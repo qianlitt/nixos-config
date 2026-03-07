@@ -17,14 +17,14 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/547ba8f8-9b77-431e-b658-3c7da5fcadf1";
-    fsType = "ext4";
+  zramSwap = {
+    enable = true;
+    # 压缩算法
+    # 检查 Zram 设备支持的算法: `cat /sys/class/block/zram*/comp_algorithm`
+    algorithm = "zstd";
+    memoryPercent = 100; # zram 大小 = 物理内存大小
+    priority = 5; # 优先级高于磁盘 swap
   };
-
-  swapDevices = [
-    {device = "/dev/disk/by-uuid/47d0b46f-ac6c-46b7-8ec0-305d28772039";}
-  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
