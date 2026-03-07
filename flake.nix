@@ -13,11 +13,19 @@
   }: {
     nixosConfigurations = {
       # x86_64-linux Hosts
-      frieren = nixpkgs.lib.nixosSystem {
-        modules = [
-          ./hosts/server-frieren
-        ];
-      };
+      frieren = let
+        inherit (inputs.nixpkgs) lib;
+        mylib = import ./lib {inherit lib;};
+      in
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs mylib;
+          };
+
+          modules = [
+            ./hosts/server-frieren
+          ];
+        };
     };
   };
 }
