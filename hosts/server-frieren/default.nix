@@ -31,13 +31,13 @@ in {
   networking.networkmanager.enable = true;
 
   # 国际化设置
-  services.customI18n = {
+  modules.nixos.i18n = {
     enable = true;
     profile = "zh";
   };
 
   # SSH 设置
-  services.customSsh = {
+  modules.nixos.ssh = {
     enable = true;
     allowPassword = false;
   };

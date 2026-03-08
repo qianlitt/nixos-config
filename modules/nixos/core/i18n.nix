@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.services.customI18n;
+  cfg = config.modules.nixos.i18n;
 in {
-  options.services.customI18n = {
+  options.modules.nixos.i18n = {
     enable = mkEnableOption "自定义多语言切换模块";
 
     profile = mkOption {
