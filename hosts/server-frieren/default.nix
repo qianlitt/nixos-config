@@ -68,6 +68,14 @@ in {
     enableSSHSupport = true;
   };
   programs.nix-ld.enable = true;
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+    enableZshIntegration = true;
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
