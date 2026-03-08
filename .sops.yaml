@@ -1,0 +1,7 @@
+keys:
+  - &admin_age_elaina age1rt9vk95rrr7x2adjgjlyulm68ppvhgvg92x9avc58jgkarjwe5escptl9d
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *admin_age_elaina
