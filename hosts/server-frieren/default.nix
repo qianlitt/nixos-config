@@ -4,14 +4,14 @@
 {
   config,
   pkgs,
+  mylib,
   ...
 }: let
   hostName = "frieren"; # Define your hostname.
 in {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
+  imports =
+    mylib.scanModules ./.
+    ++ [(mylib.root "modules/nixos/core")];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -52,18 +52,6 @@ in {
   services.xserver.xkb = {
     layout = "us";
     variant = "";
-  };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.elaina = {
-    isNormalUser = true;
-    description = "elaina";
-    extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIql1DkkFW4n1tntQxVblT3+9Lv/d8hm7i7JWZEfzrbx bitwarden@nixos"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICqTv14u4PA/Vox3HYIthOutdu9u6wSOVTWPAUf+2Gd5 openpgp"
-    ];
   };
 
   # Allow unfree packages

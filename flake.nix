@@ -21,10 +21,11 @@
       frieren = let
         inherit (inputs.nixpkgs) lib;
         mylib = import ./lib {inherit lib;};
+        myvar = import ./var;
       in
         nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs mylib;
+            inherit inputs mylib myvar;
           };
 
           modules = [
