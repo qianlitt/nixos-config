@@ -36,6 +36,12 @@ in {
     profile = "zh";
   };
 
+  # SSH 设置
+  services.customSsh = {
+    enable = true;
+    allowPassword = false;
+  };
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -62,9 +68,6 @@ in {
     enableSSHSupport = true;
   };
   programs.nix-ld.enable = true;
-
-  # List services that you want to enable:
-  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
