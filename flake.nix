@@ -13,6 +13,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -34,6 +38,18 @@
 
           modules = [
             ./hosts/server-frieren
+
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {inherit inputs mylib myvar;};
+              home-manager.users."${myvar.user.name}" = {
+                imports = [
+                  ./home/${myvar.user.name}
+                ];
+              };
+            }
           ];
         };
     };
