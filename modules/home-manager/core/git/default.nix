@@ -64,6 +64,8 @@ in {
           email = cfg.user.email;
         };
 
+        inherit alias;
+
         push.default = "current"; # 推送当前分支到远程同名分支
         pull.rebase = true; # `git pull` 时默认使用 rebase 而非 merge
         fetch.prune = true;
