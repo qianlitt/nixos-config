@@ -5,7 +5,10 @@
 }: {
   imports =
     mylib.scanModules ./.
-    ++ [(mylib.root "modules/home-manager/core")];
+    ++ (map mylib.root [
+      "modules/home-manager/core"
+      "modules/home-manager/ai"
+    ]);
 
   # git
   modules.git = {
