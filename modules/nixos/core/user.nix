@@ -1,11 +1,17 @@
 {
   config,
   pkgs,
-  mylib,
+  inputs,
   myvar,
   ...
 }: {
-  imports = [(mylib.root "secrets/secrets.nix")];
+  imports = [
+    inputs.sops-nix.nixosModules.sops
+  ];
+
+  sops.secrets = {
+    "user/${myvar.user.name}/hashedPassword" = {neededForUsers = true;};
+  };
 
   users.users."${myvar.user.name}" = {
     isNormalUser = true;
