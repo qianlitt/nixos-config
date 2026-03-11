@@ -4,31 +4,33 @@
 {
   config,
   pkgs,
+  inputs,
   mylib,
+  myvar,
   ...
-}: let
-  hostName = "frieren"; # Define your hostname.
-in {
+}: {
   imports =
     mylib.scanModules ./.
-    ++ [(mylib.root "modules/nixos/core")];
+    ++ [(mylib.root "modules/nixos/core")]
+    ++ [inputs.sops-nix.nixosModules.sops];
 
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
-  networking = {
-    inherit hostName;
+  # 网络设置
+  networking.hostName = myvar.networking.host.server-frieren.hostName; # 设置主机名
+  modules.nixos.networkd = {
+    enable = true;
+
+    wired = {
+      enable = true;
+      ip = "${myvar.networking.host.server-frieren.ip}/${toString myvar.networking.prefixLength}";
+      gateway = "${myvar.networking.gateway}";
+      dns = myvar.networking.dns;
+    };
   };
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
 
   # 国际化设置
   modules.nixos.i18n = {
@@ -47,12 +49,6 @@ in {
     layout = "us";
     variant = "";
   };
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
