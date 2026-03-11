@@ -11,8 +11,8 @@
 }: {
   imports =
     mylib.scanModules ./.
-    ++ [(mylib.root "modules/nixos/core")]
-    ++ [inputs.sops-nix.nixosModules.sops];
+    ++ [inputs.sops-nix.nixosModules.sops]
+    ++ [(mylib.root "modules/nixos/core")];
 
   # Bootloader.
   boot.loader.grub.enable = true;
