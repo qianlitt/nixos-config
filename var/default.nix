@@ -8,6 +8,8 @@ rec {
     ];
   };
 
+  networking = import ./networking.nix;
+
   git = {
     user = {
       name = "qianlitt";
