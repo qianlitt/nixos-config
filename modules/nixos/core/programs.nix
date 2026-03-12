@@ -6,6 +6,8 @@ with pkgs; let
     git
     wget
     curl
+
+    nurl # Generate Nix fetcher calls from repository URLs
   ];
   dev-nix = [
     nil # nix lsp
