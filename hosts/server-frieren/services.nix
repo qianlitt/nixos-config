@@ -40,4 +40,10 @@
 
   # Aria2
   modules.nixos.aria.enable = true;
+  modules.nixos.ariang = {
+    enable = true;
+
+    virtualHostName = "aria.lan.luna-sama.xyz";
+    useACMEHost = "wildcard.lan";
+  };
 }
