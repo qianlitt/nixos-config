@@ -37,4 +37,7 @@
       };
     };
   };
+
+  # Aria2
+  modules.nixos.aria.enable = true;
 }
