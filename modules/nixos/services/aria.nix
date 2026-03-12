@@ -180,6 +180,9 @@ in {
           "bt-force-encryption" = true;
           "bt-detach-seed-only" = true;
 
+          # === 客户端伪装 ===
+          "user-agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0";
+
           # === 执行额外命令 ===
           # TODO: aria2 清理脚本
           # "on-download-stop" = "${deleteScript}/bin/delete.sh";
