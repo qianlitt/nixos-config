@@ -181,8 +181,9 @@ in {
           "bt-detach-seed-only" = true;
 
           # === 执行额外命令 ===
-          "on-download-stop" = "${cfg.homeDir}/delete.sh";
-          "on-download-complete" = "${cfg.homeDir}/clean.sh";
+          # TODO: aria2 清理脚本
+          # "on-download-stop" = "${deleteScript}/bin/delete.sh";
+          # "on-download-complete" = "${cleanScript}/bin/clean.sh";
 
           # === RPC 设置 ===
           "enable-rpc" = true;
@@ -204,18 +205,11 @@ in {
     systemd.tmpfiles.rules = let
       home = cfg.homeDir;
       src = aria-conf;
-
-      # 获取仓库中的所有 .sh 文件（用于创建符号链接）
-      shFiles = builtins.filter (lib.hasSuffix ".sh") (builtins.attrNames (builtins.readDir src));
-      # 为每个脚本生成 L+ 规则（强制创建符号链接，所有权保持默认）
-      scriptRules = map (f: "L+ ${home}/${f} - - - - ${src}/${f}") shFiles;
-    in
-      [
-        # 复制 dht.dat / dht6.dat
-        "C ${home}/dht.dat  0644 aria2 aria2 - ${src}/dht.dat"
-        "C ${home}/dht6.dat 0644 aria2 aria2 - ${src}/dht6.dat"
-      ]
-      ++ scriptRules;
+    in [
+      # 复制 dht.dat / dht6.dat
+      "C ${home}/dht.dat  0644 aria2 aria2 - ${src}/dht.dat"
+      "C ${home}/dht6.dat 0644 aria2 aria2 - ${src}/dht6.dat"
+    ];
 
     # Tracker 更新服务
     systemd.services.aria2-tracker-update = {
