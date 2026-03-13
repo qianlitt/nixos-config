@@ -60,4 +60,12 @@
     virtualHostName = "qb.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
+
+  # PeerBanHelper
+  modules.nixos.peerbanhelper = {
+    enable = true;
+
+    virtualHostName = "pbh.lan.luna-sama.xyz";
+    useACMEHost = "wildcard.lan";
+  };
 }
