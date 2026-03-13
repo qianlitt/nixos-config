@@ -44,7 +44,9 @@
     allowPassword = false;
   };
 
+  # 容器设置
   modules.nixos.podman.enable = true;
+  modules.nixos.quadlet.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
