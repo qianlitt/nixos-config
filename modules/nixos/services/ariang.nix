@@ -30,9 +30,9 @@ in {
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ariang];
 
-    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = {
-      forceSSL = true;
-      useACMEHost = cfg.useACMEHost;
+    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
+      forceSSL = cfg.useACMEHost != "";
+      useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
 
       root = "${pkgs.ariang}/share/ariang";
 
