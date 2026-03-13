@@ -46,4 +46,18 @@
     virtualHostName = "aria.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
+
+  # qBittorrent
+  modules.nixos.qbittorrent = {
+    enable = true;
+
+    webuiPort = 8080;
+    torrentingPort = 6881;
+
+    webuiUsername = "admin";
+    webuiPassword = "iPfQ/AXYT4cV0xfQZZmxLA==:MUsIAe6w/JahMgaiVS8iQ3YKxBEFQRgnkY26TthwSY9pLEzif7/U8TOth7/zKqBT6Fza04FHGd56uTiPEGNgvA==";
+
+    virtualHostName = "qb.lan.luna-sama.xyz";
+    useACMEHost = "wildcard.lan";
+  };
 }
