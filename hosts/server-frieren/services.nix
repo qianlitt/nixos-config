@@ -1,11 +1,15 @@
 {
   config,
   pkgs,
+  inputs,
   mylib,
   myvar,
   ...
 }: {
-  imports = [(mylib.root "modules/nixos/services")];
+  imports = [
+    inputs.sops-nix.nixosModules.sops
+    (mylib.root "modules/nixos/services")
+  ];
 
   # ACME 证书管理
   modules.nixos.acme = {
@@ -81,6 +85,20 @@
     enable = true;
 
     virtualHostName = "pbh.lan.luna-sama.xyz";
+    useACMEHost = "wildcard.lan";
+  };
+
+  # cloudreve
+  sops.secrets."postgresql/cloudreve" = {
+    owner = "postgres";
+    group = "postgres";
+    mode = "0440";
+  };
+  modules.nixos.cloudreve = {
+    enable = true;
+    database.passwordFile = config.sops.secrets."postgresql/cloudreve".path;
+
+    virtualHostName = "cloud.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
 }
