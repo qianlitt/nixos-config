@@ -102,6 +102,20 @@
     useACMEHost = "wildcard.lan";
   };
 
+  # OpenList
+  sops.secrets."services/openlist" = {
+    owner = "openlist";
+    group = "openlist";
+    mode = "0400";
+  };
+  modules.nixos.openlist = {
+    enable = true;
+    adminPasswordFile = config.sops.secrets."services/openlist".path;
+
+    virtualHostName = "op.lan.luna-sama.xyz";
+    useACMEHost = "wildcard.lan";
+  };
+
   # Immich
   modules.nixos.immich = {
     enable = true;
