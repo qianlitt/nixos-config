@@ -130,4 +130,12 @@
     virtualHostName = "photo.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
+
+  # Vaultwarden
+  modules.nixos.vaultwarden = {
+    enable = true;
+
+    virtualHostName = "vw.lan.luna-sama.xyz";
+    useACMEHost = "wildcard.lan";
+  };
 }
