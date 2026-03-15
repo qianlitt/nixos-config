@@ -101,4 +101,19 @@
     virtualHostName = "cloud.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
+
+  # Immich
+  modules.nixos.immich = {
+    enable = true;
+    host = "0.0.0.0";
+    port = 2283;
+
+    environment = {
+      TZ = config.time.timeZone;
+      IMMICH_LOG_LEVEL = "log";
+    };
+
+    virtualHostName = "photo.lan.luna-sama.xyz";
+    useACMEHost = "wildcard.lan";
+  };
 }
