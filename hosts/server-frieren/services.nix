@@ -165,4 +165,7 @@
 
   # Prowlarr 索引器管理
   modules.nixos.prowlarr.enable = true;
+
+  # Jellyseerr 媒体请求管理
+  modules.nixos.jellyseerr.enable = true;
 }
