@@ -156,4 +156,7 @@
     virtualHostName = "jellyfin.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
+
+  # Radarr 电影管理
+  modules.nixos.radarr.enable = true;
 }
