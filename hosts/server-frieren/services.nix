@@ -146,4 +146,14 @@
     virtualHostName = "git.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
+
+  # ========== 媒体服务 ==========
+
+  # Jellyfin 媒体服务器
+  modules.nixos.jellyfin = {
+    enable = true;
+
+    virtualHostName = "jellyfin.lan.luna-sama.xyz";
+    useACMEHost = "wildcard.lan";
+  };
 }
