@@ -138,4 +138,12 @@
     virtualHostName = "vw.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
+
+  # Gitea
+  modules.nixos.gitea = {
+    enable = true;
+
+    virtualHostName = "git.lan.luna-sama.xyz";
+    useACMEHost = "wildcard.lan";
+  };
 }
