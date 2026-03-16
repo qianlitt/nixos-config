@@ -159,4 +159,7 @@
 
   # Radarr 电影管理
   modules.nixos.radarr.enable = true;
+
+  # Sonarr 剧集管理
+  modules.nixos.sonarr.enable = true;
 }
