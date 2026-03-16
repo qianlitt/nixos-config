@@ -162,4 +162,7 @@
 
   # Sonarr 剧集管理
   modules.nixos.sonarr.enable = true;
+
+  # Prowlarr 索引器管理
+  modules.nixos.prowlarr.enable = true;
 }
