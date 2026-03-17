@@ -9,6 +9,19 @@ in {
   options.modules.nixos.qbittorrent = {
     enable = lib.mkEnableOption "启用 qBittorrent 下载服务";
 
+    # 用户和用户组配置
+    user = lib.mkOption {
+      type = lib.types.str;
+      default = "qbittorrent";
+      description = "qBittorrent 服务用户";
+    };
+    group = lib.mkOption {
+      type = lib.types.str;
+      default = "qbittorrent";
+      example = "media";
+      description = "qBittorrent 服务用户组";
+    };
+
     # 端口配置
     webuiPort = lib.mkOption {
       type = lib.types.port;
@@ -46,6 +59,13 @@ in {
       description = "qBittorrent 配置文件目录";
     };
 
+    # 下载目录配置
+    downloadDir = lib.mkOption {
+      type = lib.types.path;
+      default = "/mnt/media/downloads";
+      description = "qBittorrent 默认下载目录";
+    };
+
     # Nginx 虚拟主机配置
     virtualHostName = lib.mkOption {
       type = lib.types.str;
@@ -63,21 +83,26 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    # 创建下载目录
+    systemd.tmpfiles.rules = [
+      "d '${cfg.downloadDir}' 2775 qbittorrent media -"
+    ];
+
     services.qbittorrent = {
       enable = true;
 
       package = pkgs.qbittorrent-enhanced-nox;
 
       openFirewall = true;
-      webuiPort = cfg.webuiPort;
-      torrentingPort = cfg.torrentingPort;
 
-      profileDir = cfg.profileDir;
+      inherit (cfg) user group webuiPort torrentingPort profileDir;
 
       serverConfig = {
         BitTorrent.Session = {
           DisableAutoTMMByDefault = false; # 新添加的种子默认启用自动管理模式
           TorrentContentLayout = "Subfolder"; # 设置 torrent 内容布局：创建子文件夹
+
+          DefaultSavePath = toString cfg.downloadDir; # 默认保存路径
 
           AddTrackersFromURLEnabled = true; # 自动添加 trackers
           AdditionalTrackersURL = "https://cf.trackerslist.com/all.txt";
