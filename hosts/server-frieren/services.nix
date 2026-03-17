@@ -6,10 +6,12 @@
   myvar,
   ...
 }: {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-    (mylib.root "modules/nixos/services")
-  ];
+  imports =
+    [inputs.sops-nix.nixosModules.sops]
+    ++ (map mylib.root [
+      "modules/nixos/services"
+      "profiles/server/media.nix"
+    ]);
 
   # ACME 证书管理
   modules.nixos.acme = {
@@ -63,28 +65,6 @@
     enable = true;
 
     virtualHostName = "aria.lan.luna-sama.xyz";
-    useACMEHost = "wildcard.lan";
-  };
-
-  # qBittorrent
-  modules.nixos.qbittorrent = {
-    enable = true;
-
-    webuiPort = 8080;
-    torrentingPort = 6881;
-
-    webuiUsername = "admin";
-    webuiPassword = "iPfQ/AXYT4cV0xfQZZmxLA==:MUsIAe6w/JahMgaiVS8iQ3YKxBEFQRgnkY26TthwSY9pLEzif7/U8TOth7/zKqBT6Fza04FHGd56uTiPEGNgvA==";
-
-    virtualHostName = "qb.lan.luna-sama.xyz";
-    useACMEHost = "wildcard.lan";
-  };
-
-  # PeerBanHelper
-  modules.nixos.peerbanhelper = {
-    enable = true;
-
-    virtualHostName = "pbh.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
 
@@ -147,25 +127,25 @@
     useACMEHost = "wildcard.lan";
   };
 
-  # ========== 媒体服务 ==========
-
-  # Jellyfin 媒体服务器
-  modules.nixos.jellyfin = {
-    enable = true;
-
-    virtualHostName = "jellyfin.lan.luna-sama.xyz";
+  # qBittorrent
+  modules.nixos.qbittorrent = {
+    virtualHostName = "qb.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
 
-  # Radarr 电影管理
-  modules.nixos.radarr.enable = true;
+  # PeerBanHelper
+  modules.nixos.peerbanhelper = {
+    virtualHostName = "pbh.lan.luna-sama.xyz";
+    useACMEHost = "wildcard.lan";
+  };
 
-  # Sonarr 剧集管理
-  modules.nixos.sonarr.enable = true;
-
-  # Prowlarr 索引器管理
-  modules.nixos.prowlarr.enable = true;
-
-  # Jellyseerr 媒体请求管理
-  modules.nixos.jellyseerr.enable = true;
+  # ========== 媒体服务 ==========
+  profiles.server.media = {
+    enable = true;
+    jellyfin = {
+      enable = true;
+      virtualHostName = "jellyfin.lan.luna-sama.xyz";
+      useACMEHost = "wildcard.lan";
+    };
+  };
 }
