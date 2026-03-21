@@ -7,6 +7,7 @@ rec {
     server-frieren = {
       hostName = "frieren";
       ip = "192.168.1.102";
+      wirelessIp = "192.168.1.103";
     };
   };
 }
