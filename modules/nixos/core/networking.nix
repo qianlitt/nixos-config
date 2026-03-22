@@ -164,9 +164,11 @@ in {
     networking.wireless.iwd.enable = mkIf wirelessCfg.enable true;
 
     # 使用 sops template 生成 iwd 配置文件
-    sops.secrets."${wirelessCfg.sopsKey}" = {
-      owner = "root";
-      mode = "0400";
+    sops.secrets = mkIf isValidWirelessConfig {
+      "${wirelessCfg.sopsKey}" = {
+        owner = "root";
+        mode = "0400";
+      };
     };
     sops.templates."iwd-psk" = mkIf isValidWirelessConfig {
       content = ''

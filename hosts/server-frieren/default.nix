@@ -30,15 +30,6 @@
       gateway = "${myvar.networking.gateway}";
       dns = myvar.networking.dns;
     };
-
-    wireless = {
-      enable = true;
-      ssid = "GONGNIU-7490";
-      sopsKey = "wifi/home/psk";
-      ip = "${myvar.networking.host.server-frieren.wirelessIp}/${toString myvar.networking.prefixLength}";
-      gateway = "${myvar.networking.gateway}";
-      dns = myvar.networking.dns;
-    };
   };
 
   # 国际化设置
