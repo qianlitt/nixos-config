@@ -21,16 +21,6 @@
 
   # 网络设置
   networking.hostName = myvar.networking.host.server-frieren.hostName; # 设置主机名
-  modules.nixos.networkd = {
-    enable = true;
-
-    wired = {
-      enable = true;
-      ip = "${myvar.networking.host.server-frieren.ip}/${toString myvar.networking.prefixLength}";
-      gateway = "${myvar.networking.gateway}";
-      dns = myvar.networking.dns;
-    };
-  };
 
   # 国际化设置
   modules.nixos.i18n = {

@@ -70,6 +70,8 @@ in {
 
       webuiUsername = "admin";
       webuiPassword = "iPfQ/AXYT4cV0xfQZZmxLA==:MUsIAe6w/JahMgaiVS8iQ3YKxBEFQRgnkY26TthwSY9pLEzif7/U8TOth7/zKqBT6Fza04FHGd56uTiPEGNgvA==";
+
+      interfaceAddress = "192.168.1.103";
     };
     # arr 家族
     modules.nixos.jellyseerr.enable = true;

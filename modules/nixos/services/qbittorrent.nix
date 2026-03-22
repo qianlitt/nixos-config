@@ -35,6 +35,18 @@ in {
       description = "BT 下载监听端口";
     };
 
+    interface = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "qBittorrent 绑定的网络接口（默认为所有接口）";
+    };
+
+    interfaceAddress = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "qBittorrent 绑定的 IP 地址（默认为所有地址）";
+    };
+
     # WebUI 帐号密码
     webuiUsername = lib.mkOption {
       type = lib.types.str;
@@ -118,6 +130,9 @@ in {
           MaxActiveUploads = 10; # 最大活跃上传数
           MaxActiveTorrents = 20; # 最大活跃 torrent 数
           IgnoreSlowTorrentsForQueueing = true; # 忽略慢速 torrent
+
+          Interface = lib.mkIf (cfg.interface != null) cfg.interface;
+          InterfaceAddress = lib.mkIf (cfg.interfaceAddress != null) cfg.interfaceAddress;
         };
 
         LegalNotice.Accepted = true;
