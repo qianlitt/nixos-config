@@ -212,6 +212,8 @@ in {
       # 复制 dht.dat / dht6.dat
       "C ${home}/dht.dat  0644 aria2 aria2 - ${src}/dht.dat"
       "C ${home}/dht6.dat 0644 aria2 aria2 - ${src}/dht6.dat"
+      # 链接脚本
+      "L+ ${home}/tracker.sh - - - - ${src}/tracker.sh"
     ];
 
     # Tracker 更新服务
