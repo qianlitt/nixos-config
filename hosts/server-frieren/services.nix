@@ -76,6 +76,7 @@
   };
   modules.nixos.cloudreve = {
     enable = true;
+    image = "docker.1ms.run/cloudreve/cloudreve:v4";
     database.passwordFile = config.sops.secrets."postgresql/cloudreve".path;
 
     virtualHostName = "cloud.lan.luna-sama.xyz";
@@ -90,6 +91,7 @@
   };
   modules.nixos.openlist = {
     enable = true;
+    image = "docker.1ms.run/openlistteam/openlist:latest";
     adminPasswordFile = config.sops.secrets."services/openlist".path;
 
     virtualHostName = "op.lan.luna-sama.xyz";

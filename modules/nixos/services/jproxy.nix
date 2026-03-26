@@ -12,6 +12,12 @@ in {
       介于 Sonarr / Radarr 和 Jackett / Prowlarr 之间的代理，主要用于优化查询和提升识别率。
     '';
 
+    image = lib.mkOption {
+      type = lib.types.str;
+      default = "docker.io/luckypuppy514/jproxy:latest";
+      description = "JProxy Docker 镜像";
+    };
+
     port = lib.mkOption {
       type = lib.types.port;
       default = 8117;
@@ -34,7 +40,7 @@ in {
     virtualisation.quadlet.containers.jproxy = {
       autoStart = true;
       containerConfig = {
-        image = "docker.io/luckypuppy514/jproxy";
+        image = cfg.image;
         publishPorts = ["${toString cfg.port}:8117"];
         volumes = ["${toString cfg.dataDir}:/config"];
         environments = {

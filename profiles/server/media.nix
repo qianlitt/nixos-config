@@ -79,6 +79,9 @@ in {
     modules.nixos.radarr.enable = true;
     modules.nixos.sonarr.enable = true;
     # arr 搜索增强
-    modules.nixos.jproxy.enable = true;
+    modules.nixos.jproxy = {
+      enable = true;
+      image = "docker.1ms.run/luckypuppy514/jproxy:latest";
+    };
   };
 }
