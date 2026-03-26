@@ -90,9 +90,6 @@ in {
         name = "immich";
         host = "/run/postgresql";
         port = 5432;
-        # PostgreSQL 17+ 不支持 pgvecto.rs，使用 VectorChord
-        enableVectors = false;
-        enableVectorChord = true;
       };
 
       redis.enable = true;
