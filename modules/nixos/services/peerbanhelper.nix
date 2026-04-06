@@ -64,7 +64,7 @@ in {
         # 必须使用 host 网络模式才能获取真实的 peer IP
         networks = ["host"];
         # 挂载数据目录
-        volumes = ["${cfg.dataDir}:/config"];
+        volumes = ["${cfg.dataDir}:/app/data"];
       };
       serviceConfig = {
         # 自动重启
