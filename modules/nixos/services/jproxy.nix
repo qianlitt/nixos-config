@@ -42,7 +42,7 @@ in {
       containerConfig = {
         image = cfg.image;
         publishPorts = ["${toString cfg.port}:8117"];
-        volumes = ["${toString cfg.dataDir}:/config"];
+        volumes = ["${toString cfg.dataDir}:/app/database"];
         environments = {
           "TZ" = config.time.timeZone;
           "JAVA_OPTS" = "-Xms512m -Xmx512m";
