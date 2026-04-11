@@ -42,7 +42,7 @@ qBittorrent 自身的设置都由 Nix 完成了。只需配置：
 
 依照[基础配置](https://github.com/LuckyPuppy514/jproxy#%EF%B8%8F-%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE)和[进阶配置](https://github.com/LuckyPuppy514/jproxy/wiki#%E8%BF%9B%E9%98%B6%E9%85%8D%E7%BD%AE)进行设置。
 
-## 7. Jellyseerr
+## 7. Seerr
 
 1. 选择 Jellyfin。
 2. 登录 Jellyfin，并同步 Jellyfin 的媒体库。

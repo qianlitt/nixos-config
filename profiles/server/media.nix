@@ -74,7 +74,7 @@ in {
       interfaceAddress = "192.168.1.103";
     };
     # arr 家族
-    modules.nixos.jellyseerr.enable = true;
+    modules.nixos.seerr.enable = true;
     modules.nixos.prowlarr.enable = true;
     modules.nixos.radarr.enable = true;
     modules.nixos.sonarr.enable = true;
