@@ -4,9 +4,10 @@
 
 ## Current Host
 
-| Host           | Platform     | Hardware       | Purpose | Status   |
-| -------------- | ------------ | -------------- | ------- | -------- |
-| server-frieren | x86_64-linux | i7-310M + 310M | Server  | ✅ Active |
+| Host           | Platform     | Hardware                     | Purpose | Status   |
+| -------------- | ------------ | ---------------------------- | ------- | -------- |
+| server-frieren | x86_64-linux | i7-310M + 310M               | Server  | ✅ Active |
+| desktop-rin    | x86_64-linux | i7-14650HX + RTX 5060 Laptop | desktop | ✅ Active |
 
 <a id="naming-convention"></a>
 > [!NOTE] Naming Convention

@@ -55,6 +55,32 @@
             }
           ];
         };
+      rin = let
+        inherit (inputs.nixpkgs) lib;
+        mylib = import ./lib {inherit lib;};
+        myvar = import ./var;
+      in
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs mylib myvar;
+          };
+
+          modules = [
+            ./hosts/desktop-rin
+
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {inherit inputs mylib myvar;};
+              home-manager.users."${myvar.user.name}" = {
+                imports = [
+                  ./home/${myvar.user.name}
+                ];
+              };
+            }
+          ];
+        };
     };
   };
 }
