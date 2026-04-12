@@ -7,7 +7,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/disk/by-id/ata-Samsung_SSD_870_EVO_1TB_S75DNX0Y111182B";
         content = {
           type = "table";
           format = "msdos"; # MBR 分区
