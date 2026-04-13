@@ -7,8 +7,6 @@
       trusted-users = [myvar.user.name];
       substituters = [
         # cache mirror located in China
-        # status: https://mirror.sjtu.edu.cn/
-        "https://mirror.sjtu.edu.cn/nix-channels/store/"
         # status: https://mirrors.ustc.edu.cn/status/
         "https://mirrors.ustc.edu.cn/nix-channels/store/"
       ];
