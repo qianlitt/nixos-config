@@ -8,7 +8,9 @@
 }: {
   imports =
     mylib.scanModules ./.
-    ++ [(mylib.root "modules/nixos/core")];
+    ++ (map mylib.root [
+      "modules/nixos/core"
+    ]);
 
   # bootloader
   boot.loader = {
@@ -34,12 +36,6 @@
     "modprobe.blacklist=iTCO_wdt"
 
     "acpi_backlight=nvidia_wmi_ec"
-  ];
-
-  # fix hyprland link
-  environment.pathsToLink = [
-    "/share/applications"
-    "/share/xdg-desktop-portal"
   ];
 
   # 网络设置
