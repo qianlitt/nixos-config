@@ -20,6 +20,7 @@
     quadlet-nix = {
       url = "github:SEIAROTg/quadlet-nix";
     };
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = inputs @ {
