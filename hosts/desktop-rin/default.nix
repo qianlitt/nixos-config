@@ -36,6 +36,12 @@
     "acpi_backlight=nvidia_wmi_ec"
   ];
 
+  # fix hyprland link
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
+
   # 网络设置
   networking.hostName = "rin"; # 设置主机名
   modules.nixos.networkd = {
