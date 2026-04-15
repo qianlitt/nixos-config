@@ -25,5 +25,15 @@
     tui.enable = true;
   };
 
+  # gpg
+  modules.gpg = {
+    enable = true;
+    sshKeys = [myvar.gpg.keygrip];
+    importKey = {
+      enable = true;
+      fingerprint = myvar.gpg.fingerprint;
+    };
+  };
+
   home.stateVersion = "25.11";
 }
