@@ -40,19 +40,6 @@
 
   # 网络设置
   networking.hostName = "rin"; # 设置主机名
-  modules.nixos.networkd = {
-    enable = true;
-    wired = {
-      enable = true;
-      ip = "192.168.1.100/24";
-      gateway = "192.168.1.200";
-      dns = [
-        "192.168.1.200"
-        "223.5.5.5"
-        "1.1.1.1"
-      ];
-    };
-  };
 
   # 国际化设置
   modules.nixos.i18n = {

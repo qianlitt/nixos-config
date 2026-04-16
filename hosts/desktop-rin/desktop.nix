@@ -14,6 +14,11 @@ in {
     inherit user;
   };
 
+  modules.nixos.desktop.quickshell.noctalia = {
+    enable = true;
+    inherit user;
+  };
+
   modules.nixos.fcitx5 = {
     enable = true;
     inherit user;

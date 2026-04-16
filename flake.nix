@@ -21,6 +21,10 @@
       url = "github:SEIAROTg/quadlet-nix";
     };
     hyprland.url = "github:hyprwm/Hyprland";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
