@@ -32,6 +32,8 @@
       libvdpau-va-gl
     ];
   };
+  # 华硕笔记本显卡切换工具
+  services.supergfxd.enable = true;
 
   users.users."${myvar.user.name}".extraGroups = ["video" "render"];
 }
