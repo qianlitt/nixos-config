@@ -41,20 +41,24 @@
         ];
       };
       localConf = ''
-        <!-- 中文语言回退 -->
-        <match>
-          <test name="lang" compare="contains"><string>zh</string></test>
-          <test name="family"><string>monospace</string></test>
-          <edit name="family" mode="prepend"><string>Maple Mono NF CN</string></edit>
-        </match>
+        <?xml version="1.0"?>
+        <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+        <fontconfig>
+          <!-- 中文语言回退 -->
+          <match>
+            <test name="lang" compare="contains"><string>zh</string></test>
+            <test name="family"><string>monospace</string></test>
+            <edit name="family" mode="prepend"><string>Maple Mono NF CN</string></edit>
+          </match>
 
-        <!-- Emoji 回退 -->
-        <match>
-          <test name="family"><string>monospace</string></test>
-          <edit name="family" mode="append" binding="weak">
-            <string>Symbols Nerd Font</string>
-          </edit>
-        </match>
+          <!-- Emoji 回退 -->
+          <match>
+            <test name="family"><string>monospace</string></test>
+            <edit name="family" mode="append" binding="weak">
+              <string>Symbols Nerd Font</string>
+            </edit>
+          </match>
+        </fontconfig>
       '';
     };
   };
