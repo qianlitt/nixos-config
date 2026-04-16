@@ -35,7 +35,7 @@
     "nowatchdog"
     "modprobe.blacklist=iTCO_wdt"
 
-    "acpi_backlight=nvidia_wmi_ec"
+    "acpi_backlight=native"
   ];
 
   # 网络设置
