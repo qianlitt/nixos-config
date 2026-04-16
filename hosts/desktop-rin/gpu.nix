@@ -1,9 +1,18 @@
 {
+  pkgs,
+  myvar,
+  ...
+}: {
   services.xserver.videoDrivers = ["modesetting" "nvidia"];
   hardware.nvidia = {
     open = true;
 
     modesetting.enable = true;
+
+    powerManagement = {
+      enable = true;
+      finegrained = true;
+    };
 
     prime = {
       intelBusId = "PCI:0@0:2:0";
@@ -14,5 +23,15 @@
       };
     };
   };
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+
+    extraPackages = with pkgs; [
+      intel-media-driver
+      nvidia-vaapi-driver
+      libvdpau-va-gl
+    ];
+  };
+
+  users.users."${myvar.user.name}".extraGroups = ["video" "render"];
 }
