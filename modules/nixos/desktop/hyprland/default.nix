@@ -3,7 +3,7 @@
   lib,
   pkgs,
   inputs,
-  myvar,
+  mylib,
   ...
 }: let
   cfg = config.modules.nixos.windowManager.hyprland;
@@ -11,6 +11,8 @@
   hyprlandPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
   portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 in {
+  imports = mylib.scanModules ./.;
+
   options.modules.nixos.windowManager.hyprland = {
     enable = lib.mkEnableOption "启用 Hyprland 窗口管理器";
 
@@ -18,6 +20,12 @@ in {
       type = lib.types.nullOr lib.types.str;
       default = null;
       description = "启用 Hyprland 的用户";
+    };
+
+    quickshell = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "在 Hyprland 启动的同时运行的 quickshell";
     };
   };
 
@@ -34,6 +42,12 @@ in {
       trusted-substituters = ["https://hyprland.cachix.org"];
       trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
+    modules.nixos.desktop.quickshell = {
+      noctalia = lib.mkIf (cfg.quickshell == "noctalia") {
+        enable = true;
+        inherit (cfg) user;
+      };
+    };
 
     #  Home Manager 配置
     assertions = [
@@ -46,6 +60,8 @@ in {
       wayland.windowManager.hyprland = {
         enable = true;
 
+        settings.exec-once = lib.mkIf (cfg.quickshell == "noctalia") ["noctalia-shell"];
+
         extraConfig = ''
           $mainMod = SUPER
 
@@ -54,8 +70,6 @@ in {
           bind = $mainMod, M, exec, command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit
           bind = $mainMod, D, exec, code
           bind = $mainMod, W, exec, chromium
-
-          exec-once=fcitx5 -d
         '';
       };
 
