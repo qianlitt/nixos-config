@@ -12,11 +12,7 @@ in {
   modules.nixos.windowManager.hyprland = {
     enable = true;
     inherit user;
-  };
-
-  modules.nixos.desktop.quickshell.noctalia = {
-    enable = true;
-    inherit user;
+    quickshell = "noctalia";
   };
 
   modules.nixos.fcitx5 = {
