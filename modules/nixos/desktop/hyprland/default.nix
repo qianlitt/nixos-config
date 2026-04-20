@@ -27,6 +27,12 @@ in {
       default = null;
       description = "在 Hyprland 启动的同时运行的 quickshell";
     };
+
+    layout = lib.mkOption {
+      type = lib.types.enum ["dwindle" "master" "scrolling" "scrolling"];
+      default = "dwindle";
+      description = "Hyprland 的布局";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -60,7 +66,20 @@ in {
       wayland.windowManager.hyprland = {
         enable = true;
 
-        settings.exec-once = lib.mkIf (cfg.quickshell == "noctalia") ["noctalia-shell"];
+        settings = {
+          exec-once = lib.mkIf (cfg.quickshell == "noctalia") ["noctalia-shell"];
+
+          general = {
+            layout = cfg.layout;
+            gaps_workspaces = "20";
+            gaps_in = "10";
+            gaps_out = "20";
+            border_size = "3";
+
+            "col.active_border" = "rgba(c2c1ffe6)"; # 活动窗口的边框颜色
+            "col.inactive_border" = "rgba(c8c5d111)"; # 非活动窗口的边框颜色
+          };
+        };
       };
 
       programs.kitty.enable = true; # 确保进入 Hyprland 时有终端可用
