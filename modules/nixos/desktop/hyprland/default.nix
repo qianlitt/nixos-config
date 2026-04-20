@@ -79,6 +79,21 @@ in {
             "col.active_border" = "rgba(c2c1ffe6)"; # 活动窗口的边框颜色
             "col.inactive_border" = "rgba(c8c5d111)"; # 非活动窗口的边框颜色
           };
+
+          gesture = [
+            "3, swipe, move" # 三指滑动 → 切换窗口
+            "3, pinch, float" # 三指捏合 → 切换窗口浮动/平铺
+            "4, horizontal, workspace" # 四指水平滑动 → 切换到 相邻工作区。
+          ];
+
+          gestures = {
+            workspace_swipe_distance = 700;
+            workspace_swipe_cancel_ratio = "0.2";
+            workspace_swipe_min_speed_to_force = 5;
+            workspace_swipe_direction_lock = true;
+            workspace_swipe_direction_lock_threshold = 10;
+            workspace_swipe_create_new = true;
+          };
         };
       };
 
