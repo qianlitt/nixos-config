@@ -61,16 +61,6 @@ in {
         enable = true;
 
         settings.exec-once = lib.mkIf (cfg.quickshell == "noctalia") ["noctalia-shell"];
-
-        extraConfig = ''
-          $mainMod = SUPER
-
-          bind = $mainMod, Q, exec, kitty
-          bind = $mainMod, C, killactive,
-          bind = $mainMod, M, exec, command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit
-          bind = $mainMod, D, exec, code
-          bind = $mainMod, W, exec, chromium
-        '';
       };
 
       programs.kitty.enable = true; # 确保进入 Hyprland 时有终端可用
