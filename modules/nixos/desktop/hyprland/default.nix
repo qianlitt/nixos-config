@@ -109,6 +109,12 @@ in {
             workspace_swipe_direction_lock_threshold = 10;
             workspace_swipe_create_new = true;
           };
+
+          misc = {
+            disable_hyprland_logo = true; # 禁止显示 Hyprland logo
+            disable_splash_rendering = true; # 禁止显示启动画面
+            focus_on_activate = true;
+          };
         };
       };
 
