@@ -80,6 +80,21 @@ in {
             "col.inactive_border" = "rgba(c8c5d111)"; # 非活动窗口的边框颜色
           };
 
+          input = {
+            kb_layout = "us"; # 键盘布局
+            numlock_by_default = true; # 默认开启 NumLock
+            repeat_delay = 250; # 键盘重复的延迟（毫秒）
+            repeat_rate = 35; # 键盘重复的速率（每秒重复次数）
+
+            follow_mouse = "1"; # 光标与焦点关系
+
+            touchpad = {
+              natural_scroll = true; # 反转滚动方向
+              disable_while_typing = true; # 打字时禁用触摸板
+              scroll_factor = 0.7; # 滚动速度因子
+            };
+          };
+
           gesture = [
             "3, swipe, move" # 三指滑动 → 切换窗口
             "3, pinch, float" # 三指捏合 → 切换窗口浮动/平铺
