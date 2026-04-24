@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.nixos.aria;
+  cfg = config.modules.aria;
 
   aria-conf = pkgs.fetchFromGitHub {
     owner = "P3TERX";
@@ -16,7 +16,7 @@
     '';
   };
 in {
-  options.modules.nixos.aria = {
+  options.modules.aria = {
     enable = lib.mkEnableOption "启用 Aria2 下载服务";
 
     # 数据目录配置

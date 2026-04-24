@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.immich;
+  cfg = config.modules.immich;
 in {
-  options.modules.nixos.immich = {
+  options.modules.immich = {
     enable = lib.mkEnableOption "启用 Immich 照片管理服务";
 
     host = lib.mkOption {
@@ -96,7 +96,7 @@ in {
     };
 
     # Nginx 反代配置
-    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
+    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
       forceSSL = cfg.useACMEHost != "";
       useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
       locations."/" = {

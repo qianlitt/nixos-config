@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.windowManager.hyprland;
+  cfg = config.modules.windowManager.hyprland;
 
   ipc = "noctalia-shell ipc call";
 

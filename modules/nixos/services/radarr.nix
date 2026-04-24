@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.radarr;
+  cfg = config.modules.radarr;
 in {
-  options.modules.nixos.radarr = {
+  options.modules.radarr = {
     enable = lib.mkEnableOption "启用 Radarr 电影管理服务";
 
     port = lib.mkOption {

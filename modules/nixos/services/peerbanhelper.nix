@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.peerbanhelper;
+  cfg = config.modules.peerbanhelper;
 in {
-  options.modules.nixos.peerbanhelper = {
+  options.modules.peerbanhelper = {
     enable = lib.mkEnableOption "启用 PeerBanHelper 反吸血辅助工具";
 
     # 数据目录配置
@@ -47,8 +47,8 @@ in {
 
   config = lib.mkIf cfg.enable {
     # 启用 podman 和 quadlet
-    modules.nixos.podman.enable = true;
-    modules.nixos.quadlet.enable = true;
+    modules.podman.enable = true;
+    modules.quadlet.enable = true;
 
     # 创建数据目录
     systemd.tmpfiles.rules = [
@@ -73,7 +73,7 @@ in {
     };
 
     # Nginx 反代配置
-    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
+    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
       forceSSL = cfg.useACMEHost != "";
       useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
 

@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.nixos.postgresql;
+  cfg = config.modules.postgresql;
 in {
-  options.modules.nixos.postgresql = {
+  options.modules.postgresql = {
     enable = lib.mkEnableOption "启用 PostgreSQL 服务";
 
     # 基础配置

@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.nixos.vaultwarden;
+  cfg = config.modules.vaultwarden;
 in {
-  options.modules.nixos.vaultwarden = {
+  options.modules.vaultwarden = {
     enable = lib.mkEnableOption "启用 Vaultwarden 密码管理服务";
 
     port = lib.mkOption {
@@ -45,8 +45,8 @@ in {
 
   config = lib.mkIf cfg.enable {
     # 确保所需子系统启用
-    modules.nixos.postgresql.enable = true;
-    modules.nixos.nginx.enable = true;
+    modules.postgresql.enable = true;
+    modules.nginx.enable = true;
 
     # Vaultwarden 服务配置
     services.vaultwarden = {
@@ -74,7 +74,7 @@ in {
     };
 
     # Nginx 反代配置
-    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = {
+    modules.nginx.virtualHosts.${cfg.virtualHostName} = {
       forceSSL = cfg.useACMEHost != "";
       useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
       locations."/" = {

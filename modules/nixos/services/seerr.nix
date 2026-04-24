@@ -3,10 +3,10 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.seerr;
+  cfg = config.modules.seerr;
   useNewConfigLocation = lib.versionAtLeast config.system.stateVersion "26.05";
 in {
-  options.modules.nixos.seerr = {
+  options.modules.seerr = {
     enable = lib.mkEnableOption "启用 Seerr 用户界面";
 
     port = lib.mkOption {

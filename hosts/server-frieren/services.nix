@@ -14,7 +14,7 @@
     ]);
 
   # ACME 证书管理
-  modules.nixos.acme = {
+  modules.acme = {
     enable = true;
 
     email = myvar.user.email;
@@ -28,7 +28,7 @@
   };
 
   # Nginx
-  modules.nixos.nginx = {
+  modules.nginx = {
     enable = true;
 
     virtualHosts."lan.luna-sama.xyz" = {
@@ -46,7 +46,7 @@
   };
 
   # PostgreSQL
-  modules.nixos.postgresql = {
+  modules.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;
     authentication = ''
@@ -60,8 +60,8 @@
   };
 
   # Aria2
-  modules.nixos.aria.enable = true;
-  modules.nixos.ariang = {
+  modules.aria.enable = true;
+  modules.ariang = {
     enable = true;
 
     virtualHostName = "aria.lan.luna-sama.xyz";
@@ -74,7 +74,7 @@
     group = "postgres";
     mode = "0440";
   };
-  modules.nixos.cloudreve = {
+  modules.cloudreve = {
     enable = true;
     image = "docker.1ms.run/cloudreve/cloudreve:v4";
     database.passwordFile = config.sops.secrets."postgresql/cloudreve".path;
@@ -89,7 +89,7 @@
     group = "openlist";
     mode = "0400";
   };
-  modules.nixos.openlist = {
+  modules.openlist = {
     enable = true;
     image = "docker.1ms.run/openlistteam/openlist:latest";
     adminPasswordFile = config.sops.secrets."services/openlist".path;
@@ -99,7 +99,7 @@
   };
 
   # Immich
-  modules.nixos.immich = {
+  modules.immich = {
     enable = true;
     host = "0.0.0.0";
     port = 2283;
@@ -114,7 +114,7 @@
   };
 
   # Vaultwarden
-  modules.nixos.vaultwarden = {
+  modules.vaultwarden = {
     enable = true;
 
     virtualHostName = "vw.lan.luna-sama.xyz";
@@ -122,7 +122,7 @@
   };
 
   # Gitea
-  modules.nixos.gitea = {
+  modules.gitea = {
     enable = true;
 
     virtualHostName = "git.lan.luna-sama.xyz";
@@ -130,13 +130,13 @@
   };
 
   # qBittorrent
-  modules.nixos.qbittorrent = {
+  modules.qbittorrent = {
     virtualHostName = "qb.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };
 
   # PeerBanHelper
-  modules.nixos.peerbanhelper = {
+  modules.peerbanhelper = {
     virtualHostName = "pbh.lan.luna-sama.xyz";
     useACMEHost = "wildcard.lan";
   };

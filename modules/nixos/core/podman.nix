@@ -5,9 +5,9 @@
   myvar,
   ...
 }: let
-  cfg = config.modules.nixos.podman;
+  cfg = config.modules.podman;
 in {
-  options.modules.nixos.podman = {
+  options.modules.podman = {
     enable = lib.mkEnableOption "启用 Podman 容器引擎";
   };
 

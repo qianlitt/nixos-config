@@ -9,13 +9,13 @@ in {
     "modules/nixos/desktop"
   ];
 
-  modules.nixos.windowManager.hyprland = {
+  modules.windowManager.hyprland = {
     enable = true;
     inherit user;
     quickshell = "noctalia";
   };
 
-  modules.nixos.fcitx5 = {
+  modules.fcitx5 = {
     enable = true;
     inherit user;
   };

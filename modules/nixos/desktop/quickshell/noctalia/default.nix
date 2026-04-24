@@ -5,9 +5,9 @@
   mylib,
   ...
 }: let
-  cfg = config.modules.nixos.desktop.quickshell.noctalia;
+  cfg = config.modules.desktop.quickshell.noctalia;
 in {
-  options.modules.nixos.desktop.quickshell.noctalia = {
+  options.modules.desktop.quickshell.noctalia = {
     enable = lib.mkEnableOption "启用 Noctalia Shell";
 
     user = lib.mkOption {

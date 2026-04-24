@@ -6,14 +6,14 @@
   mylib,
   ...
 }: let
-  cfg = config.modules.nixos.windowManager.hyprland;
+  cfg = config.modules.windowManager.hyprland;
 
   hyprlandPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
   portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 in {
   imports = mylib.scanModules ./.;
 
-  options.modules.nixos.windowManager.hyprland = {
+  options.modules.windowManager.hyprland = {
     enable = lib.mkEnableOption "启用 Hyprland 窗口管理器";
 
     user = lib.mkOption {
@@ -48,7 +48,7 @@ in {
       trusted-substituters = ["https://hyprland.cachix.org"];
       trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
-    modules.nixos.desktop.quickshell = {
+    modules.desktop.quickshell = {
       noctalia = lib.mkIf (cfg.quickshell == "noctalia") {
         enable = true;
         inherit (cfg) user;

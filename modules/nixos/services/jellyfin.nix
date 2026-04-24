@@ -3,11 +3,11 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.jellyfin;
+  cfg = config.modules.jellyfin;
 
   port = 8096;
 in {
-  options.modules.nixos.jellyfin = {
+  options.modules.jellyfin = {
     enable = lib.mkEnableOption "启用 Jellyfin 媒体服务器";
 
     # 用户和用户组选项
@@ -66,7 +66,7 @@ in {
     };
 
     # Nginx 反代配置
-    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
+    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
       forceSSL = cfg.useACMEHost != "";
       useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
       locations."/" = {
