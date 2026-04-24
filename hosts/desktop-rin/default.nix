@@ -38,6 +38,10 @@
     "acpi_backlight=native"
   ];
 
+  # 开启 I2C，支持调节外接显示器亮度
+  hardware.i2c.enable = true;
+  users.users."${myvar.user.name}".extraGroups = ["i2c"];
+
   # 网络设置
   networking.hostName = "rin"; # 设置主机名
 
