@@ -17,6 +17,5 @@ in {
 
   modules.fcitx5 = {
     enable = true;
-    inherit user;
   };
 }
