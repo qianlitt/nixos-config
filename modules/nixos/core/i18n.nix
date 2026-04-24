@@ -1,13 +1,12 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 with lib; let
-  cfg = config.modules.nixos.i18n;
+  cfg = config.modules.i18n;
 in {
-  options.modules.nixos.i18n = {
+  options.modules.i18n = {
     enable = mkEnableOption "自定义多语言切换模块";
 
     profile = mkOption {

@@ -57,10 +57,10 @@ in {
         "d '${toString cfg.dir}/downloads/tv' 2775 qbittorrent media - -"
       ];
     # 媒体服务器
-    modules.nixos.jellyfin = {inherit (cfg.jellyfin) enable virtualHostName useACMEHost;};
+    modules.jellyfin = {inherit (cfg.jellyfin) enable virtualHostName useACMEHost;};
     # 下载器
-    modules.nixos.peerbanhelper.enable = true;
-    modules.nixos.qbittorrent = {
+    modules.peerbanhelper.enable = true;
+    modules.qbittorrent = {
       enable = true;
 
       group = "media";
@@ -74,12 +74,12 @@ in {
       interfaceAddress = "192.168.1.103";
     };
     # arr 家族
-    modules.nixos.seerr.enable = true;
-    modules.nixos.prowlarr.enable = true;
-    modules.nixos.radarr.enable = true;
-    modules.nixos.sonarr.enable = true;
+    modules.seerr.enable = true;
+    modules.prowlarr.enable = true;
+    modules.radarr.enable = true;
+    modules.sonarr.enable = true;
     # arr 搜索增强
-    modules.nixos.jproxy = {
+    modules.jproxy = {
       enable = true;
       image = "docker.1ms.run/luckypuppy514/jproxy:latest";
     };

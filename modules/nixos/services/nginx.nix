@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.nginx;
+  cfg = config.modules.nginx;
 in {
-  options.modules.nixos.nginx = {
+  options.modules.nginx = {
     enable = lib.mkEnableOption "启用 Nginx 服务";
 
     virtualHosts = lib.mkOption {

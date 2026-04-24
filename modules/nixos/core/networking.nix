@@ -4,7 +4,7 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.nixos.networkd;
+  cfg = config.modules.networkd;
   wiredCfg = cfg.wired;
   wirelessCfg = cfg.wireless;
 
@@ -17,7 +17,7 @@ with lib; let
   # 验证无线网络静态IP配置的完整性
   isValidWirelessStaticConfig = wirelessCfg.ip != "" && wirelessCfg.gateway != "" && length wirelessCfg.dns > 0;
 in {
-  options.modules.nixos.networkd = {
+  options.modules.networkd = {
     enable = mkEnableOption "启用 systemd-networkd 网络配置";
 
     wired = {

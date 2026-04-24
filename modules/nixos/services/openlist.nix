@@ -1,12 +1,11 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
-  cfg = config.modules.nixos.openlist;
+  cfg = config.modules.openlist;
 in {
-  options.modules.nixos.openlist = {
+  options.modules.openlist = {
     enable = lib.mkEnableOption "启用 OpenList 服务";
 
     image = lib.mkOption {
@@ -54,8 +53,8 @@ in {
 
   config = lib.mkIf cfg.enable {
     # 确保所需子系统启用
-    modules.nixos.podman.enable = true;
-    modules.nixos.quadlet.enable = true;
+    modules.podman.enable = true;
+    modules.quadlet.enable = true;
 
     # 创建用户和用户组
     users.users.openlist = {
@@ -93,7 +92,7 @@ in {
     networking.firewall.allowedTCPPorts = [cfg.port];
 
     # Nginx 反代配置
-    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
+    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
       forceSSL = cfg.useACMEHost != "";
       useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
       locations."/" = {

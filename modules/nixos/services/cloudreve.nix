@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.nixos.cloudreve;
+  cfg = config.modules.cloudreve;
 
   # 检测是否使用远程数据库（非本地回环地址）
   useRemoteDb =
@@ -15,7 +15,7 @@
       || cfg.database.host == "::1"
     );
 in {
-  options.modules.nixos.cloudreve = {
+  options.modules.cloudreve = {
     enable = lib.mkEnableOption "启用 Cloudreve 云存储系统";
 
     image = lib.mkOption {
@@ -117,8 +117,8 @@ in {
     ];
 
     # 确保所需子系统启用
-    modules.nixos.podman.enable = true;
-    modules.nixos.quadlet.enable = true;
+    modules.podman.enable = true;
+    modules.quadlet.enable = true;
 
     # PostgreSQL 配置
     services.postgresql = lib.mkIf (!useRemoteDb) {
@@ -202,7 +202,7 @@ in {
     };
 
     # Nginx 反代配置
-    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
+    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
       forceSSL = cfg.useACMEHost != "";
       useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
       locations."/" = {

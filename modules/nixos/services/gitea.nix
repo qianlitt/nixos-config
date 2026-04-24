@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.gitea;
+  cfg = config.modules.gitea;
 in {
-  options.modules.nixos.gitea = {
+  options.modules.gitea = {
     enable = lib.mkEnableOption "启用 Gitea 服务";
 
     # 基础配置
@@ -105,7 +105,7 @@ in {
     };
 
     # Nginx 反代配置
-    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
+    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
       forceSSL = cfg.useACMEHost != "";
       useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
       locations."/" = {

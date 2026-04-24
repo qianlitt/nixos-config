@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.jproxy;
+  cfg = config.modules.jproxy;
 in {
-  options.modules.nixos.jproxy = {
+  options.modules.jproxy = {
     enable = lib.mkEnableOption ''
       启用 JProxy 服务
 

@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.nixos.acme;
+  cfg = config.modules.acme;
 in {
-  options.modules.nixos.acme = {
+  options.modules.acme = {
     enable = mkEnableOption "启用 ACME 证书管理";
 
     email = mkOption {

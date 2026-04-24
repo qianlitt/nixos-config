@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.sonarr;
+  cfg = config.modules.sonarr;
 in {
-  options.modules.nixos.sonarr = {
+  options.modules.sonarr = {
     enable = lib.mkEnableOption "启用 Sonarr 剧集管理服务";
 
     port = lib.mkOption {

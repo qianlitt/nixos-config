@@ -5,9 +5,9 @@
   mylib,
   ...
 }: let
-  cfg = config.modules.nixos.fcitx5;
+  cfg = config.modules.fcitx5;
 in {
-  options.modules.nixos.fcitx5 = {
+  options.modules.fcitx5 = {
     enable = lib.mkEnableOption "启用 Fcitx5 输入法框架";
 
     user = lib.mkOption {

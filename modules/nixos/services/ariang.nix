@@ -4,11 +4,11 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.nixos.ariang;
+  cfg = config.modules.ariang;
 
-  rpcPort = config.modules.nixos.aria.rpcListenPort;
+  rpcPort = config.modules.aria.rpcListenPort;
 in {
-  options.modules.nixos.ariang = {
+  options.modules.ariang = {
     enable = lib.mkEnableOption "启用 AriaNg 服务";
 
     # Nginx 虚拟主机配置
@@ -30,7 +30,7 @@ in {
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ariang];
 
-    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
+    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
       forceSSL = cfg.useACMEHost != "";
       useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
 

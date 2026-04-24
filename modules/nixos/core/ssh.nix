@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.nixos.ssh;
+  cfg = config.modules.ssh;
 in {
-  options.modules.nixos.ssh = {
+  options.modules.ssh = {
     enable = mkEnableOption "启用自定义 SSH 配置";
 
     ports = mkOption {

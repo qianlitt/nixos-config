@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.nixos.qbittorrent;
+  cfg = config.modules.qbittorrent;
 in {
-  options.modules.nixos.qbittorrent = {
+  options.modules.qbittorrent = {
     enable = lib.mkEnableOption "启用 qBittorrent 下载服务";
 
     # 用户和用户组配置
@@ -156,7 +156,7 @@ in {
       };
     };
 
-    modules.nixos.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
+    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
       forceSSL = cfg.useACMEHost != "";
       useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
 

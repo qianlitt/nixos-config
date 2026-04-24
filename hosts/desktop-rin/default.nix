@@ -42,13 +42,13 @@
   networking.hostName = "rin"; # 设置主机名
 
   # 国际化设置
-  modules.nixos.i18n = {
+  modules.i18n = {
     enable = true;
     profile = "zh";
   };
 
   # SSH 设置
-  modules.nixos.ssh = {
+  modules.ssh = {
     enable = true;
     allowPassword = false;
   };

@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nixos.prowlarr;
+  cfg = config.modules.prowlarr;
 in {
-  options.modules.nixos.prowlarr = {
+  options.modules.prowlarr = {
     enable = lib.mkEnableOption "启用 Prowlarr 电影管理服务";
 
     port = lib.mkOption {

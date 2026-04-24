@@ -23,20 +23,20 @@
   networking.hostName = myvar.networking.host.server-frieren.hostName; # 设置主机名
 
   # 国际化设置
-  modules.nixos.i18n = {
+  modules.i18n = {
     enable = true;
     profile = "zh";
   };
 
   # SSH 设置
-  modules.nixos.ssh = {
+  modules.ssh = {
     enable = true;
     allowPassword = false;
   };
 
   # 容器设置
-  modules.nixos.podman.enable = true;
-  modules.nixos.quadlet.enable = true;
+  modules.podman.enable = true;
+  modules.quadlet.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
