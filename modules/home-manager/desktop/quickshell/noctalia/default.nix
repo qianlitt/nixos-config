@@ -2,6 +2,7 @@
   config,
   lib,
   inputs,
+  pkgs,
   mylib,
   osConfig,
   ...
@@ -33,5 +34,13 @@ in {
     programs.noctalia-shell = {
       enable = true;
     };
+
+    home.packages = with pkgs; [
+      # 剪贴板工具
+      cliphist
+      wl-clipboard
+
+      gpu-screen-recorder # Screen Recorder 插件依赖
+    ];
   };
 }
