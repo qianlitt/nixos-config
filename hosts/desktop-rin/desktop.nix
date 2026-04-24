@@ -1,21 +1,12 @@
-{
-  mylib,
-  myvar,
-  ...
-}: let
-  user = myvar.user.name;
-in {
+{mylib, ...}: {
   imports = map mylib.root [
     "modules/nixos/desktop"
   ];
 
-  modules.windowManager.hyprland = {
-    enable = true;
-    inherit user;
-    quickshell = "noctalia";
+  modules.desktop = {
+    quickshell.noctalia.enable = true;
+    windowManager.hyprland.enable = true;
   };
 
-  modules.fcitx5 = {
-    enable = true;
-  };
+  modules.fcitx5.enable = true;
 }
