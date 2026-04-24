@@ -51,7 +51,6 @@ in {
     modules.desktop.quickshell = {
       noctalia = lib.mkIf (cfg.quickshell == "noctalia") {
         enable = true;
-        inherit (cfg) user;
       };
     };
 
