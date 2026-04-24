@@ -5,7 +5,10 @@
 
   modules.desktop = {
     quickshell.noctalia.enable = true;
-    windowManager.hyprland.enable = true;
+    windowManager = {
+      hyprland.enable = true;
+      niri.enable = true;
+    };
   };
 
   modules.fcitx5.enable = true;
