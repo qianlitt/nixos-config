@@ -7,6 +7,9 @@
       enable = true;
       quickshell = "noctalia";
     };
-    windowManager.niri.enable = true;
+    windowManager.niri = {
+      enable = true;
+      quickshell = "noctalia";
+    };
   };
 }
