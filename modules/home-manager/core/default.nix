@@ -1,5 +1,3 @@
 {mylib, ...}: {
-  imports =
-    mylib.scanModules ./.
-    ++ [./git];
+  imports = mylib.scanModules ./.;
 }
