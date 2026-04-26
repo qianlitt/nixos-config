@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   wayland.windowManager.hyprland.settings.decoration = {
     rounding_power = "2";
     rounding = "10";
@@ -27,7 +27,7 @@
       range = "20";
       offset = "0 2";
       render_power = "10";
-      color = "rgba(00000020)";
+      color = lib.mkDefault "rgba(00000020)";
     };
 
     dim_inactive = true;
