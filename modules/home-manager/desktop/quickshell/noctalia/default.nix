@@ -35,6 +35,8 @@ in {
       enable = true;
     };
 
+    stylix.targets.noctalia-shell.enable = false;
+
     home.packages = with pkgs; [
       # 剪贴板工具
       cliphist

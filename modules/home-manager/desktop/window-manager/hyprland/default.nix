@@ -50,8 +50,8 @@ in {
           gaps_out = "20";
           border_size = "3";
 
-          "col.active_border" = "rgba(c2c1ffe6)"; # 活动窗口的边框颜色
-          "col.inactive_border" = "rgba(c8c5d111)"; # 非活动窗口的边框颜色
+          "col.active_border" = lib.mkDefault "rgba(c2c1ffe6)"; # 活动窗口的边框颜色
+          "col.inactive_border" = lib.mkDefault "rgba(c8c5d111)"; # 非活动窗口的边框颜色
         };
 
         input = {
