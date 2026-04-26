@@ -8,6 +8,7 @@
     ++ (map mylib.root [
       "modules/home-manager/core"
       "modules/home-manager/ai"
+      "modules/home-manager/cli"
       "modules/home-manager/desktop"
     ]);
 
