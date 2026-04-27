@@ -23,7 +23,7 @@
     glsp = "git log --pretty=\"%h %G? %aN %s\"";
 
     # fastfetch
-    ff = "fastfetch -c examples/6";
+    ff = "fastfetch";
 
     ip = "ip -c";
     df = "df -h";
