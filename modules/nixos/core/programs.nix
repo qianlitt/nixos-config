@@ -14,7 +14,6 @@ with pkgs; let
     alejandra # nix 格式化工具
   ];
 in {
-  environment.variables.EDITOR = "nvim";
   environment.systemPackages =
     editor
     ++ dev-tools

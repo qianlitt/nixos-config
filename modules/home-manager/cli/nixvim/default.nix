@@ -10,6 +10,9 @@
   programs.nixvim = {
     enable = true;
 
+    # 设置 $EDITOR 和 $VISUAL 为 nvim
+    defaultEditor = true;
+
     # 设置 'vi', 'vim' 的别名
     viAlias = true;
     vimAlias = true;
