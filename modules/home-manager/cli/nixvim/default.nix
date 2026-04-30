@@ -30,5 +30,8 @@
       # unnamedplus: 在别处可以直接 Ctrl+V 粘贴
       register = "unnamedplus";
     };
+
+    # 性能优化
+    performance.byteCompileLua.enable = true; # 预编译 lua
   };
 }
