@@ -37,6 +37,7 @@ in {
       };
     };
 
+    gh.enable = mkEnableOption "GitHub CLI 工具";
     delta.enable = mkEnableOption "delta 语法高亮 pager";
     tui.enable = mkEnableOption "Git TUI 工具";
   };
@@ -71,6 +72,9 @@ in {
         fetch.prune = true;
       };
     };
+
+    # GitHub CLI
+    programs.gh.enable = cfg.gh.enable;
 
     # A syntax-highlighting pager for git, diff, grep, and blame output
     programs.delta = mkIf cfg.delta.enable {
