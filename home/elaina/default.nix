@@ -23,6 +23,7 @@
       enable = true;
       key = myvar.git.signingKey;
     };
+    gh.enable = true;
     tui.enable = true;
   };
 
