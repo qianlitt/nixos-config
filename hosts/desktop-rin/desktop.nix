@@ -11,5 +11,7 @@
     };
   };
 
+  modules.desktop.game.enable = true;
+
   modules.fcitx5.enable = true;
 }
