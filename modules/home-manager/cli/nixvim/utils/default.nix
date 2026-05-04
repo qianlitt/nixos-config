@@ -1,0 +1,3 @@
+{
+  icons = import ./icons.nix;
+}
