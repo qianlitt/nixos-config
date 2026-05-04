@@ -4,7 +4,7 @@
   ...
 }: {
   imports =
-    mylib.scanModules ./.
+    mylib.importExcept ./. ["utils"]
     ++ [inputs.nixvim.homeModules.nixvim];
 
   programs.nixvim = {
