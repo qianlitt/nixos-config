@@ -31,6 +31,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim.url = "github:nix-community/nixvim";
+    aagl.url = "github:ezKEa/aagl-gtk-on-nix";
   };
 
   outputs = inputs @ {
