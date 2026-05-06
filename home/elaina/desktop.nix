@@ -12,4 +12,6 @@
       quickshell = "noctalia";
     };
   };
+
+  modules.desktop.game.enable = true;
 }
