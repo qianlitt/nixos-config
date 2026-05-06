@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  inputs,
   mylib,
   ...
 }: let
@@ -18,6 +19,10 @@ in {
       gamescopeSession.enable = true;
       protontricks.enable = true;
     };
+
+    # 二游启动器
+    nix.settings = inputs.aagl.nixConfig;
+    programs.honkers-railway-launcher.enable = true;
 
     # 启用 gamemode 以提升性能
     programs.gamemode.enable = true;
