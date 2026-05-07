@@ -14,4 +14,5 @@
   };
 
   modules.desktop.game.enable = true;
+  modules.desktop.terminal.kitty.enable = true;
 }
