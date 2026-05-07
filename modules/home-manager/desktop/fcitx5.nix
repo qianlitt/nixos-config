@@ -35,6 +35,13 @@ in {
         # 方案选单快捷键
         "switcher/hotkeys":
           - "Control+F8"
+        # 由 fcitx5 控制中英文切换
+        ascii_composer/switch_key:
+          Caps_Lock: noop
+          Control_L: noop
+          Control_R: noop
+          Shift_L: noop
+          Shift_R: noop
     '';
   };
 }
