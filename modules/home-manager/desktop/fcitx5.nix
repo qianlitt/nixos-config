@@ -32,6 +32,9 @@ in {
           - schema: tiger
           - schema: rime_ice
           - schema: double_pinyin_flypy
+        # 方案选单快捷键
+        "switcher/hotkeys":
+          - "Control+F8"
     '';
   };
 }
