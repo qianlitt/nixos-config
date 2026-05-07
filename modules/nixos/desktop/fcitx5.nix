@@ -42,7 +42,8 @@ in {
               "Default Layout" = "us";
               DefaultIM = "rime";
             };
-            "Groups/0/Items/0".Name = "rime";
+            "Groups/0/Items/0".Name = "keyboard-us";
+            "Groups/0/Items/1".Name = "rime";
             GroupOrder."0" = "Default";
           };
         };
