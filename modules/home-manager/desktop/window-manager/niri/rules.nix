@@ -1,7 +1,6 @@
 {
   programs.niri.settings.workspaces = {
     "chat" = {};
-    "game" = {};
     "book" = {};
     "music" = {};
   };
@@ -42,7 +41,7 @@
         "ghostty"
         "kitty"
       ];
-      open-maximized = true; # 最大化列
+      open-maximized = true; # 最大化平铺
     }
     {
       # 视频播放器
@@ -52,14 +51,8 @@
     {
       # 图片浏览器
       matches = matchAppIDs ["org.nomacs.ImageLounge"];
-      open-maximized = true; # 最大化列
+      open-maximized = true; # 最大化平铺
       open-floating = true; # 浮动窗口
-    }
-    {
-      matches = matchAppIDs ["steam"];
-      open-fullscreen = true;
-      open-on-workspace = "game";
-      open-focused = true;
     }
     {
       matches = matchAppIDs [
@@ -89,6 +82,43 @@
       default-window-height.proportion = 1.0;
       default-column-width.proportion = 1.0;
       open-on-workspace = "music";
+    }
+
+    # 游戏
+    {
+      # Steam 登录窗口: 浮动
+      matches = [
+        {
+          app-id = "steam";
+          title = "登录 Steam";
+        }
+      ];
+      open-floating = true;
+    }
+    {
+      # Steam 主窗口: 最大化平铺
+      matches = [
+        {
+          app-id = "steam";
+          title = "Steam";
+        }
+      ];
+      open-maximized = true;
+    }
+    {
+      # 其他游戏/Proton 窗口: 浮动
+      matches = matchAppIDs [
+        "steam_proton"
+        "steam_app_default" # Lutris 打开的游戏
+      ];
+      open-floating = true;
+    }
+    {
+      # Lutris 本体窗口
+      matches = matchAppIDs [
+        "net.lutris.Lutris"
+      ];
+      open-maximized = true; # 最大化平铺
     }
   ];
 }
