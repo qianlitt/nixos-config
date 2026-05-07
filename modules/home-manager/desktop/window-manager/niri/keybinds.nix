@@ -29,6 +29,7 @@ in {
       hotkey-overlay.title = "Terminal: <b>${terminal.program}</b>";
     };
     "Mod+Return".action = spawn terminal.program;
+    "Mod+Z".action = spawn-sh "kitten quick-access-terminal";
     "${browser.key}" = {
       action = spawn browser.program;
       hotkey-overlay.title = "Browser: <b>${browser.program}</b>";
