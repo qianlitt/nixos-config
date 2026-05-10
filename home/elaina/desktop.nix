@@ -1,4 +1,8 @@
-{mylib, ...}: {
+{
+  mylib,
+  hostConfig,
+  ...
+}: {
   imports = map mylib.root [
     "modules/home-manager/desktop"
   ];
@@ -14,6 +18,7 @@
     windowManager.niri = {
       enable = true;
       quickshell = "noctalia";
+      monitors = hostConfig.monitors;
     };
 
     game.enable = true;
