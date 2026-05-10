@@ -1,8 +1,12 @@
 {
+  lib,
   mylib,
   myvar,
+  hostConfig,
   ...
-}: {
+}: let
+  hasTag = tag: lib.elem tag (hostConfig.tag or []);
+in {
   imports = map mylib.root [
     "modules/home-manager/cli"
   ];
@@ -22,7 +26,7 @@
       tui.enable = true;
     };
 
-    gpg = {
+    gpg = lib.mkIf (hasTag "gpg") {
       enable = true;
       sshKeys = [myvar.gpg.keygrip];
       importKey = {
@@ -31,6 +35,6 @@
       };
     };
 
-    ai.enable = true;
+    ai.enable = lib.mkIf (hasTag "ai") true;
   };
 }
