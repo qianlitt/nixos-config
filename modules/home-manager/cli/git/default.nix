@@ -4,11 +4,11 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.git;
+  cfg = config.modules.cli.git;
 
   alias = import ./alias.nix;
 in {
-  options.modules.git = {
+  options.modules.cli.git = {
     enable = mkEnableOption "自定义配置模块";
 
     user = {

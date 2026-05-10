@@ -9,6 +9,7 @@
   imports =
     [inputs.sops-nix.nixosModules.sops]
     ++ (map mylib.root [
+      "modules/nixos/cli"
       "modules/nixos/services"
       "profiles/server/media.nix"
     ]);
