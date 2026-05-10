@@ -2,7 +2,6 @@
   inputs,
   pkgs,
   mylib,
-  myvar,
   ...
 }: {
   imports = [
@@ -18,9 +17,8 @@
   sops = {
     defaultSopsFile = mylib.root "secrets/secrets.yaml";
 
-    # 导入 SSH 密钥作为 age 密钥
+    # nixosModules 中的 sops 导入 SSH 密钥作为 age 密钥
+    # 新主机运行 `nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'` 命令更新 `.sops.yaml` 中的密钥
     age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-    # 使用已有的 age 密钥
-    age.keyFile = "/home/${myvar.user.name}/.config/sops/age/keys.txt";
   };
 }
