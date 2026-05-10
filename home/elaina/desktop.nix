@@ -1,4 +1,8 @@
-{
+{mylib, ...}: {
+  imports = map mylib.root [
+    "modules/home-manager/desktop"
+  ];
+
   modules.fcitx5.enable = true;
 
   modules.desktop = {
@@ -11,8 +15,9 @@
       enable = true;
       quickshell = "noctalia";
     };
-  };
 
-  modules.desktop.game.enable = true;
-  modules.desktop.terminal.kitty.enable = true;
+    game.enable = true;
+
+    terminal.kitty.enable = true;
+  };
 }
