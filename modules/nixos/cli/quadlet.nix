@@ -4,11 +4,11 @@
   inputs,
   ...
 }: let
-  cfg = config.modules.quadlet;
+  cfg = config.modules.cli.quadlet;
 in {
   imports = [inputs.quadlet-nix.nixosModules.quadlet];
 
-  options.modules.quadlet = {
+  options.modules.cli.quadlet = {
     enable = lib.mkEnableOption "启用 Quadlet，Podman 容器管理器";
   };
 

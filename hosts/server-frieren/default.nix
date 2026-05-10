@@ -35,8 +35,8 @@
   };
 
   # 容器设置
-  modules.podman.enable = true;
-  modules.quadlet.enable = true;
+  modules.cli.podman.enable = true;
+  modules.cli.quadlet.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {

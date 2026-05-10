@@ -53,8 +53,8 @@ in {
 
   config = lib.mkIf cfg.enable {
     # 确保所需子系统启用
-    modules.podman.enable = true;
-    modules.quadlet.enable = true;
+    modules.cli.podman.enable = true;
+    modules.cli.quadlet.enable = true;
 
     # 创建用户和用户组
     users.users.openlist = {

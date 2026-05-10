@@ -12,7 +12,7 @@
     ]);
 
   # git
-  modules.git = {
+  modules.cli.git = {
     enable = true;
     user = {
       name = myvar.git.user.name;
@@ -27,7 +27,7 @@
   };
 
   # gpg
-  modules.gpg = {
+  modules.cli.gpg = {
     enable = true;
     sshKeys = [myvar.gpg.keygrip];
     importKey = {

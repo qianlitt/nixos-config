@@ -5,9 +5,9 @@
   myvar,
   ...
 }: let
-  cfg = config.modules.podman;
+  cfg = config.modules.cli.podman;
 in {
-  options.modules.podman = {
+  options.modules.cli.podman = {
     enable = lib.mkEnableOption "启用 Podman 容器引擎";
   };
 

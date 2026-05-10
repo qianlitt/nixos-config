@@ -47,8 +47,8 @@ in {
 
   config = lib.mkIf cfg.enable {
     # 启用 podman 和 quadlet
-    modules.podman.enable = true;
-    modules.quadlet.enable = true;
+    modules.cli.podman.enable = true;
+    modules.cli.quadlet.enable = true;
 
     # 创建数据目录
     systemd.tmpfiles.rules = [

@@ -4,14 +4,14 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.gpg;
+  cfg = config.modules.cli.gpg;
 
   inherit (lib) getExe;
   gpgBin = getExe pkgs.gnupg;
 
   gpgPrivateKeyPath = "${config.home.homeDirectory}/.config/sops-nix/secrets/gpg";
 in {
-  options.modules.gpg = {
+  options.modules.cli.gpg = {
     enable = lib.mkEnableOption "自定义 GPG 配置模块";
 
     sshKeys = lib.mkOption {

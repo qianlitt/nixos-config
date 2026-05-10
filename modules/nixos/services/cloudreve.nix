@@ -117,8 +117,8 @@ in {
     ];
 
     # 确保所需子系统启用
-    modules.podman.enable = true;
-    modules.quadlet.enable = true;
+    modules.cli.podman.enable = true;
+    modules.cli.quadlet.enable = true;
 
     # PostgreSQL 配置
     services.postgresql = lib.mkIf (!useRemoteDb) {
