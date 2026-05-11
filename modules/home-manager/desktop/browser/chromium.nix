@@ -16,6 +16,7 @@
       # GitHub
       {id = "ficfmibkjjnpogdcfhfokmihanoldbfe";} # File Icons for GitHub and GitLab - GitHub 文件图标
       {id = "hlepfoohegkhhmjieoechaddaejaokhf";} # Refined GitHub - GitHub 界面增强
+      {id = "mjoedlfflcchnleknnceiplgaeoegien";} # GitHub Isometric Contributions
 
       # Tools
       {id = "bdiifdefkgmcblbcghdlonllpjhhjgof";} # 简约翻译
