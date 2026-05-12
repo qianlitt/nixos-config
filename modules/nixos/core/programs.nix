@@ -11,6 +11,7 @@ with pkgs; let
   ];
   dev-nix = [
     nil # nix lsp
+    nixd # nix lsp
     alejandra # nix 格式化工具
   ];
 in {
