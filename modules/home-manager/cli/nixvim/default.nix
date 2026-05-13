@@ -22,9 +22,6 @@
     viAlias = true;
     vimAlias = true;
 
-    # 设置空格键为<leader>
-    globals.mapleader = " ";
-
     # 设置剪贴板支持
     clipboard = {
       # 使用 wl-copy
