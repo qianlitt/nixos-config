@@ -19,12 +19,14 @@
       grammarPackages = with config.programs.nixvim.plugins.treesitter.package.builtGrammars; [
         bash
         c
+        comment
         cpp
         diff
         html
         javascript
         jsdoc
         json
+        latex
         lua
         luadoc
         luap
@@ -40,6 +42,7 @@
         toml
         tsx
         typescript
+        typst
         vim
         vimdoc
         xml
