@@ -7,8 +7,13 @@
     mylib.importExcept ./. ["utils"]
     ++ [inputs.nixvim.homeModules.nixvim];
 
+  stylix.targets.nixvim.colors.enable = false;
+
   programs.nixvim = {
     enable = true;
+
+    # 设置主题
+    colorschemes.tokyonight.enable = true;
 
     # 设置 $EDITOR 和 $VISUAL 为 nvim
     defaultEditor = true;
