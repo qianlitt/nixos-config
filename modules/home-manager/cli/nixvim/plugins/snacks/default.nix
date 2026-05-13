@@ -18,7 +18,7 @@
         quickfile.enabled = true; # 尽快加载文件
         scope.enabled = true; # 检测当前行所属的 scope
         scroll.enabled = true; # 平滑滚动
-        statuscolumn.enabled = false; # 状态栏
+        statuscolumn.enabled = true; # 状态栏
         words.enabled = true; # LSP 引用查看和跳转
       };
     };
