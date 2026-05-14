@@ -11,6 +11,28 @@
       lazyLoad.settings.ft = "markdown";
 
       settings = {
+        preview = {
+          # 光标进入节点时取消渲染，显示 Markdown 源码
+          # 光标退出节点后恢复渲染
+          hybrid_modes = [
+            "n" # Normal
+            "i" # Insert
+          ];
+          modes = [
+            "n" # Normal
+            "no" # Operator-pending
+            "i" # Insert
+            "c" # Command-line
+          ];
+          callbacks = {
+            on_enable.__raw = ''
+              function (_, win)
+                  vim.wo[win].conceallevel = 2
+                  vim.wo[win].concealcursor = "nc"
+              end
+            '';
+          };
+        };
         markdown = {
           markdown_inline = {
             tags = {
