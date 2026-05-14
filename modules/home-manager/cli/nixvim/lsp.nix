@@ -3,9 +3,34 @@ let
 in {
   programs.nixvim = {
     # nvim-lspconfig
-    plugins.lspconfig = {
+    plugins.lsp = {
       enable = true;
       lazyLoad.settings.event = ["BufReadPre" "BufNewFile"];
+
+      servers = {
+        basedpyright = {
+          enable = true;
+          settings = {
+            basedpyright = {
+              disableOrganizeImports = true;
+            };
+            python = {
+              analysis = {
+                typeCheckingMode = "recommended";
+              };
+            };
+          };
+        };
+
+        ruff = {
+          enable = true;
+          rootMarkers = ["pyproject.toml" "ruff.toml" ".ruff.toml" ".git"];
+          # 关闭 ruff hover
+          onAttach.function = ''
+            client.server_capabilities.hoverProvider = false
+          '';
+        };
+      };
     };
 
     lsp = {
@@ -43,7 +68,11 @@ in {
         };
 
         clangd.enable = true; # C/C++
-        pyright.enable = true; # Python
+
+        # Python
+        basedpyright.enable = true;
+        ruff.enable = true;
+
         rust_analyzer.enable = true; # Rust
       };
     };
