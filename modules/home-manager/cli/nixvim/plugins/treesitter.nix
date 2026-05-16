@@ -15,38 +15,16 @@
       indent.enable = true; # 启用缩进
       folding.enable = true; # 启用折叠
 
-      # 安装语法解析器
+      # 非语言特定的语法解析器，语言相关 grammar 分散在各 lang/*.nix 中
       grammarPackages = with config.programs.nixvim.plugins.treesitter.package.builtGrammars; [
-        bash
-        c
         comment
-        cpp
         diff
-        html
-        javascript
-        jsdoc
-        json
-        latex
-        lua
-        luadoc
-        luap
         make
-        markdown
-        markdown_inline
-        nix
         printf
-        python
         query
         regex
-        rust
-        toml
-        tsx
-        typescript
-        typst
         vim
         vimdoc
-        xml
-        yaml
       ];
     };
   };
