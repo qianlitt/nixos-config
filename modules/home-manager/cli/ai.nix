@@ -21,16 +21,18 @@ in {
     '';
 
     # llm-agents.nix: https://github.com/numtide/llm-agents.nix
-    home.packages = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
-      # AI Coding Agents
-      claude-code
-      codex
-      oh-my-codex
-      opencode
-      oh-my-opencode
+    home.packages =
+      (with pkgs; [uv nodejs]) # MCP Dependencise
+      ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+        # AI Coding Agents
+        claude-code
+        codex
+        oh-my-codex
+        opencode
+        oh-my-opencode
 
-      # Utilities
-      cc-switch-cli
-    ];
+        # Utilities
+        cc-switch-cli
+      ]);
   };
 }
