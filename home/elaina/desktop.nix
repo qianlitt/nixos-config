@@ -14,6 +14,7 @@
     windowManager.hyprland = {
       enable = true;
       quickshell = "noctalia";
+      monitors = hostConfig.monitors;
     };
     windowManager.niri = {
       enable = true;
