@@ -1,4 +1,10 @@
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
   programs.niri.settings.workspaces = {
     "chat" = {};
     "book" = {};
@@ -121,4 +127,22 @@
       open-maximized = true; # 最大化平铺
     }
   ];
+
+  # warn: 临时手段，向 config.kdl 追加配置
+  xdg.configFile.niri-config.source = let
+    inherit (inputs.niri.lib.internal) validated-config-for;
+    inherit (config.programs.niri) finalConfig package;
+  in
+    lib.mkForce (
+      validated-config-for pkgs package ''
+        ${finalConfig}
+
+        window-rule {
+          background-effect {
+            blur true
+            // xray false
+          }
+        }
+      ''
+    );
 }
