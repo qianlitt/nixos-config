@@ -64,13 +64,10 @@
         sources = {
           # 补全来源优先级
           default = [
-            "lsp"
-            "path"
-            "snippets"
-            "buffer"
-            "git"
-            "dictionary"
-            "thesaurus"
+            "lsp" # LSP 提供的语义级补全
+            "path" # 文件路径补全
+            "snippets" # 代码片段
+            "buffer" # 当前所有已打开缓冲区中的已有单词补全
           ];
           providers = {
             git = {
@@ -103,8 +100,9 @@
             };
           };
           per_filetype = {
-            text = ["dictionary"];
-            markdown = ["thesaurus"];
+            gitcommit = ["git" "buffer"];
+            text = ["thesaurus" "buffer"];
+            markdown = ["thesaurus" "buffer"];
           };
         };
         fuzzy = {
