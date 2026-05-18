@@ -36,7 +36,16 @@
           };
         };
         sources = {
-          default = ["lsp" "path" "snippets" "buffer" "git"]; # 补全来源优先级
+          # 补全来源优先级
+          default = [
+            "lsp"
+            "path"
+            "snippets"
+            "buffer"
+            "git"
+            "dictionary"
+            "thesaurus"
+          ];
           providers = {
             git = {
               module = "blink-cmp-git";
@@ -47,6 +56,29 @@
                 git_centers = {git_hub = {};};
               };
             };
+            thesaurus = {
+              name = "blink-cmp-words";
+              module = "blink-cmp-words.thesaurus";
+              opts = {
+                score_offset = 0;
+                definition_pointers = ["!" "&" "^"];
+                similarity_pointers = ["&" "^"];
+                similarity_depth = 2;
+              };
+            };
+            dictionary = {
+              name = "blink-cmp-words";
+              module = "blink-cmp-words.dictionary";
+              opts = {
+                dictionary_search_threshold = 3;
+                score_offset = 0;
+                definition_pointers = ["!" "&" "^"];
+              };
+            };
+          };
+          per_filetype = {
+            text = ["dictionary"];
+            markdown = ["thesaurus"];
           };
         };
         fuzzy = {
@@ -79,5 +111,8 @@
 
     # Home Page: https://github.com/Kaiser-Yang/blink-cmp-git
     plugins.blink-cmp-git.enable = true;
+
+    # Home Page: https://github.com/archie-judd/blink-cmp-words
+    plugins.blink-cmp-words.enable = true;
   };
 }
