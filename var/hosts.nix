@@ -20,6 +20,16 @@
     ];
 
     monitors = {
+      "eDP-1" = {
+        width = 2560;
+        height = 1600;
+        refreshRate = 60.002;
+        scale = 1.6;
+        position = {
+          x = 0;
+          y = 0;
+        };
+      };
       "eDP-2" = {
         width = 2560;
         height = 1600;
@@ -28,6 +38,17 @@
         position = {
           x = 0;
           y = 0;
+        };
+      };
+      "DP-1" = {
+        primaryMonitor = true; # 设为主显示器
+        width = 3840;
+        height = 2560;
+        refreshRate = 59.984;
+        scale = 1.6;
+        position = {
+          x = 1600;
+          y = -300;
         };
       };
       "DP-3" = {
