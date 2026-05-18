@@ -36,7 +36,18 @@
           };
         };
         sources = {
-          default = ["lsp" "path" "snippets" "buffer"]; # 补全来源优先级
+          default = ["lsp" "path" "snippets" "buffer" "git"]; # 补全来源优先级
+          providers = {
+            git = {
+              module = "blink-cmp-git";
+              name = "git";
+              score_offset = 100;
+              opts = {
+                commit = {};
+                git_centers = {git_hub = {};};
+              };
+            };
+          };
         };
         fuzzy = {
           implementation = "rust"; # 使用 rust 实现的模糊匹配算法
@@ -65,5 +76,8 @@
         };
       };
     };
+
+    # Home Page: https://github.com/Kaiser-Yang/blink-cmp-git
+    plugins.blink-cmp-git.enable = true;
   };
 }
