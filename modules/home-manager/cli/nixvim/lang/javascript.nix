@@ -9,6 +9,8 @@ in {
   home.packages = with pkgs; [prettierd prettier];
 
   programs.nixvim = {
+    lsp.servers.ts_ls.enable = true;
+
     plugins.conform-nvim.settings = {
       formatters_by_ft = {
         javascript = {
