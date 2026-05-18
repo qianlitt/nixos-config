@@ -9,9 +9,7 @@ in {
   home.packages = [pkgs.clang-tools];
 
   programs.nixvim = {
-    lsp.servers = {
-      clangd.enable = true;
-    };
+    lsp.servers.clangd.enable = true;
 
     plugins.conform-nvim.settings = {
       formatters_by_ft = {
