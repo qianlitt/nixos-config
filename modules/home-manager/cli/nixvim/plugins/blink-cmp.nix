@@ -16,11 +16,37 @@
         keymap = {
           # 预设: https://main.cmp.saghen.dev/configuration/keymap.html#presets
           preset = "enter";
-          "<C-i>" = ["show" "show_documentation" "hide_documentation"]; # 显示补全菜单
-          "<C-y>" = ["select_and_accept"]; # 选中并应用
 
-          "<Tab>" = ["select_next" "fallback"]; # 绑定 Tab/S-Tab 切换选项
-          "<S-Tab>" = ["select_prev" "fallback"];
+          # Alt + space: 显示补全菜单
+          "<M-Space>" = ["show" "show_documentation" "hide_documentation"];
+          # Ctrl + y: 选中并应用
+          "<C-y>" = ["select_and_accept"];
+          # Tab: 显示补全菜单时，选择下一项
+          "<Tab>" = [
+            {
+              __raw = ''
+                function(cmp)
+                  if cmp.is_visible() then
+                    return cmp.select_next()
+                  end
+                end
+              '';
+            }
+            "fallback"
+          ];
+          # Shift + Tab: 显示补全菜单时，选择上一项
+          "<S-Tab>" = [
+            {
+              __raw = ''
+                function(cmp)
+                  if cmp.is_visible() then
+                    return cmp.select_prev()
+                  end
+                end
+              '';
+            }
+            "fallback"
+          ];
         };
         completion = {
           accept = {
