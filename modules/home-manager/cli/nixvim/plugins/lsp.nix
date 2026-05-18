@@ -3,7 +3,7 @@ let
 in {
   programs.nixvim = {
     # nvim-lspconfig
-    plugins.lsp = {
+    plugins.lspconfig = {
       enable = true;
       lazyLoad.settings.event = ["BufReadPre" "BufNewFile"];
     };
