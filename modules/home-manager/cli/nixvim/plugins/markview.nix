@@ -8,7 +8,7 @@
     plugins.markview = {
       enable = true;
 
-      lazyLoad.settings.ft = "markdown";
+      lazyLoad.settings.ft = ["markdown" "tex" "typst" "html"];
 
       settings = {
         preview = {
