@@ -6,8 +6,6 @@
 }: let
   inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
 in {
-  home.packages = [pkgs.ruff];
-
   programs.nixvim = {
     lsp.servers = {
       basedpyright.enable = true;
