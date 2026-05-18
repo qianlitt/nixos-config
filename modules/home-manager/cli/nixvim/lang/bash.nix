@@ -9,6 +9,8 @@ in {
   home.packages = with pkgs; [shellcheck shellharden shfmt];
 
   programs.nixvim = {
+    lsp.servers.bashls.enable = true;
+
     plugins.conform-nvim.settings = {
       formatters_by_ft = {
         bash = ["shellcheck" "shellharden" "shfmt"];
