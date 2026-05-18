@@ -5,7 +5,11 @@
 }: let
   inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
 in {
-  programs.nixvim.plugins.treesitter.grammarPackages = lib.mkAfter [
-    builtGrammars.toml
-  ];
+  programs.nixvim = {
+    lsp.servers.tombi.enable = true;
+
+    plugins.treesitter.grammarPackages = lib.mkAfter [
+      builtGrammars.toml
+    ];
+  };
 }
