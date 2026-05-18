@@ -6,8 +6,6 @@
 }: let
   inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
 in {
-  home.packages = [pkgs.clang-tools];
-
   programs.nixvim = {
     lsp.servers.clangd.enable = true;
 

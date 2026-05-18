@@ -6,8 +6,6 @@
 }: let
   inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
 in {
-  home.packages = with pkgs; [shellcheck shellharden shfmt];
-
   programs.nixvim = {
     lsp.servers.bashls.enable = true;
 

@@ -34,6 +34,4 @@
       };
     };
   };
-
-  home.packages = [pkgs.coreutils];
 }

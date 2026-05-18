@@ -6,8 +6,6 @@
 }: let
   inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
 in {
-  home.packages = with pkgs; [prettierd prettier];
-
   programs.nixvim = {
     lsp.servers.ts_ls.enable = true;
 
