@@ -8,6 +8,12 @@ in {
   programs.nixvim = {
     lsp.servers.tombi.enable = true;
 
+    plugins.conform-nvim.settings = {
+      formatters_by_ft = {
+        toml = ["tombi"];
+      };
+    };
+
     plugins.treesitter.grammarPackages = lib.mkAfter [
       builtGrammars.toml
     ];
