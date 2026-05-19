@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
@@ -10,6 +11,11 @@ in {
 
     plugins.treesitter.grammarPackages = lib.mkAfter [
       builtGrammars.rust
+    ];
+
+    extraPackages = with pkgs; [
+      rustc
+      cargo
     ];
   };
 }
