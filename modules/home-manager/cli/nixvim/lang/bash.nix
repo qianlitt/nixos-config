@@ -21,6 +21,12 @@ in {
       };
     };
 
+    plugins.lint = {
+      lintersByFt = {
+        bash = ["bash"];
+      };
+    };
+
     plugins.treesitter.grammarPackages = lib.mkAfter [
       builtGrammars.bash
     ];
