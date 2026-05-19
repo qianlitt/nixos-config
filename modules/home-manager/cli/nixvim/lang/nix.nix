@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
@@ -34,6 +35,16 @@ in {
             };
           };
         };
+      };
+    };
+
+    plugins.conform-nvim.settings = {
+      formatters_by_ft = {
+        nix = ["alejandra"];
+      };
+
+      formatters = {
+        alejandra.command = lib.getExe pkgs.alejandra;
       };
     };
 
