@@ -17,6 +17,12 @@ in {
       formatters.clang-format.command = lib.getExe' pkgs.clang-tools "clang-format";
     };
 
+    plugins.lint = {
+      lintersByFt = {
+        cpp = ["clangtidy"];
+      };
+    };
+
     plugins.treesitter.grammarPackages = lib.mkAfter [
       builtGrammars.c
       builtGrammars.cpp
