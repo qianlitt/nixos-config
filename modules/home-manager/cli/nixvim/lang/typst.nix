@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
@@ -11,6 +12,16 @@ in {
       config = {
         exportPdf = "onType";
         formatterMode = "typstyle";
+      };
+    };
+
+    plugins.conform-nvim.settings = {
+      formatters_by_ft = {
+        typst = ["typstyle"];
+      };
+
+      formatters = {
+        typstyle.command = lib.getExe pkgs.typstyle;
       };
     };
 
