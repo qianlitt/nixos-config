@@ -1,11 +1,19 @@
-{lib, config, pkgs, ...}: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (config.modules.cli.nixvim) lsp format lint treesitter;
   inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
 
-  allConfigs = builtins.filter (x: x != null)
-    (lib.mapAttrsToList (name: type:
-      if type == "regular" && lib.hasSuffix ".nix" name && name != "default.nix"
-      then import (./. + "/${name}") { inherit lib pkgs; }
-      else null
+  allConfigs =
+    builtins.filter (x: x != null)
+    (lib.mapAttrsToList (
+      name: type:
+        if type == "regular" && lib.hasSuffix ".nix" name && name != "default.nix"
+        then import (./. + "/${name}") {inherit lib pkgs;}
+        else null
     ) (builtins.readDir ./.));
 
   mergeField = name:
@@ -17,21 +25,25 @@
   allExtraPackages = lib.flatten (map (cfg: cfg.extraPackages or []) allConfigs);
 in {
   programs.nixvim = {
-    lsp.servers = lib.mkMerge (map (cfg:
-      lib.mapAttrs (name: svr: { enable = true; } // svr) (cfg.lsp or {})
-    ) allConfigs);
+    lsp.servers = lib.mkIf lsp.enable (
+      lib.mkMerge (map (
+          cfg:
+            lib.mapAttrs (name: svr: {enable = true;} // svr) (cfg.lsp or {})
+        )
+        allConfigs)
+    );
 
     plugins = {
-      conform-nvim.settings = {
+      conform-nvim.settings = lib.mkIf format.enable {
         formatters_by_ft = allConform.formatters_by_ft or {};
-        formatters = lib.mapAttrs (_: cmd: { command = cmd; }) (allConform.commands or {});
+        formatters = lib.mapAttrs (_: cmd: {command = cmd;}) (allConform.commands or {});
       };
-      lint.lintersByFt = allLint;
-      treesitter.grammarPackages = lib.mkAfter (
-        map (g: builtGrammars.${g}) allTreesitter
+      lint.lintersByFt = lib.mkIf lint.enable allLint;
+      treesitter.grammarPackages = lib.mkIf treesitter.enable (
+        lib.mkAfter (map (g: builtGrammars.${g}) allTreesitter)
       );
     };
 
-    extraPackages = allExtraPackages;
+    extraPackages = lib.mkIf (lsp.enable || format.enable || lint.enable) allExtraPackages;
   };
 }

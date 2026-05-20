@@ -36,5 +36,15 @@ in {
     };
 
     ai.enable = lib.mkIf (hasTag "ai") true;
+
+    nixvim = {
+      enable = true;
+
+      completion.enable = lib.mkIf (hasTag "develop") true;
+      lsp.enable = lib.mkIf (hasTag "develop") true;
+      format.enable = lib.mkIf (hasTag "develop") true;
+      lint.enable = lib.mkIf (hasTag "develop") true;
+      treesitter.enable = lib.mkIf (hasTag "develop") true;
+    };
   };
 }
