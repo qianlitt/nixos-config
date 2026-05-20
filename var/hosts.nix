@@ -17,6 +17,7 @@
     tag = [
       "ai" # 启用 AI 模块
       "gpg" # 启用 gpg 模块，导入 gpg 密钥
+      "develop" # 安装和配置开发工具
     ];
 
     monitors = {
