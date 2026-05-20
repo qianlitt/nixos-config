@@ -19,6 +19,14 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
+  # kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = [
+    # disable watchdog
+    "nowatchdog"
+    "modprobe.blacklist=iTCO_wdt"
+  ];
+
   # 网络设置
   networking.hostName = myvar.networking.host.server-frieren.hostName; # 设置主机名
 
