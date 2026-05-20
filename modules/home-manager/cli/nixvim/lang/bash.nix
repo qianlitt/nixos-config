@@ -1,34 +1,16 @@
 {
   lib,
-  config,
   pkgs,
-  ...
-}: let
-  inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
-in {
-  programs.nixvim = {
-    lsp.servers.bashls.enable = true;
-
-    plugins.conform-nvim.settings = {
-      formatters_by_ft = {
-        bash = ["shellcheck" "shellharden" "shfmt"];
-      };
-
-      formatters = {
-        shellcheck.command = lib.getExe pkgs.shellcheck;
-        shellharden.command = lib.getExe pkgs.shellharden;
-        shfmt.command = lib.getExe pkgs.shfmt;
-      };
+}: {
+  lsp.bashls = {};
+  conform = {
+    formatters_by_ft.bash = ["shellcheck" "shellharden" "shfmt"];
+    commands = {
+      shellcheck = lib.getExe pkgs.shellcheck;
+      shellharden = lib.getExe pkgs.shellharden;
+      shfmt = lib.getExe pkgs.shfmt;
     };
-
-    plugins.lint = {
-      lintersByFt = {
-        bash = ["bash"];
-      };
-    };
-
-    plugins.treesitter.grammarPackages = lib.mkAfter [
-      builtGrammars.bash
-    ];
   };
+  lint.bash = ["bash"];
+  treesitter = ["bash"];
 }
