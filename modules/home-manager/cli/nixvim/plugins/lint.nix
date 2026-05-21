@@ -16,6 +16,15 @@ in
         enable = true;
 
         lazyLoad.settings.event = ["BufWritePost" "BufReadPost" "InsertLeave"];
+
+        autoCmd = {
+          event = ["BufWritePost"]; # 保存时运行
+          callback.__raw = ''
+            function()
+              require('lint').try_lint()
+            end
+          '';
+        };
       };
     };
   }
