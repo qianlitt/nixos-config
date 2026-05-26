@@ -3,7 +3,7 @@
     enable = true;
     enableDefaultConfig = false;
 
-    matchBlocks = {
+    settings = {
       # 此处的顺序不重要，由 nix 自动合并
       "*" = {
         forwardAgent = false; # 禁用代理转发
