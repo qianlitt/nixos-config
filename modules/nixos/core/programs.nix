@@ -1,4 +1,4 @@
-# 只包含维护 NixOS 系统所必需的软件
+# 只包含通用程序
 {pkgs, ...}:
 with pkgs; let
   editor = [neovim];
@@ -11,18 +11,4 @@ in {
   environment.systemPackages =
     editor
     ++ dev-tools;
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-    enableZshIntegration = true;
-  };
 }
