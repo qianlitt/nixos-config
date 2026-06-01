@@ -2,6 +2,8 @@
   description = "A flake for NixOS configuration";
 
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
 
@@ -35,43 +37,68 @@
     llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    ...
-  }: let
-    inherit (inputs.nixpkgs) lib;
-    mylib = import ./lib {inherit lib;};
-    myvar = import ./var;
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux"];
 
-    # host builder
-    mkHost = hostname: hostPath:
-      nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs mylib myvar hostname;
-          hostConfig = myvar.hosts.${hostname} or {};
+      perSystem = {pkgs, ...}: {
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            git
+            nil # nix lsp
+            nixd # nix lsp
+            alejandra # nix 格式化工具
+            nurl # Generate Nix fetcher calls from repository URLs
+
+            # MCP Dependencise
+            uv
+            nodejs
+
+            # secrets
+            age
+            sops
+          ];
+
+          shellHook = ''
+            echo "缓存 mcp-nixos..."
+            ${pkgs.nix}/bin/nix build --no-link github:utensils/mcp-nixos 2>/dev/null || true
+            echo "mcp-nixos 已缓存"
+          '';
         };
-        modules = [
-          hostPath
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = {
-              inherit inputs mylib myvar hostname;
-              hostConfig = myvar.hosts.${hostname} or {};
-            };
-            home-manager.users."${myvar.user.name}" = {
-              imports = [./home/${myvar.user.name}];
-            };
-          }
-        ];
       };
-  in {
-    nixosConfigurations = {
-      # x86_64-linux Hosts
-      frieren = mkHost "frieren" ./hosts/server-frieren;
-      rin = mkHost "rin" ./hosts/desktop-rin;
+
+      flake = {
+        nixosConfigurations = let
+          inherit (inputs.nixpkgs) lib;
+          mylib = import ./lib {inherit lib;};
+          myvar = import ./var;
+
+          mkHost = hostname: hostPath:
+            lib.nixosSystem {
+              specialArgs = {
+                inherit inputs mylib myvar hostname;
+                hostConfig = myvar.hosts.${hostname} or {};
+              };
+              modules = [
+                hostPath
+                inputs.home-manager.nixosModules.home-manager
+                {
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager.extraSpecialArgs = {
+                    inherit inputs mylib myvar hostname;
+                    hostConfig = myvar.hosts.${hostname} or {};
+                  };
+                  home-manager.users."${myvar.user.name}" = {
+                    imports = [./home/${myvar.user.name}];
+                  };
+                }
+              ];
+            };
+        in {
+          frieren = mkHost "frieren" ./hosts/server-frieren;
+          rin = mkHost "rin" ./hosts/desktop-rin;
+        };
+      };
     };
-  };
 }

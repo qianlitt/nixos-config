@@ -6,19 +6,11 @@ with pkgs; let
     git
     wget
     curl
-
-    nurl # Generate Nix fetcher calls from repository URLs
-  ];
-  dev-nix = [
-    nil # nix lsp
-    nixd # nix lsp
-    alejandra # nix 格式化工具
   ];
 in {
   environment.systemPackages =
     editor
-    ++ dev-tools
-    ++ dev-nix;
+    ++ dev-tools;
 
   programs.gnupg.agent = {
     enable = true;
