@@ -10,7 +10,7 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.desktop.stylix;
+  cfg = config.modules.stylix;
 
   # 色彩方案: https://tinted-theming.github.io/tinted-gallery/
   themeName = "catppuccin-mocha";
@@ -48,7 +48,7 @@ in {
     inputs.stylix.nixosModules.stylix
   ];
 
-  options.modules.desktop.stylix = {
+  options.modules.stylix = {
     enable = lib.mkEnableOption "启用 stylix";
   };
 

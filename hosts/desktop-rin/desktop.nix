@@ -16,6 +16,5 @@
     fonts.enable = true;
     game.enable = true;
     keyd.enable = true;
-    stylix.enable = true;
   };
 }
