@@ -6,7 +6,7 @@
 }: let
   cfg = config.modules.fcitx5;
 
-  nixosFcitx5Enabled = osConfig.modules.fcitx5.enable or false;
+  nixosFcitx5Enabled = osConfig.modules.desktop.fcitx5.enable or false;
 in {
   options.modules.fcitx5 = {
     enable = lib.mkEnableOption "启用 Fcitx5 输入法框架";
@@ -19,7 +19,7 @@ in {
         message = ''
           Home Manager 的 fcitx5 配置已启用，但对应的 NixOS 模块未启用。
           请在你的 NixOS 配置中添加：
-            modules.modules.fcitx5.enable = true;
+            modules.modules.desktop.fcitx5.enable = true;
         '';
       }
     ];
