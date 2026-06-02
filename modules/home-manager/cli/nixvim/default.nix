@@ -22,8 +22,6 @@ in {
     ++ [inputs.nixvim.homeModules.nixvim];
 
   config = lib.mkIf cfg.enable {
-    stylix.targets.nixvim.colors.enable = false;
-
     programs.nixvim = {
       enable = true;
 

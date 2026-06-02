@@ -39,9 +39,6 @@ in {
       }
     ];
 
-    # BUG: 当前 stylix 不能正确配置 decoration
-    stylix.targets.hyprland.colors.enable = false;
-
     wayland.windowManager.hyprland = {
       enable = true;
 
