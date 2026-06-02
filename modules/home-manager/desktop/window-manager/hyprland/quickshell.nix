@@ -27,11 +27,11 @@ in {
       ];
       extraConfig = ''
         -- quickshell
-        hl.bind("SUPER + SUPER_L", hl.dsp.global("noctalia-shell ipc call launcher toggle"), { description = "Shell: Toggle launcher" })
-        hl.bind("SUPER + SUPER_R", hl.dsp.global("noctalia-shell ipc call launcher toggle"))
-        hl.bind("${kbControlCenter}", hl.dsp.global("noctalia-shell ipc call controlCenter toggle"))
-        hl.bind("${kbSettings}", hl.dsp.global("noctalia-shell ipc call settings toggle"))
-        hl.bind("${kbLock}", hl.dsp.global("noctalia-shell ipc call lockScreen lock"))
+        hl.bind("SUPER + SUPER_L", hl.dsp.exec_cmd("noctalia-shell ipc call launcher toggle"), { description = "Shell: Toggle launcher" })
+        hl.bind("SUPER + SUPER_R", hl.dsp.exec_cmd("noctalia-shell ipc call launcher toggle"))
+        hl.bind("${kbControlCenter}", hl.dsp.exec_cmd("noctalia-shell ipc call controlCenter toggle"))
+        hl.bind("${kbSettings}", hl.dsp.exec_cmd("noctalia-shell ipc call settings toggle"))
+        hl.bind("${kbLock}", hl.dsp.exec_cmd("noctalia-shell ipc call lockScreen lock"))
 
         -- Media
         hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("noctalia-shell ipc call volume increase"), { locked = true, repeating = true })
