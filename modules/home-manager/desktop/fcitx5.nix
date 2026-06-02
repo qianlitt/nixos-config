@@ -4,11 +4,11 @@
   osConfig,
   ...
 }: let
-  cfg = config.modules.fcitx5;
+  cfg = config.modules.desktop.fcitx5;
 
   nixosFcitx5Enabled = osConfig.modules.desktop.fcitx5.enable or false;
 in {
-  options.modules.fcitx5 = {
+  options.modules.desktop.fcitx5 = {
     enable = lib.mkEnableOption "启用 Fcitx5 输入法框架";
   };
 

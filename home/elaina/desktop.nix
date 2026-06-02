@@ -7,8 +7,6 @@
     "modules/home-manager/desktop"
   ];
 
-  modules.fcitx5.enable = true;
-
   modules.desktop = {
     quickshell.noctalia.enable = true;
     windowManager.hyprland = {
@@ -22,8 +20,8 @@
       monitors = hostConfig.monitors;
     };
 
+    fcitx5.enable = true;
     game.enable = true;
-
     terminal.kitty.enable = true;
   };
 }
