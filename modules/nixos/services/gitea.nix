@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.gitea;
+  cfg = config.modules.services.gitea;
 in {
-  options.modules.gitea = {
+  options.modules.services.gitea = {
     enable = lib.mkEnableOption "启用 Gitea 服务";
 
     # 基础配置
@@ -66,19 +66,6 @@ in {
       description = "额外的 Gitea 配置，透传给 services.gitea.settings";
     };
 
-    virtualHostName = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      example = "git.example.com";
-      description = "Gitea 虚拟主机域名";
-    };
-
-    useACMEHost = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      example = "wildcard.example.com";
-      description = "用于 ACME 证书的主机名";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -102,16 +89,6 @@ in {
             SSH_PORT = cfg.ssh.port;
           };
         };
-    };
-
-    # Nginx 反代配置
-    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
-      forceSSL = cfg.useACMEHost != "";
-      useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString cfg.port}/";
-        proxyWebsockets = true;
-      };
     };
 
     # 防火墙配置

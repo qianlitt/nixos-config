@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.cloudreve;
+  cfg = config.modules.services.cloudreve;
 
   # 检测是否使用远程数据库（非本地回环地址）
   useRemoteDb =
@@ -15,7 +15,7 @@
       || cfg.database.host == "::1"
     );
 in {
-  options.modules.cloudreve = {
+  options.modules.services.cloudreve = {
     enable = lib.mkEnableOption "启用 Cloudreve 云存储系统";
 
     image = lib.mkOption {
@@ -93,18 +93,6 @@ in {
       };
     };
 
-    virtualHostName = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      example = "cloudreve.example.com";
-      description = "Cloudreve WebUI 的 Nginx 虚拟主机域名";
-    };
-
-    useACMEHost = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      description = "使用的 ACME 主机证书配置";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -198,28 +186,6 @@ in {
         ExecStartPre = [
           "${pkgs.bash}/bin/bash -c 'echo \"CR_CONF_Database.Password=$(< ${cfg.database.passwordFile})\" > /run/cloudreve/db-password.env'"
         ];
-      };
-    };
-
-    # Nginx 反代配置
-    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
-      forceSSL = cfg.useACMEHost != "";
-      useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString cfg.webPort}/";
-        proxyWebsockets = true;
-        extraConfig = ''
-          client_max_body_size 0;        # 不限大小，或设为 1024m
-          tcp_nopush on;
-          tcp_nodelay on;
-          proxy_send_timeout 600s;
-          proxy_read_timeout 600s;
-
-          # 流式传输（适合超大文件，减少内存使用）
-          proxy_request_buffering off;   # 关闭请求缓冲，直接流式传输到后端
-          proxy_buffering off;           # 关闭响应缓冲
-          chunked_transfer_encoding on;  # 分块传输编码
-        '';
       };
     };
 

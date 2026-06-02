@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.openlist;
+  cfg = config.modules.services.openlist;
 in {
-  options.modules.openlist = {
+  options.modules.services.openlist = {
     enable = lib.mkEnableOption "启用 OpenList 服务";
 
     image = lib.mkOption {
@@ -37,18 +37,6 @@ in {
       description = "OpenList 监听端口";
     };
 
-    virtualHostName = lib.mkOption {
-      type = lib.types.str;
-      default = "op.lan.luna-sama.xyz";
-      example = "openlist.example.com";
-      description = "OpenList WebUI 的 Nginx 虚拟主机域名";
-    };
-
-    useACMEHost = lib.mkOption {
-      type = lib.types.str;
-      default = "wildcard.lan";
-      description = "使用的 ACME 主机证书配置";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -90,27 +78,5 @@ in {
     };
 
     networking.firewall.allowedTCPPorts = [cfg.port];
-
-    # Nginx 反代配置
-    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
-      forceSSL = cfg.useACMEHost != "";
-      useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString cfg.port}/";
-        proxyWebsockets = true;
-        extraConfig = ''
-          client_max_body_size 0;        # 不限大小，或设为 1024m
-          tcp_nopush on;
-          tcp_nodelay on;
-          proxy_send_timeout 600s;
-          proxy_read_timeout 600s;
-
-          # 流式传输（适合超大文件，减少内存使用）
-          proxy_request_buffering off;   # 关闭请求缓冲，直接流式传输到后端
-          proxy_buffering off;           # 关闭响应缓冲
-          chunked_transfer_encoding on;  # 分块传输编码
-        '';
-      };
-    };
   };
 }

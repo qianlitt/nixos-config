@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.jproxy;
+  cfg = config.modules.services.jproxy;
 in {
-  options.modules.jproxy = {
+  options.modules.services.jproxy = {
     enable = lib.mkEnableOption ''
       启用 JProxy 服务
 

@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.acme;
+  cfg = config.modules.services.acme;
 in {
-  options.modules.acme = {
+  options.modules.services.acme = {
     enable = mkEnableOption "启用 ACME 证书管理";
 
     email = mkOption {

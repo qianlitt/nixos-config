@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.prowlarr;
+  cfg = config.modules.services.prowlarr;
 in {
-  options.modules.prowlarr = {
+  options.modules.services.prowlarr = {
     enable = lib.mkEnableOption "启用 Prowlarr 电影管理服务";
 
     port = lib.mkOption {

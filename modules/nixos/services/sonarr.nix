@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.sonarr;
+  cfg = config.modules.services.sonarr;
 in {
-  options.modules.sonarr = {
+  options.modules.services.sonarr = {
     enable = lib.mkEnableOption "启用 Sonarr 剧集管理服务";
 
     port = lib.mkOption {

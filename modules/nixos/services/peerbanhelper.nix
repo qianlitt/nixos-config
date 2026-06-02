@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.peerbanhelper;
+  cfg = config.modules.services.peerbanhelper;
 in {
-  options.modules.peerbanhelper = {
+  options.modules.services.peerbanhelper = {
     enable = lib.mkEnableOption "启用 PeerBanHelper 反吸血辅助工具";
 
     # 数据目录配置
@@ -29,20 +29,6 @@ in {
       description = "PeerBanHelper Docker 镜像";
     };
 
-    # Nginx 虚拟主机配置
-    virtualHostName = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      example = "pbh.example.com";
-      description = "PeerBanHelper WebUI 的 Nginx 虚拟主机域名";
-    };
-
-    # ACME 证书配置
-    useACMEHost = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      description = "使用的 ACME 主机证书配置";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -69,17 +55,6 @@ in {
       serviceConfig = {
         # 自动重启
         Restart = "always";
-      };
-    };
-
-    # Nginx 反代配置
-    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
-      forceSSL = cfg.useACMEHost != "";
-      useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
-
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString cfg.webuiPort}/";
-        proxyWebsockets = true;
       };
     };
   };

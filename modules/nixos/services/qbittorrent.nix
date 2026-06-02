@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.qbittorrent;
+  cfg = config.modules.services.qbittorrent;
 in {
-  options.modules.qbittorrent = {
+  options.modules.services.qbittorrent = {
     enable = lib.mkEnableOption "启用 qBittorrent 下载服务";
 
     # 用户和用户组配置
@@ -78,20 +78,6 @@ in {
       description = "qBittorrent 默认下载目录";
     };
 
-    # Nginx 虚拟主机配置
-    virtualHostName = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      example = "example.com";
-      description = "qBittorrent WebUI 的 Nginx 虚拟主机域名";
-    };
-
-    # ACME 证书配置
-    useACMEHost = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      description = "使用的 ACME 主机证书配置";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -152,18 +138,6 @@ in {
             EnableProcessing = true; # 获取 RSS 订阅
             RefreshInterval = 60; # RSS 源更新时间（分钟）
           };
-        };
-      };
-    };
-
-    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
-      forceSSL = cfg.useACMEHost != "";
-      useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
-
-      locations = {
-        "/" = {
-          proxyPass = "http://127.0.0.1:${toString cfg.webuiPort}/";
-          proxyWebsockets = true;
         };
       };
     };
