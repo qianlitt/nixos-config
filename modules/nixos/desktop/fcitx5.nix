@@ -5,9 +5,9 @@
   mylib,
   ...
 }: let
-  cfg = config.modules.fcitx5;
+  cfg = config.modules.desktop.fcitx5;
 in {
-  options.modules.fcitx5 = {
+  options.modules.desktop.fcitx5 = {
     enable = lib.mkEnableOption "启用 Fcitx5 输入法框架";
   };
 

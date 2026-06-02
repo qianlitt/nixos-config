@@ -4,11 +4,14 @@
 * 此处包含了 Stylix 的主题、光标和字体等基础配置，这些配置默认将传递给 home-manager 模块。
 */
 {
+  config,
   lib,
   inputs,
   pkgs,
   ...
 }: let
+  cfg = config.modules.desktop.stylix;
+
   # 色彩方案: https://tinted-theming.github.io/tinted-gallery/
   themeName = "catppuccin-mocha";
 
@@ -45,48 +48,54 @@ in {
     inputs.stylix.nixosModules.stylix
   ];
 
-  stylix = {
-    enable = true;
+  options.modules.desktop.stylix = {
+    enable = lib.mkEnableOption "启用 stylix";
+  };
 
-    autoEnable = true;
+  config = lib.mkIf cfg.enable {
+    stylix = {
+      enable = true;
 
-    # Theme
-    polarity = "dark"; # 强制深色主题
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/${themeName}.yaml";
-    cursor = {
-      name = "rose-pine-cursor";
-      package = rose-pine-cursor;
-      size = 14;
-    };
-    fonts = {
-      emoji = {
-        name = "Noto Color Emoji";
-        package = pkgs.noto-fonts-color-emoji;
-      };
-      monospace = {
-        name = "Maple Mono NF CN";
-        package = pkgs.maple-mono.NF-CN-unhinted;
-      };
-      sansSerif = {
-        name = "Noto Sans CJK SC";
-        package = pkgs.noto-fonts-cjk-sans;
-      };
-      serif = {
-        name = "Noto Sans CJK SC";
-        package = pkgs.noto-fonts-cjk-sans;
-      };
+      autoEnable = true;
 
-      sizes = {
-        applications = 12;
-        desktop = 10;
-        terminal = 12;
+      # Theme
+      polarity = "dark"; # 强制深色主题
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/${themeName}.yaml";
+      cursor = {
+        name = "rose-pine-cursor";
+        package = rose-pine-cursor;
+        size = 14;
       };
-    };
-    opacity = {
-      # 不透明度设置
-      applications = 0.95;
-      desktop = 1.0;
-      terminal = 0.9;
+      fonts = {
+        emoji = {
+          name = "Noto Color Emoji";
+          package = pkgs.noto-fonts-color-emoji;
+        };
+        monospace = {
+          name = "Maple Mono NF CN";
+          package = pkgs.maple-mono.NF-CN-unhinted;
+        };
+        sansSerif = {
+          name = "Noto Sans CJK SC";
+          package = pkgs.noto-fonts-cjk-sans;
+        };
+        serif = {
+          name = "Noto Sans CJK SC";
+          package = pkgs.noto-fonts-cjk-sans;
+        };
+
+        sizes = {
+          applications = 12;
+          desktop = 10;
+          terminal = 12;
+        };
+      };
+      opacity = {
+        # 不透明度设置
+        applications = 0.95;
+        desktop = 1.0;
+        terminal = 0.9;
+      };
     };
   };
 }
