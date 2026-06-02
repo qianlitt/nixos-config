@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.aria;
+  cfg = config.modules.services.aria;
 
   aria-conf = pkgs.fetchFromGitHub {
     owner = "P3TERX";
@@ -16,7 +16,7 @@
     '';
   };
 in {
-  options.modules.aria = {
+  options.modules.services.aria = {
     enable = lib.mkEnableOption "启用 Aria2 下载服务";
 
     # 数据目录配置

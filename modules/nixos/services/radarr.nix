@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.modules.radarr;
+  cfg = config.modules.services.radarr;
 in {
-  options.modules.radarr = {
+  options.modules.services.radarr = {
     enable = lib.mkEnableOption "启用 Radarr 电影管理服务";
 
     port = lib.mkOption {

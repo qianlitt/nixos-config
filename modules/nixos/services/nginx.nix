@@ -3,16 +3,10 @@
   lib,
   ...
 }: let
-  cfg = config.modules.nginx;
+  cfg = config.modules.services.nginx;
 in {
-  options.modules.nginx = {
+  options.modules.services.nginx = {
     enable = lib.mkEnableOption "启用 Nginx 服务";
-
-    virtualHosts = lib.mkOption {
-      type = lib.types.attrsOf lib.types.unspecified;
-      default = {};
-      description = "Nginx 虚拟主机配置，透传给 services.nginx.virtualHosts";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -26,8 +20,6 @@ in {
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
-
-      virtualHosts = cfg.virtualHosts;
     };
   };
 }

@@ -19,16 +19,6 @@ in {
 
     jellyfin = {
       enable = lib.mkEnableOption "启用 Jellyfin 媒体服务器";
-      virtualHostName = lib.mkOption {
-        type = lib.types.str;
-        default = "";
-        description = "Jellyfin 虚拟主机域名";
-      };
-      useACMEHost = lib.mkOption {
-        type = lib.types.str;
-        default = "";
-        description = "Jellyfin 使用的 ACME 主机证书配置";
-      };
     };
   };
 
@@ -57,10 +47,10 @@ in {
         "d '${toString cfg.dir}/downloads/tv' 2775 qbittorrent media - -"
       ];
     # 媒体服务器
-    modules.jellyfin = {inherit (cfg.jellyfin) enable virtualHostName useACMEHost;};
+    modules.services.jellyfin.enable = cfg.jellyfin.enable;
     # 下载器
-    modules.peerbanhelper.enable = true;
-    modules.qbittorrent = {
+    modules.services.peerbanhelper.enable = true;
+    modules.services.qbittorrent = {
       enable = true;
 
       group = "media";
@@ -74,12 +64,12 @@ in {
       interfaceAddress = "192.168.1.103";
     };
     # arr 家族
-    modules.seerr.enable = true;
-    modules.prowlarr.enable = true;
-    modules.radarr.enable = true;
-    modules.sonarr.enable = true;
+    modules.services.seerr.enable = true;
+    modules.services.prowlarr.enable = true;
+    modules.services.radarr.enable = true;
+    modules.services.sonarr.enable = true;
     # arr 搜索增强
-    modules.jproxy = {
+    modules.services.jproxy = {
       enable = true;
       image = "docker.1ms.run/luckypuppy514/jproxy:latest";
     };

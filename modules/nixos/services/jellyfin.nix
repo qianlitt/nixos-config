@@ -3,12 +3,16 @@
   lib,
   ...
 }: let
-  cfg = config.modules.jellyfin;
-
-  port = 8096;
+  cfg = config.modules.services.jellyfin;
 in {
-  options.modules.jellyfin = {
+  options.modules.services.jellyfin = {
     enable = lib.mkEnableOption "启用 Jellyfin 媒体服务器";
+
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 8096;
+      description = "Jellyfin 服务监听端口";
+    };
 
     # 用户和用户组选项
     user = lib.mkOption {
@@ -41,19 +45,6 @@ in {
       description = "Jellyfin 硬件加速配置";
     };
 
-    virtualHostName = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      example = "jellyfin.example.com";
-      description = "Jellyfin 虚拟主机域名";
-    };
-
-    useACMEHost = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-      example = "wildcard.example.com";
-      description = "用于 ACME 证书的主机名";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -63,20 +54,6 @@ in {
       openFirewall = true;
 
       inherit (cfg) user group dataDir transcoding hardwareAcceleration;
-    };
-
-    # Nginx 反代配置
-    modules.nginx.virtualHosts.${cfg.virtualHostName} = lib.mkIf (cfg.virtualHostName != "") {
-      forceSSL = cfg.useACMEHost != "";
-      useACMEHost = lib.mkIf (cfg.useACMEHost != "") cfg.useACMEHost;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString port}/";
-        proxyWebsockets = true;
-        extraConfig = ''
-          client_max_body_size 0;        # 不限大小
-          proxy_buffering off;           # 禁用缓冲
-        '';
-      };
     };
   };
 }

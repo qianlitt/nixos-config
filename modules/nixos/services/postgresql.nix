@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: let
-  cfg = config.modules.postgresql;
+  cfg = config.modules.services.postgresql;
 in {
-  options.modules.postgresql = {
+  options.modules.services.postgresql = {
     enable = lib.mkEnableOption "启用 PostgreSQL 服务";
 
     # 基础配置

@@ -3,10 +3,10 @@
   lib,
   ...
 }: let
-  cfg = config.modules.seerr;
+  cfg = config.modules.services.seerr;
   useNewConfigLocation = lib.versionAtLeast config.system.stateVersion "26.05";
 in {
-  options.modules.seerr = {
+  options.modules.services.seerr = {
     enable = lib.mkEnableOption "启用 Seerr 用户界面";
 
     port = lib.mkOption {
