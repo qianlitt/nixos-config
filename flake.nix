@@ -36,6 +36,11 @@
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     llm-agents.url = "github:numtide/llm-agents.nix";
     dolphin-overlay.url = "github:MattiDragon/dolphin-overlay";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs = inputs:
