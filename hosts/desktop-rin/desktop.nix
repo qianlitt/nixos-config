@@ -12,6 +12,7 @@
 
     audio.enable = true;
     displayManager.enable = true;
+    dolphin.enable = true;
     fcitx5.enable = true;
     fonts.enable = true;
     game.enable = true;

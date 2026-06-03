@@ -35,6 +35,7 @@
     nixvim.url = "github:nix-community/nixvim";
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    dolphin-overlay.url = "github:MattiDragon/dolphin-overlay";
   };
 
   outputs = inputs:
