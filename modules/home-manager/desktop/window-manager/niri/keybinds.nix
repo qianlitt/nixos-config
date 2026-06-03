@@ -15,6 +15,10 @@
     program = "spotify";
     key = "Mod+A";
   };
+  fileManager = {
+    program = "dolphin";
+    key = "Mod+E";
+  };
 in {
   programs.niri.settings.binds = with config.lib.niri.actions; {
     # Mod-Shift-/ 快捷键列表
@@ -41,6 +45,10 @@ in {
     "${music.key}" = {
       action = spawn-sh music.program;
       hotkey-overlay.title = "Music: <b>${music.program}</b>";
+    };
+    "${fileManager.key}" = {
+      action = spawn-sh fileManager.program;
+      hotkey-overlay.title = "File Manager: <b>${fileManager.program}</b>";
     };
 
     # Column & window
