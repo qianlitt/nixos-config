@@ -149,6 +149,17 @@ in {
             "useFixedWidth" = false;
             "visualizerType" = "linear";
           }
+          {
+            "activeColor" = "primary";
+            "camFilterRegex" = "";
+            "enableToast" = true;
+            "hideInactive" = true;
+            "iconSpacing" = 4;
+            "inactiveColor" = "none";
+            "id" = "plugin:privacy-indicator";
+            "micFilterRegex" = "";
+            "removeMargins" = false;
+          }
         ];
         "right" = [
           {
