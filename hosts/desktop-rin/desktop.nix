@@ -10,6 +10,8 @@
       niri.enable = true;
     };
 
+    programs.localsend.enable = true;
+
     audio.enable = true;
     displayManager.enable = true;
     dolphin.enable = true;
