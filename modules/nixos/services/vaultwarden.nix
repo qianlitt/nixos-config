@@ -28,7 +28,6 @@ in {
         description = "PostgreSQL 用户名";
       };
     };
-
   };
 
   config = lib.mkIf cfg.enable {

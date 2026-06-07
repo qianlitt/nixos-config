@@ -36,7 +36,6 @@ in {
       default = 5244;
       description = "OpenList 监听端口";
     };
-
   };
 
   config = lib.mkIf cfg.enable {
