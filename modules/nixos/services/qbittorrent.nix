@@ -77,7 +77,6 @@ in {
       default = "/mnt/media/downloads";
       description = "qBittorrent 默认下载目录";
     };
-
   };
 
   config = lib.mkIf cfg.enable {

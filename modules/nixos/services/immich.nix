@@ -57,7 +57,6 @@ in {
         description = "Immich 机器学习服务环境变量";
       };
     };
-
   };
 
   config = lib.mkIf cfg.enable {

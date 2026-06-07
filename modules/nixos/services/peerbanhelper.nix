@@ -28,7 +28,6 @@ in {
       default = "registry.cn-hangzhou.aliyuncs.com/ghostchu/peerbanhelper:latest";
       description = "PeerBanHelper Docker 镜像";
     };
-
   };
 
   config = lib.mkIf cfg.enable {

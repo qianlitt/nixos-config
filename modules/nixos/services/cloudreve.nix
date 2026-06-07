@@ -92,7 +92,6 @@ in {
         description = "Redis 监听端口";
       };
     };
-
   };
 
   config = lib.mkIf cfg.enable {

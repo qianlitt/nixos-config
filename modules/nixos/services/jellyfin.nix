@@ -44,7 +44,6 @@ in {
       default = {};
       description = "Jellyfin 硬件加速配置";
     };
-
   };
 
   config = lib.mkIf cfg.enable {

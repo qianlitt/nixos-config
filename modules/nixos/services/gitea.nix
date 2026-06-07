@@ -65,7 +65,6 @@ in {
       default = {};
       description = "额外的 Gitea 配置，透传给 services.gitea.settings";
     };
-
   };
 
   config = lib.mkIf cfg.enable {

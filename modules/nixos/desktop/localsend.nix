@@ -2,9 +2,9 @@
   config,
   lib,
   ...
-}: let 
+}: let
   cfg = config.modules.desktop.programs.localsend;
-in{
+in {
   options.modules.desktop.programs.localsend = {
     enable = lib.mkEnableOption "安装 LocalSend";
   };

@@ -3,6 +3,10 @@
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
@@ -45,15 +49,38 @@
 
   outputs = inputs:
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [
+        inputs.git-hooks.flakeModule
+      ];
+
       systems = ["x86_64-linux"];
 
-      perSystem = {pkgs, ...}: {
+      perSystem = {
+        config,
+        pkgs,
+        ...
+      }: {
+        pre-commit = {
+          settings = {
+            hooks = {
+              # Nix formatter
+              alejandra.enable = true;
+            };
+          };
+        };
+
         devShells.default = pkgs.mkShell {
+          inputsFrom = [config.pre-commit.devShell];
+
           packages = with pkgs; [
+            # git tools
             git
-            nil # nix lsp
-            nixd # nix lsp
-            alejandra # nix 格式化工具
+            pre-commit
+
+            # Nix
+            nil # lsp
+            nixd # lsp
+            alejandra # formatter
             nurl # Generate Nix fetcher calls from repository URLs
 
             # MCP Dependencise
@@ -71,6 +98,7 @@
             echo "mcp-nixos 已缓存"
           '';
         };
+        formatter = pkgs.alejandra;
       };
 
       flake = {
