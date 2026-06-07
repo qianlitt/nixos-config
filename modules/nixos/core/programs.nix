@@ -6,6 +6,12 @@ with pkgs; let
     git
     wget
     curl
+
+    # Nix
+    nil # lsp
+    nixd # lsp
+    alejandra # formatter
+    nurl # Generate Nix fetcher calls from repository URLs
   ];
 in {
   environment.systemPackages =
