@@ -76,6 +76,8 @@
 
         settings = {
           config = {
+            xwayland.force_zero_scaling = true;
+
             general = {
               inherit (cfg) layout;
               gaps_workspaces = 20;
