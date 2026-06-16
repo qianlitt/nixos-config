@@ -1,0 +1,146 @@
+{
+  flake.modules.nixos."services.qbittorrent" = {
+    config,
+    lib,
+    pkgs,
+    ...
+  }: let
+    cfg = config.modules.services.qbittorrent;
+  in {
+    options.modules.services.qbittorrent = {
+      enable = lib.mkEnableOption "启用 qBittorrent 下载服务";
+
+      # 用户和用户组配置
+      user = lib.mkOption {
+        type = lib.types.str;
+        default = "qbittorrent";
+        description = "qBittorrent 服务用户";
+      };
+      group = lib.mkOption {
+        type = lib.types.str;
+        default = "qbittorrent";
+        example = "media";
+        description = "qBittorrent 服务用户组";
+      };
+
+      # 端口配置
+      webuiPort = lib.mkOption {
+        type = lib.types.port;
+        default = 8080;
+        description = "WebUI 监听端口";
+      };
+
+      torrentingPort = lib.mkOption {
+        type = lib.types.port;
+        default = 6881;
+        description = "BT 下载监听端口";
+      };
+
+      interface = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "qBittorrent 绑定的网络接口（默认为所有接口）";
+      };
+
+      interfaceAddress = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "qBittorrent 绑定的 IP 地址（默认为所有地址）";
+      };
+
+      # WebUI 帐号密码
+      webuiUsername = lib.mkOption {
+        type = lib.types.str;
+        default = "admin";
+        description = "WebUI 用户名";
+      };
+
+      webuiPassword = lib.mkOption {
+        type = lib.types.str;
+        default = "Z0v9T1+A5E43hLa7Df03Qw==:wJ8rx1mACpr3EVmNjuqqcz6qw0aa4wFdE2gXAdqJ7W/CJNhmRTxVKqLLhga5rurb25eCGpwla3wfkbmPs+QNfw==";
+        description = ''
+          WebUI 密码，默认为 `password`。
+
+          可用[该工具](https://codeberg.org/feathecutie/qbittorrent_password)生成，或运行该命令：`nix run git+https://codeberg.org/feathecutie/qbittorrent_password -- -p <your_password>`
+        '';
+      };
+
+      # 数据目录配置
+      profileDir = lib.mkOption {
+        type = lib.types.str;
+        default = "/var/lib/qBittorrent/";
+        description = "qBittorrent 配置文件目录";
+      };
+
+      # 下载目录配置
+      downloadDir = lib.mkOption {
+        type = lib.types.path;
+        default = "/mnt/media/downloads";
+        description = "qBittorrent 默认下载目录";
+      };
+    };
+
+    config = lib.mkIf cfg.enable {
+      # 创建下载目录
+      systemd.tmpfiles.rules = [
+        "d '${cfg.downloadDir}' 2775 qbittorrent media -"
+      ];
+
+      services.qbittorrent = {
+        enable = true;
+
+        package = pkgs.qbittorrent-enhanced-nox;
+
+        openFirewall = true;
+
+        inherit (cfg) user group webuiPort torrentingPort profileDir;
+
+        serverConfig = {
+          BitTorrent.Session = {
+            DisableAutoTMMByDefault = false; # 新添加的种子默认启用自动管理模式
+            TorrentContentLayout = "Subfolder"; # 设置 torrent 内容布局：创建子文件夹
+
+            DefaultSavePath = toString cfg.downloadDir; # 默认保存路径
+
+            AddTrackersFromURLEnabled = true; # 自动添加 trackers
+            AdditionalTrackersURL = "https://cf.trackerslist.com/all.txt";
+
+            GlobalDLSpeedLimit = 0; # 全局下载速度限制
+            GlobalUPSpeedLimit = 1000; # 全局上传速度限制
+
+            GlobalMaxInactiveSeedingMinutes = 1440; # 不活跃做种时间
+            GlobalMaxRatio = 10; # 最大分享率
+            ShareLimitAction = "Stop"; # 达到条件时停止做种
+
+            MaxActiveDownloads = 10; # 最大活跃下载数
+            MaxActiveUploads = 10; # 最大活跃上传数
+            MaxActiveTorrents = 20; # 最大活跃 torrent 数
+            IgnoreSlowTorrentsForQueueing = true; # 忽略慢速 torrent
+
+            Interface = lib.mkIf (cfg.interface != null) cfg.interface;
+            InterfaceAddress = lib.mkIf (cfg.interfaceAddress != null) cfg.interfaceAddress;
+          };
+
+          LegalNotice.Accepted = true;
+
+          Preferences = {
+            General.Locale = "zh_CN";
+
+            WebUI = {
+              Username = cfg.webuiUsername;
+              Password_PBKDF2 = cfg.webuiPassword;
+              LocalHostAuth = false; # 对本地主机上的客户端跳过身份验证
+            };
+          };
+
+          RSS = {
+            Session = {
+              EnableProcessing = true; # 获取 RSS 订阅
+              RefreshInterval = 60; # RSS 源更新时间（分钟）
+            };
+          };
+        };
+      };
+    };
+  };
+}
