@@ -36,6 +36,7 @@
   flake.modules.homeManager.hyprland = {
     config,
     lib,
+    pkgs,
     osConfig,
     ...
   }: let
@@ -53,8 +54,8 @@
       };
 
       layout = lib.mkOption {
-        type = lib.types.enum ["dwindle" "master" "scrolling" "scrolling"];
-        default = "dwindle";
+        type = lib.types.enum ["dwindle" "master" "scrolling"];
+        default = "scrolling";
         description = "Hyprland 的布局";
       };
     };
@@ -95,7 +96,7 @@
               repeat_delay = 250; # 键盘重复的延迟（毫秒）
               repeat_rate = 35; # 键盘重复的速率（每秒重复次数）
 
-              follow_mouse = 1; # 光标与焦点关系
+              follow_mouse = 2; # 光标与焦点关系
 
               touchpad = {
                 natural_scroll = true; # 反转滚动方向
@@ -144,6 +145,9 @@
       };
 
       programs.kitty.enable = true; # 确保进入 Hyprland 时有终端可用
+      home.packages = with pkgs; [
+        libnotify
+      ];
     };
   };
 }
