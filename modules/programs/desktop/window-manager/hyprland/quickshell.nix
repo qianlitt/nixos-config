@@ -8,9 +8,9 @@
 
     # quickshell 快捷键
     kbLauncher = "SUPER + Space";
-    kbControlCenter = "SUPER + S";
-    kbSettings = "SUPER + Comma";
-    kbLock = "SUPER + L";
+    kbControlCenter = "SUPER + ALT + X";
+    kbSettings = "SUPER + ALT + Comma";
+    kbLock = "SUPER + ALT + L";
   in {
     wayland.windowManager.hyprland = lib.mkIf (quickshell != null) (
       # noctalia
