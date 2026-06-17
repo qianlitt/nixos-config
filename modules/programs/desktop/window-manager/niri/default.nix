@@ -1,6 +1,6 @@
 {inputs, ...}: {
   flake-file.inputs = {
-    niri.url = "github:sodiboo/niri-flake";
+    niri.url = "github:sodiboo/niri-flake/3754a033e05c750ef46fe4f078d79b826c4f9287";
   };
 
   flake.modules.nixos.niri = {
