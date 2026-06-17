@@ -5,7 +5,7 @@
       key = "SUPER + Q";
     };
     browser = {
-      program = "chromium";
+      program = "zen-twilight";
       key = "SUPER + W";
     };
     editor = {

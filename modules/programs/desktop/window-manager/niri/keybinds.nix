@@ -5,7 +5,7 @@
       key = "Mod+Q";
     };
     browser = {
-      program = "chromium";
+      program = "zen-twilight";
       key = "Mod+W";
     };
     editor = {
