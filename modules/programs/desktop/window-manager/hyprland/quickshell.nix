@@ -7,12 +7,13 @@
     quickshell = config.modules.desktop.windowManager.hyprland.quickshell;
 
     # quickshell 快捷键
+    kbLauncher = "SUPER + Space";
     kbControlCenter = "SUPER + S";
     kbSettings = "SUPER + Comma";
     kbLock = "SUPER + L";
   in {
     wayland.windowManager.hyprland = lib.mkIf (quickshell != null) (
-      # noctalia-shell
+      # noctalia
       lib.optionalAttrs (quickshell == "noctalia") {
         settings.on = [
           {
@@ -29,8 +30,7 @@
         extraConfig = ''
           -- quickshell
           local ipc = "noctalia msg"
-          hl.bind("SUPER + SUPER_L", hl.dsp.exec_cmd(ipc .. " panel-toggle launcher"), { description = "Shell: Toggle launcher" })
-          hl.bind("SUPER + SUPER_R", hl.dsp.exec_cmd(ipc .. " panel-toggle launcher"))
+          hl.bind("${kbLauncher}", hl.dsp.exec_cmd(ipc .. " panel-toggle launcher"), { description = "Shell: Toggle launcher" })
           hl.bind("${kbControlCenter}", hl.dsp.exec_cmd(ipc .. " panel-toggle control-center"))
           hl.bind("${kbSettings}", hl.dsp.exec_cmd(ipc .. " settings-toggle"))
           hl.bind("${kbLock}", hl.dsp.exec_cmd(ipc .. " session lock"))
