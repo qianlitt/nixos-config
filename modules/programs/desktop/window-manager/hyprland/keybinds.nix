@@ -1,11 +1,25 @@
 {
   flake.modules.homeManager.hyprland = let
-    # Apps
-    kbTerminal = "SUPER + Q";
-    kbBrowser = "SUPER + W";
-    kbEditor = "SUPER + D";
-    # kbFileExplorer = "SUPER + E";
-    # kbMusicApp = "SUPER + A";
+    terminal = {
+      program = "kitty";
+      key = "SUPER + Q";
+    };
+    browser = {
+      program = "chromium";
+      key = "SUPER + W";
+    };
+    editor = {
+      program = "code";
+      key = "SUPER + D";
+    };
+    music = {
+      program = "spotify";
+      key = "SUPER + A";
+    };
+    fileManager = {
+      program = "dolphin";
+      key = "SUPER + E";
+    };
   in {
     wayland.windowManager.hyprland.extraConfig = ''
       -- Workspace
@@ -155,11 +169,14 @@
 
 
       -- Apps
-      hl.bind("${kbTerminal}", hl.dsp.exec_cmd("kitty"), { description = "App: Terminal" })
-      hl.bind("SUPER + Return", hl.dsp.exec_cmd("kitty"))
+      hl.bind("${terminal.key}", hl.dsp.exec_cmd("${terminal.program}"), { description = "App: Terminal" })
+      hl.bind("SUPER + Return", hl.dsp.exec_cmd("${terminal.program}"))
       hl.bind("SUPER + Z", hl.dsp.exec_cmd("kitten quick-access-terminal"))
-      hl.bind("${kbEditor}", hl.dsp.exec_cmd("code"), { description = "App: Code editor" })
-      hl.bind("${kbBrowser}", hl.dsp.exec_cmd("chromium"), { description = "App: Browser" })
+      hl.bind("${browser.key}", hl.dsp.exec_cmd("${browser.program}"), { description = "App: Browser" })
+      hl.bind("${editor.key}", hl.dsp.exec_cmd("${editor.program}"), { description = "App: Code editor" })
+      hl.bind("${music.key}", hl.dsp.exec_cmd("${music.program}"), { description = "App: Music player" })
+      hl.bind("${fileManager.key}", hl.dsp.exec_cmd("${fileManager.program}"), { description = "App: Code editor" })
+
       hl.bind("SUPER + C", hl.dsp.window.close(), { description = "Window: Close" })
       hl.bind("SUPER + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
     '';
