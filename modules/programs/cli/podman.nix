@@ -22,21 +22,24 @@
     config = lib.mkIf cfg.enable (lib.mkMerge [
       {
         # 启用 Podman 服务
-        virtualisation.podman = {
-          enable = true;
-
-          dockerCompat = true;
-          dockerSocket.enable = true; # 替换 docker socket，便于使用 docker 工具
-          defaultNetwork.settings.dns_enabled = true; # podman-compose 内部容器互通
-
-          # 自动清理
-          autoPrune = {
+        virtualisation = {
+          podman = {
             enable = true;
-            flags = [
-              "--all" # 未使用的镜像
-            ];
-            dates = "0 3 * * 0"; # 每周日凌晨3点
+
+            dockerCompat = true;
+            dockerSocket.enable = true; # 替换 docker socket，便于使用 docker 工具
+            defaultNetwork.settings.dns_enabled = true; # podman-compose 内部容器互通
+
+            # 自动清理
+            autoPrune = {
+              enable = true;
+              flags = [
+                "--all" # 未使用的镜像
+              ];
+              dates = "0 3 * * 0"; # 每周日凌晨3点
+            };
           };
+          docker.enable = lib.mkForce false;
         };
 
         environment.systemPackages = with pkgs; [

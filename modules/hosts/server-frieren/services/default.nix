@@ -18,9 +18,6 @@
       nixos."services.immich"
       nixos."services.openlist"
       nixos."services.vaultwarden"
-
-      # DevOps
-      nixos."services.gitea"
     ];
 
     modules = {
@@ -82,9 +79,6 @@
           };
         };
         vaultwarden.enable = true;
-
-        # DevOps
-        gitea.enable = true;
       };
     };
 
@@ -186,17 +180,6 @@
 
         locations."/" = {
           proxyPass = "http://127.0.0.1:${toString config.modules.services.vaultwarden.port}/";
-          proxyWebsockets = true;
-        };
-      };
-
-      # Gitea
-      "git.${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
-
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString config.modules.services.gitea.port}/";
           proxyWebsockets = true;
         };
       };
