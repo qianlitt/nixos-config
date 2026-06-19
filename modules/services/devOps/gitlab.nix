@@ -17,6 +17,13 @@
         startAt = "03:00";
         keepTime = 48; # 保留 48 小时
       };
+
+      # registry
+      registry = lib.mkDefault {
+        enable = true;
+        certFile = "/var/gitlab/cert/registry.crt";
+        keyFile = "/var/gitlab/cert/registry.key";
+      };
     };
   };
 }
