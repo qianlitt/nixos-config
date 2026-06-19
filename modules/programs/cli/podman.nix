@@ -36,7 +36,7 @@
               flags = [
                 "--all" # 未使用的镜像
               ];
-              dates = "0 3 * * 0"; # 每周日凌晨3点
+              dates = "weekly";
             };
           };
           docker.enable = lib.mkForce false;
