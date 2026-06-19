@@ -57,13 +57,31 @@
     };
 
     services = {
-      nginx.virtualHosts."git.${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
+      nginx.virtualHosts = {
+        "git.${domain}" = {
+          forceSSL = true;
+          useACMEHost = "wildcard.lan";
 
-        locations."/" = {
-          proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
-          proxyWebsockets = true;
+          locations."/" = {
+            proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
+            proxyWebsockets = true;
+          };
+        };
+        "${config.services.gitlab.registry.externalAddress}" = {
+          forceSSL = true;
+          useACMEHost = "wildcard.lan";
+
+          locations."/" = {
+            proxyPass = "http://${config.services.gitlab.registry.host}:${toString config.services.gitlab.registry.port}";
+            extraConfig = ''
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_buffering off;
+              proxy_request_buffering off;
+            '';
+          };
         };
       };
 
@@ -81,6 +99,11 @@
           activeRecordPrimaryKeyFile = config.sops.secrets."services/gitlab/activeRecordPrimaryKey".path;
           activeRecordDeterministicKeyFile = config.sops.secrets."services/gitlab/activeRecordDeterministicKey".path;
           activeRecordSaltFile = config.sops.secrets."services/gitlab/activeRecordSaltFile".path;
+        };
+
+        registry = {
+          externalAddress = "registry.${domain}";
+          externalPort = 443;
         };
       };
 
