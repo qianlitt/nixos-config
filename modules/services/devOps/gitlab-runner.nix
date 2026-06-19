@@ -9,5 +9,12 @@
         log_level = "info";
       };
     };
+
+    # 避免 gitlab-runner 服务在 podman 之前启动
+    systemd.services.gitlab-runner = {
+      after = ["podman.socket"];
+      requires = ["podman.socket"];
+      bindsTo = ["podman.socket"];
+    };
   };
 }
