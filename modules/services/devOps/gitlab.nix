@@ -24,6 +24,11 @@
         certFile = "/var/gitlab/cert/registry.crt";
         keyFile = "/var/gitlab/cert/registry.key";
       };
+
+      # pages
+      pages = lib.mkDefault {
+        enable = true;
+      };
     };
   };
 }
