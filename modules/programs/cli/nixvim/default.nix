@@ -8,7 +8,6 @@
   flake.modules.homeManager.nixvim = {
     config,
     lib,
-    pkgs,
     ...
   }: let
     cfg = config.modules.cli.nixvim;
