@@ -41,6 +41,13 @@
               extraDomainNames = ["*.${domain}"];
               group = "nginx";
             };
+            "wildcard.pages" = {
+              domain = "pages.${domain}";
+              extraDomainNames = [
+                "*.pages.${domain}"
+              ];
+              group = "nginx";
+            };
           };
         };
         nginx.enable = true;

@@ -83,6 +83,17 @@
             '';
           };
         };
+        "${config.services.gitlab.pages.settings.pages-domain}" = {
+          forceSSL = true;
+          useACMEHost = "wildcard.pages";
+
+          serverAliases = ["*.${config.services.gitlab.pages.settings.pages-domain}"];
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:8090";
+            proxyWebsockets = true;
+            recommendedProxySettings = true;
+          };
+        };
       };
 
       gitlab = {
@@ -104,6 +115,21 @@
         registry = {
           externalAddress = "registry.${domain}";
           externalPort = 443;
+        };
+
+        pages = {
+          settings = {
+            pages-domain = "pages.${domain}";
+            listen-proxy = ["127.0.0.1:8090"];
+          };
+        };
+
+        extraConfig = {
+          pages = {
+            # 控制 pages 生成的链接
+            port = 443; # 去除生端口号
+            https = true; # 使用 HTTPS scheme
+          };
         };
       };
 
