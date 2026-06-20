@@ -7,6 +7,7 @@
       i18n
       kernel
       nix
+      nur
       sops
       time
     ];

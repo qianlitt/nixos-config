@@ -42,6 +42,7 @@
         zen-browser
         neovide
         vscode
+        wps
 
         hyprland
         niri
