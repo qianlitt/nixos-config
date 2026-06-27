@@ -55,7 +55,7 @@
 
       shellHook = ''
         echo "缓存 mcp-nixos..."
-        ${pkgs.nix}/bin/nix build --no-link github:utensils/mcp-nixos 2>/dev/null || true
+        ${pkgs.nix}/bin/nix build --no-link github:utensils/mcp-nixos
         echo "mcp-nixos 已缓存"
       '';
     };
