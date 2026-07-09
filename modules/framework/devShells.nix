@@ -44,7 +44,7 @@
         statix # linter
         nurl # Generate Nix fetcher calls from repository URLs
 
-        # MCP Dependencise
+        # MCP Dependencies
         uv
         nodejs
 
