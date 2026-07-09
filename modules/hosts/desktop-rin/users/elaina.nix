@@ -6,6 +6,8 @@
     ];
 
     home-manager.users.elaina = {
+      home.pointerCursor.enable = true;
+
       imports = with inputs.self.modules.homeManager; [
         anki
         discord
