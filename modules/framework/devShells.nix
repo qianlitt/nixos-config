@@ -50,6 +50,7 @@
 
         # MCP
         mcp-nixos
+        codebase-memory-mcp
 
         # secrets
         age
