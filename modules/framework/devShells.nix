@@ -48,16 +48,13 @@
         uv
         nodejs
 
+        # MCP
+        mcp-nixos
+
         # secrets
         age
         sops
       ];
-
-      shellHook = ''
-        echo "缓存 mcp-nixos..."
-        ${pkgs.nix}/bin/nix build --no-link github:utensils/mcp-nixos
-        echo "mcp-nixos 已缓存"
-      '';
     };
     formatter = pkgs.alejandra;
   };
