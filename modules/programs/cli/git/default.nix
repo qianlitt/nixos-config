@@ -89,7 +89,13 @@
         };
 
         # Git TUI
-        lazygit = lib.mkIf cfg.tui.enable {enable = true;};
+        lazygit = lib.mkIf cfg.tui.enable {
+          enable = true;
+
+          settings = {
+            git.overrideGpg = true;
+          };
+        };
       };
 
       # TODO: git trim
