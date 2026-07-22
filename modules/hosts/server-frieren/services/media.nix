@@ -1,7 +1,9 @@
 {inputs, ...}: let
   dir = "/mnt/media";
 in {
-  flake.modules.nixos.frieren = {
+  flake.modules.nixos.frieren = {config, ...}: let
+    domain = "lan.${config.systemConstants.admin.domain}"; # 分配三级域名
+  in {
     imports = with inputs.self.modules; [
       nixos."services.qbittorrent"
       nixos."services.peerbanhelper"
@@ -15,6 +17,45 @@ in {
     ];
 
     # 媒体服务器
+    services.nginx.virtualHosts = {
+      # qBittorrent
+      "qb.${domain}" = {
+        forceSSL = true;
+        useACMEHost = "wildcard.lan";
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString config.modules.services.qbittorrent.webuiPort}/";
+          proxyWebsockets = true;
+        };
+      };
+
+      # PeerBanHelper
+      "pbh.${domain}" = {
+        forceSSL = true;
+        useACMEHost = "wildcard.lan";
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString config.modules.services.peerbanhelper.webuiPort}/";
+          proxyWebsockets = true;
+        };
+      };
+
+      # Jellyfin
+      "jellyfin.${domain}" = {
+        forceSSL = true;
+        useACMEHost = "wildcard.lan";
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString config.modules.services.jellyfin.port}/";
+          proxyWebsockets = true;
+          extraConfig = ''
+            client_max_body_size 0;
+            proxy_buffering off;
+          '';
+        };
+      };
+    };
+
     modules.services = {
       jellyfin.enable = true;
       # 下载器

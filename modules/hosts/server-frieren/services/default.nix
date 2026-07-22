@@ -190,43 +190,6 @@
           proxyWebsockets = true;
         };
       };
-
-      # qBittorrent
-      "qb.${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
-
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString config.modules.services.qbittorrent.webuiPort}/";
-          proxyWebsockets = true;
-        };
-      };
-
-      # PeerBanHelper
-      "pbh.${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
-
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString config.modules.services.peerbanhelper.webuiPort}/";
-          proxyWebsockets = true;
-        };
-      };
-
-      # Jellyfin
-      "jellyfin.${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
-
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString config.modules.services.jellyfin.port}/";
-          proxyWebsockets = true;
-          extraConfig = ''
-            client_max_body_size 0;
-            proxy_buffering off;
-          '';
-        };
-      };
     };
   };
 }
