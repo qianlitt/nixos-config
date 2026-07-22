@@ -21,6 +21,10 @@
           # "https://mirrors.ustc.edu.cn/nix-channels/store/"
         ];
         warn-dirty = false; # 禁用 git dirty 警告
+
+        # 并行
+        max-substitution-jobs = 128; # 最大并行替换作业数
+        http-connections = 128; # 最大并行 TCP 连接数
       };
 
       # 每周自动垃圾回收
