@@ -31,7 +31,7 @@
     hyprland.url = "github:hyprwm/Hyprland";
     import-tree.url = "github:vic/import-tree";
     llm-agents.url = "github:numtide/llm-agents.nix";
-    niri.url = "github:sodiboo/niri-flake/3754a033e05c750ef46fe4f078d79b826c4f9287";
+    niri.url = "github:sodiboo/niri-flake";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-lib.follows = "nixpkgs";
     nixvim.url = "github:nix-community/nixvim";
