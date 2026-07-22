@@ -3,14 +3,7 @@
     niri.url = "github:sodiboo/niri-flake/3754a033e05c750ef46fe4f078d79b826c4f9287";
   };
 
-  flake.modules.nixos.niri = {
-    config,
-    lib,
-    pkgs,
-    ...
-  }: let
-    cfg = config.modules.desktop.windowManager.niri;
-  in {
+  flake.modules.nixos.niri = {pkgs, ...}: {
     # 二进制缓存命中需要:
     # 1. 导入 niri 的 NixOS 模块: `niri.nixosModules.niri`。
     # 2. 第一次重建时不启用 niri，让缓存配置生效后再正式启用。
@@ -20,17 +13,11 @@
       inputs.niri.nixosModules.niri
     ];
 
-    options.modules.desktop.windowManager.niri = {
-      enable = lib.mkEnableOption "启用 niri 窗口管理器";
-    };
-
-    config = lib.mkIf cfg.enable {
-      # 使用 niri-unstable（需要 overlay）
-      nixpkgs.overlays = [inputs.niri.overlays.niri];
-      programs.niri = {
-        enable = true;
-        package = pkgs.niri-unstable; # 或 pkgs.niri
-      };
+    # 使用 niri-unstable（需要 overlay）
+    nixpkgs.overlays = [inputs.niri.overlays.niri];
+    programs.niri = {
+      enable = true;
+      package = pkgs.niri-unstable; # 或 pkgs.niri
     };
   };
 
@@ -38,12 +25,9 @@
     config,
     lib,
     pkgs,
-    osConfig,
     ...
   }: let
     cfg = config.modules.desktop.windowManager.niri;
-
-    nixosNiriEnabled = osConfig.modules.desktop.windowManager.niri.enable;
   in {
     options.modules.desktop.windowManager.niri = {
       enable = lib.mkEnableOption "启用 Niri 窗口管理器";
@@ -56,17 +40,7 @@
     };
 
     config = lib.mkIf cfg.enable {
-      assertions = [
-        {
-          assertion = nixosNiriEnabled;
-          message = ''
-            Home Manager 的 Niri 配置已启用，但对应的 NixOS 模块未启用，它会配置二进制缓存并安装必要的组件。
-            请在你的 NixOS 配置中添加：
-              modules.desktop.windowManager.niri.enable = true;
-          '';
-        }
-      ];
-
+      # 请确保已导入 `flake.modules.nixos.niri`
       programs.niri.settings = {
         xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
 
