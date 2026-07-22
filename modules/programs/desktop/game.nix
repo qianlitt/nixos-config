@@ -20,8 +20,11 @@
     };
 
     config = lib.mkIf cfg.enable {
-      # 二游启动器
-      nix.settings = inputs.aagl.nixConfig;
+      # 缓存配置
+      nix.settings = {
+        substituters = lib.mkOrder 700 ["https://ezkea.cachix.org"];
+        trusted-public-keys = ["ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI="];
+      };
 
       programs = {
         steam = {

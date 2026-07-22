@@ -18,10 +18,10 @@
     };
 
     config = lib.mkIf cfg.enable {
-      # Cachix 配置
+      # 缓存配置
       nix.settings = {
-        extra-substituters = ["https://noctalia.cachix.org"];
-        extra-trusted-public-keys = ["noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="];
+        substituters = lib.mkOrder 700 ["https://noctalia.cachix.org"];
+        trusted-public-keys = ["noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="];
       };
       networking.networkmanager.enable = lib.mkDefault true;
       hardware.bluetooth.enable = true;

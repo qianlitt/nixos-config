@@ -3,7 +3,11 @@
     niri.url = "github:sodiboo/niri-flake/3754a033e05c750ef46fe4f078d79b826c4f9287";
   };
 
-  flake.modules.nixos.niri = {pkgs, ...}: {
+  flake.modules.nixos.niri = {
+    lib,
+    pkgs,
+    ...
+  }: {
     # 二进制缓存命中需要:
     # 1. 导入 niri 的 NixOS 模块: `niri.nixosModules.niri`。
     # 2. 第一次重建时不启用 niri，让缓存配置生效后再正式启用。
@@ -12,6 +16,13 @@
     imports = [
       inputs.niri.nixosModules.niri
     ];
+
+    # 缓存配置
+    niri-flake.cache.enable = false;
+    nix.settings = {
+      substituters = lib.mkOrder 600 ["https://niri.cachix.org"];
+      trusted-public-keys = ["niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="];
+    };
 
     # 使用 niri-unstable（需要 overlay）
     nixpkgs.overlays = [inputs.niri.overlays.niri];
