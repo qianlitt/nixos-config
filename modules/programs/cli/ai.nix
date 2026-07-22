@@ -15,9 +15,10 @@
     };
 
     config = lib.mkIf cfg.enable {
+      # 缓存配置
       nix.settings = {
-        extra-substituters = ["https://cache.numtide.com"];
-        extra-trusted-public-keys = [
+        substituters = lib.mkOrder 700 ["https://cache.numtide.com"];
+        trusted-public-keys = [
           "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
         ];
       };
