@@ -266,6 +266,16 @@
           match.float = "0";
           no_shadow = true;
         }
+
+        # Game
+        {
+          match = {
+            class = "^(steam_app).*";
+            title = "^鸣潮%s*$";
+          };
+          immediate = true;
+          float = true;
+        }
       ];
     };
   };
