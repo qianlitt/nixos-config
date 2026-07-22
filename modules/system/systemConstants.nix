@@ -54,6 +54,7 @@
                 y = -300;
               };
             };
+            "DP-2" = host.rin.monitors.DP-1;
             "DP-3" = host.rin.monitors.DP-1;
           };
         };
