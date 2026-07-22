@@ -14,8 +14,11 @@
         ];
         substituters = lib.mkBefore [
           # cache mirror located in China
+          # status: https://mirror.nju.edu.cn/
+          "https://mirror.nju.edu.cn/nix-channels/store"
+
           # status: https://mirrors.ustc.edu.cn/status/
-          "https://mirrors.ustc.edu.cn/nix-channels/store/"
+          # "https://mirrors.ustc.edu.cn/nix-channels/store/"
         ];
         warn-dirty = false; # 禁用 git dirty 警告
       };
