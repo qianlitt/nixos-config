@@ -36,7 +36,6 @@
         quickshell.noctalia.enable = true;
         windowManager = {
           hyprland.enable = true;
-          niri.enable = true;
         };
 
         audio.enable = true;
