@@ -1,5 +1,9 @@
 {
-  flake.modules.nixos.nix = {config, ...}: {
+  flake.modules.nixos.nix = {
+    config,
+    lib,
+    ...
+  }: {
     nixpkgs.config.allowUnfree = true;
     nix = {
       settings = {
@@ -8,7 +12,7 @@
         trusted-users = [
           "@wheel" # wheel 用户组的所有用户
         ];
-        substituters = [
+        substituters = lib.mkBefore [
           # cache mirror located in China
           # status: https://mirrors.ustc.edu.cn/status/
           "https://mirrors.ustc.edu.cn/nix-channels/store/"
