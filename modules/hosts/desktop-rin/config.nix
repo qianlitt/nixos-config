@@ -1,7 +1,21 @@
 {inputs, ...}: {
   flake.modules.nixos.rin = {
-    imports = [
-      inputs.self.modules.nixos.profile-desktop
+    imports = with inputs.self.modules.nixos; [
+      profile-cli
+
+      audio
+      displayManager
+      dolphin
+      fcitx5
+      fonts
+      keyboard
+      localsend
+
+      hyprland
+      niri
+      noctalia
+      game
+      stylix
     ];
 
     boot.kernelParams = [
