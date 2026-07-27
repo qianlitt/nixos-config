@@ -17,6 +17,7 @@
       cloc # better wc
       duf # better du
       dust # better du
+      _7zip-zstd-rar
     ];
   in {
     programs = lib.mkMerge (
