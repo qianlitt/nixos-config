@@ -22,6 +22,8 @@ local apps = {
 	},
 }
 
+local screenshots_dir = os.getenv("HOME") .. "/Pictures/Screenshots"
+
 -- Utils
 -- 发送通知
 local function send_notification(title, message)
@@ -44,6 +46,24 @@ local function workspace_in_group(i)
 	return newVal
 end
 
+-- generate timestamped filename
+-- @param prefix (string|nil)
+-- @return (string)
+-- @usage `screenshots("Screenshot")` -> $HOME/Pictures/Screenshots/Screenshot_20260724-000522.png
+local function screenshot_filename(prefix)
+	local timestamp = os.date("%Y%m%d-%H%M%S")
+	return screenshots_dir .. "/" .. (prefix or "Screenshot") .. "_" .. timestamp .. ".png"
+end
+
+-- get basename
+-- @param path (string)
+-- @return (string)
+-- @usage `basename(~/dir/file.ext)` -> file.ext
+local function basename(path)
+	return path:match("([^/]+)$")
+end
+
+-- Keybinds
 -- Apps
 hl.bind(apps.terminal.key, hl.dsp.exec_cmd(apps.terminal.program), { description = "App: Terminal" })
 hl.bind("SUPER + Return", hl.dsp.exec_cmd(apps.terminal.program))
@@ -52,6 +72,63 @@ hl.bind(apps.browser.key, hl.dsp.exec_cmd(apps.browser.program), { description =
 hl.bind(apps.editor.key, hl.dsp.exec_cmd(apps.editor.program), { description = "App: Code editor" })
 hl.bind(apps.music.key, hl.dsp.exec_cmd(apps.music.program), { description = "App: Music player" })
 hl.bind(apps.fileManager.key, hl.dsp.exec_cmd(apps.fileManager.program), { description = "App: Code editor" })
+
+-- Screenshot
+os.execute("mkdir -p " .. screenshots_dir)
+
+-- Full screen screenshots (save + clipboard): Print
+hl.bind("Print", function()
+	local file = screenshot_filename("Screenshot_fullscreen")
+	local cmd = string.format('hyprshot -m output -o "%s" -f "%s"', screenshots_dir, basename(file))
+	hl.dispatch(hl.dsp.exec_cmd(cmd))
+end, { description = "Screenshot: Full screen (save + clipboard)" })
+-- Full screen -> swappy: SHIFT + Print
+hl.bind("SHIFT + Print", function()
+	local cmd = "hyprshot -m output --freeze --raw --clipboard-only | swappy -f -"
+	hl.dispatch(hl.dsp.exec_cmd(cmd))
+end, { description = "Screenshot: Full screen → annotate with swappy" })
+
+-- Window screenshot (save + clipboard): CTRL + Print
+hl.bind("CTRL + Print", function()
+	local file = screenshot_filename("Screenshot_window")
+	local cmd = string.format('hyprshot -m window -o "%s" -f "%s"', screenshots_dir, basename(file))
+	hl.dispatch(hl.dsp.exec_cmd(cmd))
+end, { description = "Screenshot: Window (save + clipboard)" })
+-- Window screenshot → swappy: SHIFT + CTRL + Print
+hl.bind("SHIFT + CTRL + Print", function()
+	local cmd = "hyprshot -m window --freeze --raw --clipboard-only | swappy -f -"
+	hl.dispatch(hl.dsp.exec_cmd(cmd))
+end, { description = "Screenshot: Window → annotate with swappy" })
+
+-- Region screenshot (save + clipboard): ALT + Print
+hl.bind("ALT + Print", function()
+	local file = screenshot_filename("Screenshot_region")
+	local cmd = string.format('hyprshot -m region -o "%s" -f "%s"', screenshots_dir, basename(file))
+	hl.dispatch(hl.dsp.exec_cmd(cmd))
+end, { description = "Screenshot: Region (save + clipboard)" })
+-- Region screenshot → swappy: SHIFT + ALT + Print
+hl.bind("SHIFT + ALT + Print", function()
+	local cmd = "hyprshot -m region --freeze --raw --clipboard-only | swappy -f -"
+	hl.dispatch(hl.dsp.exec_cmd(cmd))
+end, { description = "Screenshot: Region → annotate with swappy" })
+-- Region screenshot → swappy: SUPER + SHIFT + S
+hl.bind("SUPER + SHIFT + S", function()
+	local cmd = "hyprshot -m region --freeze --raw --clipboard-only | swappy -f -"
+	hl.dispatch(hl.dsp.exec_cmd(cmd))
+end, { description = "Screenshot: Quick annotate region" })
+
+-- All monitors (save + clipboard): SUPER + CTRL + ALT + Print
+hl.bind("SUPER + CTRL + ALT + Print", function()
+	local file = screenshot_filename()
+	local cmd = string.format('grim "%s" && cat "%s" | wl-copy --type image/png', file, file)
+	hl.dispatch(hl.dsp.exec_cmd(cmd))
+	send_notification("grim", "Image saved in " .. file .. " and copied to the clipboard.")
+end, { description = "Screenshot: All monitors (save + clipboard)" })
+-- All monitor → swappy: SHIFT + SUPER + CTRL + ALT + Print
+hl.bind("SHIFT + SUPER + CTRL + ALT + Print", function()
+	local cmd = string.format("grim - | swappy -f -")
+	hl.dispatch(hl.dsp.exec_cmd(cmd))
+end, { description = "Screenshot: All monitors → annotate with swappy" })
 
 -- Close Hyprland
 hl.bind(

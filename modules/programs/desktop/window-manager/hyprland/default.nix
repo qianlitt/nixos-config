@@ -143,9 +143,25 @@
         };
       };
 
-      programs.kitty.enable = true; # 确保进入 Hyprland 时有终端可用
+      programs = {
+        kitty.enable = true; # 确保进入 Hyprland 时有终端可用
+
+        # 截图标注
+        swappy = {
+          enable = true;
+          settings.Default = {
+            save_dir = "$HOME/Pictures/Screenshots";
+            save_filename_format = "swappy-%Y%m%d-%H%M%S.png";
+          };
+        };
+      };
       home.packages = with pkgs; [
         libnotify
+
+        # 截图
+        hyprshot # Hyprland 截图工具
+        grim # 截图
+        slurp # 区域选择
       ];
     };
   };
