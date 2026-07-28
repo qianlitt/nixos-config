@@ -20,6 +20,7 @@
         neovide
         vscode
         wps
+        zeal
 
         hyprland
         niri
