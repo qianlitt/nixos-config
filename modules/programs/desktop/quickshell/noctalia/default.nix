@@ -69,6 +69,7 @@
         wl-clipboard
 
         gpu-screen-recorder # Screen Recorder 插件依赖
+        ddcutil # 显示器亮度调节工具
       ];
     };
   };
