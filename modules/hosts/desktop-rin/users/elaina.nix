@@ -20,6 +20,7 @@
         neovide
         vscode
         wps
+        zathura
         zeal
 
         hyprland
