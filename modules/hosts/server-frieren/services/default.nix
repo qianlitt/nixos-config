@@ -104,19 +104,6 @@
 
     # ========== Nginx 子域名反代配置 ==========
     services.nginx.virtualHosts = {
-      # Nginx 测试页
-      "${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
-
-        locations."/" = {
-          return = "200 '<!DOCTYPE html><html><head><title>Welcome to Nginx!</title></head><body><h1>Welcome to Nginx!</h1><p>If you see this page, the nginx web server is successfully installed and working.</p></body></html>'";
-          extraConfig = ''
-            add_header Content-Type text/html;
-          '';
-        };
-      };
-
       # Cloudreve
       "pan.${domain}" = {
         forceSSL = true;
