@@ -62,6 +62,12 @@
           forceSSL = true;
           useACMEHost = "wildcard.lan";
 
+          extraConfig = ''
+            client_max_body_size 2048m;
+            proxy_request_buffering off;
+            proxy_buffering off;
+          '';
+
           locations."/" = {
             proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
             proxyWebsockets = true;
