@@ -27,7 +27,7 @@
         # ignore_window = true;
         range = 20;
         offset = "0 2";
-        render_power = 10;
+        render_power = 4;
         color = lib.mkDefault "rgba(00000020)";
       };
 
