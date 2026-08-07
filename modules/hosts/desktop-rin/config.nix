@@ -12,7 +12,7 @@
       localsend
 
       hyprland
-      niri
+      # niri
       noctalia
       game
       stylix

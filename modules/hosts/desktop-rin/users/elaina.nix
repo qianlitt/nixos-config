@@ -25,7 +25,7 @@
         zeal
 
         hyprland
-        niri
+        # niri
         noctalia
         game
         stylix
@@ -76,11 +76,11 @@
             quickshell = "noctalia";
             monitors = config.systemConstants.host.rin.monitors;
           };
-          windowManager.niri = {
-            enable = true;
-            quickshell = "noctalia";
-            monitors = config.systemConstants.host.rin.monitors;
-          };
+          # windowManager.niri = {
+          #   enable = true;
+          #   quickshell = "noctalia";
+          #   monitors = config.systemConstants.host.rin.monitors;
+          # };
 
           fcitx5.enable = true;
           game.enable = true;

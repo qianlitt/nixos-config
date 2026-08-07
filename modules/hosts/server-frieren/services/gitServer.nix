@@ -78,7 +78,7 @@
           useACMEHost = "wildcard.lan";
 
           locations."/" = {
-            proxyPass = "http://${config.services.gitlab.registry.host}:${toString config.services.gitlab.registry.port}";
+            proxyPass = "http://${config.services.gitlab.registry.settings.http.addr}";
             extraConfig = ''
               proxy_set_header Host $host;
               proxy_set_header X-Real-IP $remote_addr;
