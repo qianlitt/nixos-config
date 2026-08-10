@@ -4,6 +4,8 @@
       inputs.self.modules.nixos.profile-cli
     ];
 
+    documentation.enable = false;
+
     modules = {
       grub = {
         enable = true;
