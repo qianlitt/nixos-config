@@ -23,6 +23,7 @@
         calibre
         zathura
         zeal
+        godot
 
         hyprland
         # niri
