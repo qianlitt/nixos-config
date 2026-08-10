@@ -133,6 +133,7 @@
       systemd.services.cloudreve-db-init = lib.mkIf (!useRemoteDb) {
         description = "Initialize Cloudreve database user";
         after = ["postgresql.service"];
+        requires = ["postgresql.service"];
         wantedBy = ["multi-user.target"];
         serviceConfig = {
           Type = "oneshot";
