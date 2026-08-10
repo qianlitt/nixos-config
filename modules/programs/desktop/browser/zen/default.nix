@@ -34,6 +34,7 @@
         };
         search = import ./_search.nix {inherit pkgs;};
 
+        containersForce = true;
         containers = {
           "私人" = {
             icon = "fingerprint";
