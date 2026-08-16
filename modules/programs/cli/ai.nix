@@ -56,6 +56,7 @@
           oh-my-codex
           opencode
           oh-my-opencode
+          dsh
 
           # Utilities
           cc-switch-cli
