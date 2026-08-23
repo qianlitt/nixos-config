@@ -92,8 +92,9 @@
           "switcher/hotkeys":
             - "Control+F8"
           # 由 fcitx5 控制中英文切换
+          ascii_composer/good_old_caps_lock: true
           ascii_composer/switch_key:
-            Caps_Lock: noop
+            Caps_Lock: clear
             Control_L: noop
             Control_R: noop
             Shift_L: noop
