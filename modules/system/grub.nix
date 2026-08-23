@@ -38,6 +38,7 @@
             useOSProber = true;
             configurationLimit = 10;
             default = "saved";
+            timeout = 1;
           };
         };
       })
