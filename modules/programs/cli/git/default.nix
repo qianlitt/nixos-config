@@ -2,6 +2,7 @@
   flake.modules.homeManager.git = {
     config,
     lib,
+    pkgs,
     ...
   }: let
     cfg = config.modules.cli.git;
@@ -97,6 +98,10 @@
           };
         };
       };
+
+      home.packages = with pkgs; [
+        git-filter-repo
+      ];
 
       # TODO: git trim
       # TODO: git flow
