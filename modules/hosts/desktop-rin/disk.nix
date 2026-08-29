@@ -93,5 +93,17 @@
       "vm.watermark_scale_factor" = 125;
       "vm.page-cluster" = 0;
     };
+
+    systemd.mounts = [
+      {
+        name = "mnt-d.mount";
+        description = "Mount Windows D: drive";
+        what = "/dev/disk/by-id/nvme-HFS001TEM9X174N_5ME7N002112407A6N-part4";
+        where = "/mnt/d";
+        type = "ntfs";
+        options = "rw,iocharset=utf8,umask=000,noatime,nodiratime,uid=1000,gid=100";
+        wantedBy = ["multi-user.target"];
+      }
+    ];
   };
 }
