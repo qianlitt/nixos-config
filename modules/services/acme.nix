@@ -38,6 +38,11 @@
               default = "cloudflare";
               description = "DNS 提供商";
             };
+            dnsResolver = lib.mkOption {
+              type = lib.types.str;
+              default = "1.1.1.1";
+              description = "DNS 解析";
+            };
             group = lib.mkOption {
               type = lib.types.str;
               default = config.security.acme.defaults.group;
@@ -67,7 +72,7 @@
 
         certs =
           lib.mapAttrs (_name: certCfg: {
-            inherit (certCfg) group domain extraDomainNames dnsProvider;
+            inherit (certCfg) group domain extraDomainNames dnsProvider dnsResolver;
             environmentFile = config.sops.secrets."cloudflare/api_token".path;
           })
           cfg.certs;
