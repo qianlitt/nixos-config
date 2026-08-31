@@ -31,6 +31,7 @@
             canTouchEfiVariables = true;
             efiSysMountPoint = "/boot";
           };
+          timeout = 1;
           grub = {
             enable = true;
             device = "nodev";
@@ -38,7 +39,6 @@
             useOSProber = true;
             configurationLimit = 10;
             default = "saved";
-            timeout = 1;
           };
         };
       })
