@@ -24,6 +24,7 @@
         zathura
         zeal
         godot
+        aseprite
 
         hyprland
         # niri
