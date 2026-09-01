@@ -13,6 +13,8 @@
           "@wheel" # wheel 用户组的所有用户
         ];
         substituters = lib.mkBefore [
+          "https://cache.lan.1806016.xyz"
+
           # cache mirror located in China
           # status: https://mirror.nju.edu.cn/
           "https://mirror.nju.edu.cn/nix-channels/store"
@@ -20,6 +22,10 @@
           # status: https://mirrors.ustc.edu.cn/status/
           # "https://mirrors.ustc.edu.cn/nix-channels/store/"
         ];
+        trusted-public-keys = [
+          "niks3.lan.1806016.xyz-1:zsdxgZE5zu8BfbFQAmNFnXLG8rISRRlciCLeh1+gwho="
+        ];
+
         warn-dirty = false; # 禁用 git dirty 警告
 
         # 并行
