@@ -9,8 +9,15 @@
       quadlet.enable = true;
     };
 
+    users.groups.github-runner = {};
+    users.users.github-runner = {
+      isSystemUser = true;
+      group = "github-runner";
+    };
+
     sops.secrets = {
       "services/gitlab-runner/default" = {};
+      "services/github-runner/nixos-config" = {owner = "github-runner";};
     };
 
     # GitLab Runner
@@ -28,6 +35,15 @@
 
         dockerPullPolicy = "if-not-present";
       };
+    };
+
+    # GitHub Runner
+    services.github-runners."nixos-config" = {
+      enable = true;
+      url = "https://github.com/qianlitt/nixos-config";
+      tokenFile = config.sops.secrets."services/github-runner/nixos-config".path;
+      user = "github-runner";
+      extraLabels = ["nix"]; # workflow 用 runs-on: [self-hosted, nix]
     };
   };
 }
