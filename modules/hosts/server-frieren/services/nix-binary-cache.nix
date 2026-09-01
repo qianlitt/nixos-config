@@ -4,18 +4,31 @@
   in {
     imports = with inputs.self.modules; [
       nixos."services.rustfs"
+      nixos."services.niks3"
     ];
+
+    users = {
+      groups.s3-credentials = {};
+      users.niks3.extraGroups = ["s3-credentials"];
+      users.rustfs.extraGroups = ["s3-credentials"];
+    };
 
     sops.secrets = {
       "services/rustfs/accessKey" = {
         owner = config.services.rustfs.user;
-        group = config.services.rustfs.group;
-        mode = "0400";
+        group = "s3-credentials";
+        mode = "0440";
       };
       "services/rustfs/secretKey" = {
         owner = config.services.rustfs.user;
-        group = config.services.rustfs.group;
-        mode = "0400";
+        group = "s3-credentials";
+        mode = "0440";
+      };
+      "services/niks3/apiToken" = {
+        owner = config.services.niks3.user;
+      };
+      "services/niks3/signingKey" = {
+        owner = config.services.niks3.user;
       };
     };
 
@@ -71,6 +84,48 @@
             '';
           };
         };
+        "niks3.${domain}" = {
+          forceSSL = true;
+          useACMEHost = "wildcard.lan";
+
+          locations."/" = {
+            proxyPass = "http://${config.services.niks3.httpAddr}";
+          };
+        };
+        "cache.${domain}" = {
+          forceSSL = true;
+          useACMEHost = "wildcard.lan";
+
+          locations."= /" = {
+            proxyPass = "http://127.0.0.1:9000/nix-cache/index.html";
+            recommendedProxySettings = false;
+            extraConfig = ''
+              proxy_http_version 1.1;
+              proxy_set_header Host s3.${domain};
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_set_header Connection "";
+              proxy_cache_convert_head off;
+              chunked_transfer_encoding off;
+            '';
+          };
+          locations."/" = {
+            # 必须带尾斜杠：否则 location / 前缀替换后路径粘连
+            proxyPass = "http://127.0.0.1:9000/nix-cache/";
+            recommendedProxySettings = false;
+            extraConfig = ''
+              proxy_http_version 1.1;
+              proxy_set_header Host s3.${domain};
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_set_header Connection "";
+              proxy_cache_convert_head off;
+              chunked_transfer_encoding off;
+            '';
+          };
+        };
       };
 
       # s3 storage
@@ -78,6 +133,39 @@
         address = "127.0.0.1:9000";
         accessKeyFile = config.sops.secrets."services/rustfs/accessKey".path;
         secretKeyFile = config.sops.secrets."services/rustfs/secretKey".path;
+      };
+
+      # niks3
+      niks3 = {
+        serverUrl = "https://niks3.${domain}";
+        cacheUrl = "https://cache.${domain}";
+
+        s3 = {
+          # 需要手动创建存储桶并开放下载
+          endpoint = "s3.${domain}";
+          bucket = "nix-cache";
+          bucketLookup = "path";
+          useSSL = true;
+          accessKeyFile = config.sops.secrets."services/rustfs/accessKey".path;
+          secretKeyFile = config.sops.secrets."services/rustfs/secretKey".path;
+        };
+
+        # niks3 API token
+        apiTokenFile = config.sops.secrets."services/niks3/apiToken".path;
+
+        # Nix binary cache signing key
+        signKeyFiles = [
+          config.sops.secrets."services/niks3/signingKey".path
+        ];
+      };
+      postgresql = {
+        ensureDatabases = ["niks3"];
+        ensureUsers = [
+          {
+            name = "niks3";
+            ensureDBOwnership = true;
+          }
+        ];
       };
     };
   };
