@@ -4,7 +4,6 @@
   in {
     imports = with inputs.self.modules; [
       nixos."services.gitlab"
-      nixos."services.gitlab-runner"
     ];
 
     sops.secrets = {
@@ -53,7 +52,6 @@
         group = "gitlab";
         mode = "0440";
       };
-      "services/gitlab-runner/default" = {};
     };
 
     services = {
@@ -136,23 +134,6 @@
             port = 443; # 去除生端口号
             https = true; # 使用 HTTPS scheme
           };
-        };
-      };
-
-      # Runner 定义
-      gitlab-runner.services = {
-        default = {
-          authenticationTokenConfigFile = config.sops.secrets."services/gitlab-runner/default".path;
-
-          executor = "docker";
-          dockerImage = "alpine:latest";
-          description = "podman runner";
-
-          dockerVolumes = [
-            "/run/podman/podman.sock:/var/run/docker.sock"
-          ];
-
-          dockerPullPolicy = "if-not-present";
         };
       };
     };
