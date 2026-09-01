@@ -157,6 +157,18 @@
         signKeyFiles = [
           config.sops.secrets."services/niks3/signingKey".path
         ];
+
+        # CI 通过 OIDC 免密钥推送(GitHub Actions / GitLab CI)
+        oidc.providers = {
+          github = {
+            issuer = "https://token.actions.githubusercontent.com";
+            audience = "https://niks3.${domain}";
+          };
+          gitlab = {
+            issuer = "https://git.${domain}";
+            audience = "https://niks3.${domain}";
+          };
+        };
       };
       postgresql = {
         ensureDatabases = ["niks3"];
