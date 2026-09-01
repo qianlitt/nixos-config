@@ -44,6 +44,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+    rustfs = {
+      url = "github:rustfs/rustfs-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     secrets = {
       url = "path:./secrets";
       flake = false;
