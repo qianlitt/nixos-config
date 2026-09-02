@@ -1,0 +1,36 @@
+name: Build Nix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**/*.nix"
+      - "flake.lock"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        host:
+          - rin
+          - frieren
+      fail-fast: false
+
+    runs-on: [self-hosted, nix]
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: Mic92/niks3-action@v1
+        with:
+          server-url: https://niks3.lan.1806016.xyz
+      - name: Check flake
+        run: nix flake check --show-trace
+      - name: Build NixOS
+        run: |
+          nix build \
+            .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
