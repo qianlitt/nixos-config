@@ -14,6 +14,7 @@
       isSystemUser = true;
       group = "github-runner";
     };
+    nix.settings.trusted-users = ["github-runner"];
 
     sops.secrets = {
       "services/gitlab-runner/default" = {};
