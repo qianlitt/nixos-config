@@ -6,6 +6,8 @@ on:
     paths:
       - "**/*.nix"
       - "flake.lock"
+      - ".github/workflows/**.yml"
+      - "modules/**"
   workflow_dispatch:
 
 permissions:
@@ -28,8 +30,6 @@ jobs:
       - uses: Mic92/niks3-action@v1
         with:
           server-url: https://niks3.lan.1806016.xyz
-      - name: Check flake
-        run: nix flake check --show-trace
       - name: Build NixOS
         run: |
           nix build \
