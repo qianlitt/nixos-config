@@ -96,6 +96,11 @@
           forceSSL = true;
           useACMEHost = "wildcard.lan";
 
+          extraConfig = ''
+            client_max_body_size 0;
+            ignore_invalid_headers off;
+          '';
+
           locations."= /" = {
             proxyPass = "http://127.0.0.1:9000/nix-cache/index.html";
             recommendedProxySettings = false;
