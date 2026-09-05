@@ -45,10 +45,13 @@
 
       # Legacy
       (lib.mkIf (cfg.type == "legacy") {
-        boot.loader.grub = {
-          enable = true;
-          inherit (cfg) device;
-          useOSProber = true;
+        boot.loader = {
+          timeout = 1;
+          grub = {
+            enable = true;
+            inherit (cfg) device;
+            useOSProber = true;
+          };
         };
       })
     ]);
