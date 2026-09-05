@@ -25,27 +25,11 @@
 
         volumes = lib.mkDefault "/var/lib/rustfs";
 
-        logDirectory = lib.mkDefault "/var/log/rustfs";
-        logLevel = lib.mkDefault "info";
-
         address = lib.mkDefault ":9000";
 
         consoleEnable = lib.mkDefault true;
         # 需要 SSH 转发: `ssh -L 9001:localhost:9001 server`
         consoleAddress = lib.mkDefault "127.0.0.1:9001";
-      };
-      logrotate = {
-        enable = true;
-        settings.rustfs = {
-          files = "/var/log/rustfs/*.log";
-          frequency = "daily";
-          rotate = 7;
-          compress = true;
-          delaycompress = true;
-          missingok = true;
-          notifempty = true;
-          create = "0640 rustfs rustfs";
-        };
       };
     };
   };
