@@ -8,7 +8,7 @@
   flake-file = {
     description = "A flake for NixOS configuration";
     inputs = {
-      flake-file.url = "github:vic/flake-file";
+      flake-file.url = "github:denful/flake-file";
     };
     outputs = ''
       inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules)
