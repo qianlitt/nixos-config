@@ -13,7 +13,7 @@
       nixos."services.nginx"
       nixos."services.postgresql"
 
-      nixos."services.aria"
+      # nixos."services.aria"
       nixos."services.alist"
       nixos."services.cloudreve"
       nixos."services.immich"
@@ -65,7 +65,7 @@
           backup.enable = true;
         };
 
-        aria.enable = true;
+        # aria.enable = true;
         cloudreve = {
           enable = true;
           image = "docker.1ms.run/cloudreve/cloudreve:v4";
