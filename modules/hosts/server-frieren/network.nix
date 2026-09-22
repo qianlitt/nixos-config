@@ -4,6 +4,7 @@
     networking = {
       networkmanager.enable = false;
       useNetworkd = true;
+      enableIPv6 = false;
     };
 
     # systemd-networkd 配置

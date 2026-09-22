@@ -1,12 +1,10 @@
 {
   flake.modules.nixos.rin = {config, ...}: {
     sops.secrets = {
-      "wifi/home/ssid" = {};
       "wifi/home/psk" = {};
     };
     sops.templates."wifi-home.env" = {
       content = ''
-        WIFI_SSID=${config.sops.placeholder."wifi/home/ssid"}
         WIFI_PSK=${config.sops.placeholder."wifi/home/psk"}
       '';
     };
@@ -18,10 +16,10 @@
       ensureProfiles = {
         environmentFiles = [config.sops.templates."wifi-home.env".path];
         profiles = {
-          wireless = {
+          GONGNIU-7490 = {
             connection = {
-              id = "wireless";
-              interface-name = "wlp108s0";
+              id = "GONGNIU-7490";
+              interface-name = "wlan0";
               timestamp = "1776342650";
               type = "wifi";
               uuid = "a4578a17-f214-4a5f-a544-cd2de88dc7a3";
@@ -34,12 +32,12 @@
             };
             ipv6 = {
               addr-gen-mode = "default";
-              method = "auto";
+              method = "disabled";
             };
             proxy = {};
             wifi = {
               mode = "infrastructure";
-              ssid = "$WIFI_SSID";
+              ssid = "GONGNIU-7490";
             };
             wifi-security = {
               auth-alg = "open";
@@ -65,7 +63,7 @@
             };
             ipv6 = {
               addr-gen-mode = "default";
-              method = "auto";
+              method = "disabled";
             };
             proxy = {};
           };
