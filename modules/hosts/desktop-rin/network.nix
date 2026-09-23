@@ -25,14 +25,11 @@
               uuid = "a4578a17-f214-4a5f-a544-cd2de88dc7a3";
             };
             ipv4 = {
-              address1 = "192.168.1.101/24";
-              dns = "192.168.1.200;223.5.5.5;";
-              gateway = "192.168.1.200";
-              method = "manual";
+              method = "auto";
             };
             ipv6 = {
               addr-gen-mode = "default";
-              method = "disabled";
+              method = "auto";
             };
             proxy = {};
             wifi = {
@@ -56,14 +53,11 @@
             };
             ethernet = {};
             ipv4 = {
-              address1 = "192.168.1.100/24";
-              dns = "192.168.1.200;223.5.5.5;";
-              gateway = "192.168.1.200";
-              method = "manual";
+              method = "auto";
             };
             ipv6 = {
               addr-gen-mode = "default";
-              method = "disabled";
+              method = "auto";
             };
             proxy = {};
           };
