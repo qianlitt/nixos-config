@@ -20,32 +20,8 @@
     # 色彩方案: https://tinted-theming.github.io/tinted-gallery/
     themeName = "catppuccin-mocha";
 
-    # cursor theme
-    rose-pine-cursor = pkgs.stdenvNoCC.mkDerivation rec {
-      pname = "rose-pine-cursor";
-      version = "1.1.0";
-
-      src = pkgs.fetchurl {
-        url = "https://github.com/rose-pine/cursor/releases/download/v${version}/BreezeX-RosePine-Linux.tar.xz";
-        hash = "sha256-szDVnOjg5GAgn2OKl853K3jZ5rVsz2PIpQ6dlBKJoa8=";
-      };
-
-      sourceRoot = ".";
-
-      installPhase = ''
-        runHook preInstall
-        mkdir -p $out/share/icons
-        cp -R BreezeX-RosePine-Linux $out/share/icons/rose-pine-cursor
-        runHook postInstall
-      '';
-
-      meta = with lib; {
-        description = "Soho vibes for Cursors";
-        downloadPage = "https://github.com/rose-pine/cursor/releases";
-        homepage = "https://rosepinetheme.com/";
-        license = licenses.gpl3;
-      };
-    };
+    # 本仓库自打包的派生，见 modules/pkgs/
+    ps = inputs.self.packages.${pkgs.stdenv.hostPlatform.system};
   in {
     imports = [
       inputs.stylix.nixosModules.stylix
@@ -66,7 +42,7 @@
         base16Scheme = "${pkgs.base16-schemes}/share/themes/${themeName}.yaml";
         cursor = {
           name = "rose-pine-cursor";
-          package = rose-pine-cursor;
+          package = ps.rose-pine-cursor;
           size = 20;
         };
         fonts = {

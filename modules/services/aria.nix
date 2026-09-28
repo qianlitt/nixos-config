@@ -1,4 +1,4 @@
-{
+{inputs, ...}: {
   flake.modules.nixos."services.aria" = {
     config,
     lib,
@@ -7,15 +7,8 @@
   }: let
     cfg = config.modules.services.aria;
 
-    aria-conf = pkgs.fetchFromGitHub {
-      owner = "P3TERX";
-      repo = "aria2.conf";
-      rev = "02b9d95ea155e66f7e3c4340cd22717f8bc7401c";
-      hash = "sha256-O7g/oGgANgoChKACAKzLIOOUbacWpHCEsH533eJwePo=";
-      postFetch = ''
-        chmod +x "$out"/*.sh || true
-      '';
-    };
+    # 本仓库自打包的派生，见 modules/pkgs/
+    ps = inputs.self.packages.${pkgs.stdenv.hostPlatform.system};
   in {
     options.modules.services.aria = {
       enable = lib.mkEnableOption "启用 Aria2 下载服务";
@@ -209,7 +202,7 @@
         # 复制和链接 aria-conf 中的文件
         tmpfiles.rules = let
           home = cfg.homeDir;
-          src = aria-conf;
+          src = ps.aria-conf;
         in [
           # 复制 dht.dat / dht6.dat
           "C ${home}/dht.dat  0644 aria2 aria2 - ${src}/dht.dat"
