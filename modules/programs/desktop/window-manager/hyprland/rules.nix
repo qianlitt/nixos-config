@@ -276,6 +276,11 @@
           immediate = true;
           float = true;
         }
+
+        {
+          match.class = "kitty";
+          fullscreen_state = "0 0";
+        }
       ];
     };
   };
