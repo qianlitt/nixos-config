@@ -19,6 +19,7 @@
       nixos."services.immich"
       # nixos."services.openlist"
       nixos."services.vaultwarden"
+      nixos."services.anki-sync"
     ];
 
     modules = {
@@ -90,6 +91,15 @@
       };
     };
 
+    services.anki-sync-server = {
+      users = [
+        {
+          username = "lean";
+          passwordFile = config.sops.secrets."services/anki-sync/lean".path;
+        }
+      ];
+    };
+
     sops = {
       secrets."postgresql/cloudreve" = {
         owner = "postgres";
@@ -101,6 +111,7 @@
       #   group = "openlist";
       #   mode = "0400";
       # };
+      secrets."services/anki-sync/lean" = {};
     };
 
     # ========== Nginx 子域名反代配置 ==========
@@ -177,6 +188,27 @@
           proxyPass = "http://127.0.0.1:${toString config.modules.services.vaultwarden.port}/";
           proxyWebsockets = true;
         };
+      };
+
+      # Anki sync server
+      "anki.${domain}" = {
+        forceSSL = true;
+        useACMEHost = "wildcard.lan";
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString config.services.anki-sync-server.port}/";
+          proxyWebsockets = true;
+        };
+        extraConfig = ''
+          client_max_body_size 0;
+          tcp_nopush on;
+          tcp_nodelay on;
+          proxy_send_timeout 600s;
+          proxy_read_timeout 600s;
+          proxy_request_buffering off;
+          proxy_buffering off;
+          chunked_transfer_encoding on;
+        '';
       };
     };
   };
