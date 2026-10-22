@@ -5,8 +5,10 @@
     ...
   }: {
     sops.secrets = {
-      "programs/anki/username" = {};
-      "programs/anki/key" = {};
+      "programs/anki/official/username" = {};
+      "programs/anki/official/key" = {};
+      "programs/anki/mysync/username" = {};
+      "programs/anki/mysync/key" = {};
     };
 
     programs.anki = {
@@ -38,8 +40,9 @@
         "账户 1" = {
           default = true;
           sync = {
-            usernameFile = config.sops.secrets."programs/anki/username".path;
-            keyFile = config.sops.secrets."programs/anki/key".path;
+            url = "https://anki.lan.1806016.xyz/";
+            usernameFile = config.sops.secrets."programs/anki/mysync/username".path;
+            keyFile = config.sops.secrets."programs/anki/mysync/key".path;
             autoSync = true;
           };
         };
