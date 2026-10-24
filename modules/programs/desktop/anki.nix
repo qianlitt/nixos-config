@@ -18,19 +18,19 @@
       answerKeys = [
         {
           ease = 1;
-          key = "a";
+          key = "q";
         }
         {
           ease = 2;
-          key = "s";
+          key = "w";
         }
         {
           ease = 3;
-          key = "d";
+          key = "e";
         }
         {
           ease = 4;
-          key = "f";
+          key = "r";
         }
       ];
       addons = with pkgs.ankiAddons; [
