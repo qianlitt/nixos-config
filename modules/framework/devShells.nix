@@ -49,7 +49,7 @@
         nodejs
 
         # MCP
-        mcp-nixos
+        # mcp-nixos
         codebase-memory-mcp
 
         # secrets
