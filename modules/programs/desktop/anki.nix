@@ -1,16 +1,5 @@
 {
-  flake.modules.homeManager.anki = {
-    config,
-    pkgs,
-    ...
-  }: {
-    sops.secrets = {
-      "programs/anki/official/username" = {};
-      "programs/anki/official/key" = {};
-      "programs/anki/mysync/username" = {};
-      "programs/anki/mysync/key" = {};
-    };
-
+  flake.modules.homeManager.anki = {pkgs, ...}: {
     programs.anki = {
       enable = true;
 
@@ -39,12 +28,7 @@
       profiles = {
         "账户 1" = {
           default = true;
-          sync = {
-            url = "https://anki.lan.1806016.xyz/";
-            usernameFile = config.sops.secrets."programs/anki/mysync/username".path;
-            keyFile = config.sops.secrets."programs/anki/mysync/key".path;
-            autoSync = true;
-          };
+          sync.autoSync = true;
         };
       };
     };

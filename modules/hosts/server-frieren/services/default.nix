@@ -5,6 +5,7 @@
     ...
   }: let
     domain = "lan.${config.systemConstants.admin.domain}"; # 分配三级域名
+    sopsFile = "${inputs.self.inputs.secrets}/hosts/frieren.yaml";
   in {
     imports = with inputs.self.modules; [
       nixos."services.ssh"
@@ -21,6 +22,22 @@
       nixos."services.vaultwarden"
       nixos."services.anki-sync"
     ];
+
+    sops = {
+      secrets."services/postgresql/cloudreve" = {
+        inherit sopsFile;
+        owner = "postgres";
+        group = "postgres";
+        mode = "0440";
+      };
+      # secrets."services/openlist" = {
+      #   inherit sopsFile;
+      #   owner = "openlist";
+      #   group = "openlist";
+      #   mode = "0400";
+      # };
+      secrets."services/anki-sync/lean" = {inherit sopsFile;};
+    };
 
     modules = {
       cli.podman = {
@@ -70,7 +87,7 @@
         cloudreve = {
           enable = true;
           image = "docker.1ms.run/cloudreve/cloudreve:v4";
-          database.passwordFile = config.sops.secrets."postgresql/cloudreve".path;
+          database.passwordFile = config.sops.secrets."services/postgresql/cloudreve".path;
         };
         # openlist = {
         #   enable = true;
@@ -98,20 +115,6 @@
           passwordFile = config.sops.secrets."services/anki-sync/lean".path;
         }
       ];
-    };
-
-    sops = {
-      secrets."postgresql/cloudreve" = {
-        owner = "postgres";
-        group = "postgres";
-        mode = "0440";
-      };
-      # secrets."services/openlist" = {
-      #   owner = "openlist";
-      #   group = "openlist";
-      #   mode = "0400";
-      # };
-      secrets."services/anki-sync/lean" = {};
     };
 
     # ========== Nginx 子域名反代配置 ==========

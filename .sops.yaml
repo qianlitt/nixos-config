@@ -1,11 +1,33 @@
 keys:
-  - &admin_age_elaina age1rt9vk95rrr7x2adjgjlyulm68ppvhgvg92x9avc58jgkarjwe5escptl9d
-  - &host_rin age1e36u5v6uat5xwvhk6sjqsj50f0cwl75rk20p9dxsa7n5443jldqqr7ms2q
-  - &host_frieren age1mrh0g3p6sdkt7k6g02hstu8z66ehae7rfyqsh35fec3pfhw364ms78d6ww
+  - &admin age1rt9vk95rrr7x2adjgjlyulm68ppvhgvg92x9avc58jgkarjwe5escptl9d
+  - &host_rin age1e088ymgv3k5mjul2an6d7rfr7p0ccnvpa9rms37mm8qnkcf7re7sxv9wtm
+  - &host_frieren age1533hh72zntc73upx9qf0xtqtkk6d9wz6s7yq48nfhnxyzzews9esagajyv
+  - &user_elaina age1p4rd8gxquxzjhjlhhkyjppfhm79rggal82m5yal658g05kwhz5vqul684j
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+  # Hosts
+  - path_regex: secrets/hosts/rin\.yaml$
     key_groups:
       - age:
-          - *admin_age_elaina
+          - *admin
+          - *host_rin
+  - path_regex: secrets/hosts/frieren\.yaml$
+    key_groups:
+      - age:
+          - *admin
+          - *host_frieren
+
+  # Users
+  - path_regex: secrets/users/elaina\.yaml$
+    key_groups:
+      - age:
+          - *admin
+          - *user_elaina
+
+  # Common
+  - path_regex: secrets/common\.yaml$
+    key_groups:
+      - age:
+          - *admin
           - *host_rin
           - *host_frieren
+          - *user_elaina

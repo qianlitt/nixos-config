@@ -1,6 +1,7 @@
 {inputs, ...}: {
   flake.modules.nixos.frieren = {config, ...}: let
     domain = "lan.${config.systemConstants.admin.domain}";
+    sopsFile = "${inputs.self.inputs.secrets}/hosts/frieren.yaml";
   in {
     imports = with inputs.self.modules; [
       nixos."services.gitlab"
@@ -8,46 +9,55 @@
 
     sops.secrets = {
       "services/gitlab/initialRootPassword" = {
+        inherit sopsFile;
         owner = "gitlab";
         group = "gitlab";
         mode = "0440";
       };
       "services/gitlab/databasePassword" = {
+        inherit sopsFile;
         owner = "gitlab";
         group = "gitlab";
         mode = "0440";
       };
       "services/gitlab/secret" = {
+        inherit sopsFile;
         owner = "gitlab";
         group = "gitlab";
         mode = "0440";
       };
       "services/gitlab/db" = {
+        inherit sopsFile;
         owner = "gitlab";
         group = "gitlab";
         mode = "0440";
       };
       "services/gitlab/otp" = {
+        inherit sopsFile;
         owner = "gitlab";
         group = "gitlab";
         mode = "0440";
       };
       "services/gitlab/jws" = {
+        inherit sopsFile;
         owner = "gitlab";
         group = "gitlab";
         mode = "0440";
       };
       "services/gitlab/activeRecordPrimaryKey" = {
+        inherit sopsFile;
         owner = "gitlab";
         group = "gitlab";
         mode = "0440";
       };
       "services/gitlab/activeRecordDeterministicKey" = {
+        inherit sopsFile;
         owner = "gitlab";
         group = "gitlab";
         mode = "0440";
       };
       "services/gitlab/activeRecordSaltFile" = {
+        inherit sopsFile;
         owner = "gitlab";
         group = "gitlab";
         mode = "0440";

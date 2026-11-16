@@ -1,11 +1,11 @@
 {inputs, ...}: {
-  flake.modules.nixos.rin = {config, ...}: {
+  flake.modules.nixos.rin = {
     imports = with inputs.self.modules.nixos;
     with inputs.self.factory; [
       elaina
     ];
 
-    home-manager.users.elaina = {
+    home-manager.users.elaina = {config, ...}: {
       home.pointerCursor.enable = true;
 
       imports = with inputs.self.modules.homeManager; [
@@ -32,6 +32,24 @@
         game
         stylix
       ];
+
+      sops.secrets = {
+        gpg = {
+          sopsFile = "${inputs.self.inputs.secrets}/users/elaina.yaml";
+        };
+        "programs/anki/official/username" = {
+          sopsFile = "${inputs.self.inputs.secrets}/users/elaina.yaml";
+        };
+        "programs/anki/official/key" = {
+          sopsFile = "${inputs.self.inputs.secrets}/users/elaina.yaml";
+        };
+        "programs/anki/mysync/username" = {
+          sopsFile = "${inputs.self.inputs.secrets}/users/elaina.yaml";
+        };
+        "programs/anki/mysync/key" = {
+          sopsFile = "${inputs.self.inputs.secrets}/users/elaina.yaml";
+        };
+      };
 
       modules = {
         cli = {
@@ -88,6 +106,12 @@
           game.enable = true;
           terminal.kitty.enable = true;
         };
+      };
+
+      programs.anki.profiles."账户 1".sync = {
+        url = "https://anki.lan.1806016.xyz/";
+        usernameFile = config.sops.secrets."programs/anki/mysync/username".path;
+        keyFile = config.sops.secrets."programs/anki/mysync/key".path;
       };
     };
   };

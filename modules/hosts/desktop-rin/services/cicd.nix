@@ -17,8 +17,13 @@
     nix.settings.trusted-users = ["github-runner"];
 
     sops.secrets = {
-      "services/gitlab-runner/default" = {};
-      "services/github-runner/nixos-config" = {owner = "github-runner";};
+      "services/gitlab-runner/default" = {
+        sopsFile = "${inputs.self.inputs.secrets}/hosts/rin.yaml";
+      };
+      "services/github-runner/nixos-config" = {
+        owner = "github-runner";
+        sopsFile = "${inputs.self.inputs.secrets}/hosts/rin.yaml";
+      };
     };
 
     # GitLab Runner

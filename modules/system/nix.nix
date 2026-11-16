@@ -50,7 +50,7 @@
     # Docs: https://nix.dev/manual/nix/latest/command-ref/conf-file#conf-access-tokens
     sops = {
       # 声明 token
-      # secrets.yaml 格式: github-token: ghp_xxx
+      # common.yaml 格式: github-token: ghp_xxx
       secrets."github-token" = {
         mode = "0400";
       };
@@ -71,7 +71,7 @@
   flake.modules.homeManager.nix = {config, ...}: {
     sops = {
       # 声明 token
-      # secrets.yaml 格式: github-token: ghp_xxx
+      # common.yaml 格式: github-token: ghp_xxx
       secrets."github-token" = {};
 
       # 使用 sops-template 生成配置文件

@@ -1,6 +1,7 @@
 {inputs, ...}: {
   flake.modules.nixos.frieren = {config, ...}: let
     domain = "lan.${config.systemConstants.admin.domain}";
+    sopsFile = "${inputs.self.inputs.secrets}/hosts/frieren.yaml";
   in {
     imports = with inputs.self.modules; [
       nixos."services.rustfs"
@@ -15,19 +16,23 @@
 
     sops.secrets = {
       "services/rustfs/accessKey" = {
+        inherit sopsFile;
         owner = config.services.rustfs.user;
         group = "s3-credentials";
         mode = "0440";
       };
       "services/rustfs/secretKey" = {
+        inherit sopsFile;
         owner = config.services.rustfs.user;
         group = "s3-credentials";
         mode = "0440";
       };
       "services/niks3/apiToken" = {
+        inherit sopsFile;
         owner = config.services.niks3.user;
       };
       "services/niks3/signingKey" = {
+        inherit sopsFile;
         owner = config.services.niks3.user;
       };
     };

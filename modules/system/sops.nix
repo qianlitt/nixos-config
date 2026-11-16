@@ -20,11 +20,9 @@
     ];
 
     sops = {
-      defaultSopsFile = "${self.inputs.secrets}/secrets.yaml";
+      defaultSopsFile = "${self.inputs.secrets}/common.yaml";
 
-      # nixosModules 中的 sops 导入 SSH 密钥作为 age 密钥
-      # 新主机运行 `nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'` 命令更新 `.sops.yaml` 中的密钥
-      age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+      age.keyFile = "/var/lib/sops-nix/host-key.txt";
     };
   };
 
@@ -33,6 +31,6 @@
       inputs.sops-nix.homeManagerModules.sops
     ];
 
-    sops.defaultSopsFile = "${self.inputs.secrets}/secrets.yaml";
+    sops.defaultSopsFile = "${self.inputs.secrets}/common.yaml";
   };
 }

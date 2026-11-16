@@ -86,7 +86,9 @@
 
     config = lib.mkIf cfg.enable {
       # Sops 密钥配置
-      sops.secrets."aria/rpc_secret" = {
+      # 数据位于 hosts/<host>.yaml；启用本服务时需在 host 模块中设置
+      # sops.secrets."services/aria/rpc_secret".sopsFile = .../hosts/<host>.yaml;
+      sops.secrets."services/aria/rpc_secret" = {
         mode = "0400";
       };
 
@@ -96,7 +98,7 @@
         openPorts = true;
         downloadDirPermission = "0770";
         serviceUMask = "0002";
-        rpcSecretFile = config.sops.secrets."aria/rpc_secret".path;
+        rpcSecretFile = config.sops.secrets."services/aria/rpc_secret".path;
 
         # 参考: https://github.com/P3TERX/aria2.conf
         settings =
