@@ -1,8 +1,4 @@
-{inputs, ...}: {
-  flake-file.inputs = {
-    dolphin-overlay.url = "github:MattiDragon/dolphin-overlay";
-  };
-
+{
   flake.modules.nixos.dolphin = {
     config,
     lib,
@@ -16,13 +12,12 @@
     };
 
     config = lib.mkIf cfg.enable {
-      nixpkgs.overlays = [inputs.dolphin-overlay.overlays.default];
-
       environment.systemPackages = with pkgs.kdePackages; [
         qtsvg
         kio
         kio-fuse
         kio-extras
+        kde-cli-tools
         dolphin
       ];
     };
