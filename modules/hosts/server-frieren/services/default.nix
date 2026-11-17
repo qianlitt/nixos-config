@@ -14,28 +14,13 @@
       nixos."services.nginx"
       nixos."services.postgresql"
 
-      # nixos."services.aria"
       nixos."services.alist"
-      nixos."services.cloudreve"
       nixos."services.immich"
-      # nixos."services.openlist"
       nixos."services.vaultwarden"
       nixos."services.anki-sync"
     ];
 
     sops = {
-      secrets."services/postgresql/cloudreve" = {
-        inherit sopsFile;
-        owner = "postgres";
-        group = "postgres";
-        mode = "0440";
-      };
-      # secrets."services/openlist" = {
-      #   inherit sopsFile;
-      #   owner = "openlist";
-      #   group = "openlist";
-      #   mode = "0400";
-      # };
       secrets."services/anki-sync/lean" = {inherit sopsFile;};
     };
 
@@ -83,17 +68,6 @@
           backup.enable = true;
         };
 
-        # aria.enable = true;
-        cloudreve = {
-          enable = true;
-          image = "docker.1ms.run/cloudreve/cloudreve:v4";
-          database.passwordFile = config.sops.secrets."services/postgresql/cloudreve".path;
-        };
-        # openlist = {
-        #   enable = true;
-        #   image = "docker.1ms.run/openlistteam/openlist:latest";
-        #   adminPasswordFile = config.sops.secrets."services/openlist".path;
-        # };
         immich = {
           enable = true;
           host = "0.0.0.0";
@@ -121,29 +95,8 @@
 
     # ========== Nginx 子域名反代配置 ==========
     services.nginx.virtualHosts = {
-      # Cloudreve
-      "pan.${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
-
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString config.modules.services.cloudreve.webPort}/";
-          proxyWebsockets = true;
-          extraConfig = ''
-            client_max_body_size 0;
-            tcp_nopush on;
-            tcp_nodelay on;
-            proxy_send_timeout 600s;
-            proxy_read_timeout 600s;
-            proxy_request_buffering off;
-            proxy_buffering off;
-            chunked_transfer_encoding on;
-          '';
-        };
-      };
-
       # AList
-      "op.${domain}" = {
+      "pan.${domain}" = {
         forceSSL = true;
         useACMEHost = "wildcard.lan";
 
