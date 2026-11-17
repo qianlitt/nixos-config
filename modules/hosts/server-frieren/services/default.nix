@@ -99,11 +99,13 @@
           host = "0.0.0.0";
           port = 2283;
 
+          machine-learning.enable = false;
           environment = {
             TZ = config.time.timeZone;
             IMMICH_LOG_LEVEL = "log";
           };
         };
+
         vaultwarden.enable = true;
       };
     };
