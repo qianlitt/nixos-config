@@ -5,7 +5,11 @@
       elaina
     ];
 
-    home-manager.users.elaina = {config, ...}: {
+    home-manager.users.elaina = {
+      config,
+      pkgs,
+      ...
+    }: {
       home.pointerCursor.enable = true;
 
       imports = with inputs.self.modules.homeManager; [
@@ -108,10 +112,13 @@
         };
       };
 
-      programs.anki.profiles."账户 1".sync = {
-        url = "https://anki.lan.1806016.xyz/";
-        usernameFile = config.sops.secrets."programs/anki/mysync/username".path;
-        keyFile = config.sops.secrets."programs/anki/mysync/key".path;
+      programs = {
+        btop.package = pkgs.btop-cuda;
+        anki.profiles."账户 1".sync = {
+          url = "https://anki.lan.1806016.xyz/";
+          usernameFile = config.sops.secrets."programs/anki/mysync/username".path;
+          keyFile = config.sops.secrets."programs/anki/mysync/key".path;
+        };
       };
     };
   };
