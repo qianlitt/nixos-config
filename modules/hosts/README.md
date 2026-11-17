@@ -4,12 +4,11 @@
 
 ## Current Host
 
-| Host           | Platform     | Hardware                     | Purpose | Status    |
-| -------------- | ------------ | ---------------------------- | ------- | --------- |
-| server-frieren | x86_64-linux | i7-310M + 310M               | Server  | ✅ Active |
+| Host           | Platform     | Hardware                     | Purpose | Status   |
+| -------------- | ------------ | ---------------------------- | ------- | -------- |
 | desktop-rin    | x86_64-linux | i7-14650HX + RTX 5060 Laptop | desktop | ✅ Active |
+| server-frieren | x86_64-linux | Virtual                      | server  | ✅ Active |
 
-<a id="naming-convention"></a>
 > [!NOTE] Naming Convention
 >
 > 目录名遵循“用途-主机名”的格式。例如，`server-frieren` 表示这是一个主机名为 frieren 的服务器。
