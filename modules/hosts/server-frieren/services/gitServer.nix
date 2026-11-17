@@ -114,6 +114,11 @@
         host = "git.${domain}";
         port = 443;
 
+        # 降低常驻内存
+        puma.workers = 1;
+        sidekiq.concurrency = 4;
+        sidekiq.memoryKiller.maxMemory = 1200;
+
         initialRootPasswordFile = config.sops.secrets."services/gitlab/initialRootPassword".path;
         databasePasswordFile = config.sops.secrets."services/gitlab/databasePassword".path;
         secrets = {
@@ -139,9 +144,12 @@
         };
 
         extraConfig = {
+          # 关闭 usage ping，减少周期性后台任务
+          gitlab.usage_ping_enabled = false;
+
           pages = {
             # 控制 pages 生成的链接
-            port = 443; # 去除生端口号
+            port = 443; # 避免生成端口号
             https = true; # 使用 HTTPS scheme
           };
         };
