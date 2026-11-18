@@ -67,6 +67,7 @@
       # 覆盖雾凇拼音配置
       ".local/share/fcitx5/rime/rime_ice.custom.yaml".text = ''
         patch:
+          # 关闭 emoji
           switches/@3:
             name: emoji
             states: [ 💀, 😄 ]
@@ -76,6 +77,7 @@
       # 覆盖小鹤双拼配置
       ".local/share/fcitx5/rime/double_pinyin_flypy.custom.yaml".text = ''
         patch:
+          # 关闭 emoji
           switches/@3:
             name: emoji
             states: [ 💀, 😄 ]
