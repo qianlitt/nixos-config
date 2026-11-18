@@ -32,6 +32,7 @@
             godot
             aseprite
             homeManager."git.full"
+            homeManager."nixvim.full"
 
             hyprland
             # niri
@@ -71,18 +72,6 @@
       };
 
       modules = {
-        cli = {
-          nixvim = {
-            enable = true;
-
-            completion.enable = true;
-            lsp.enable = true;
-            format.enable = true;
-            lint.enable = true;
-            treesitter.enable = true;
-          };
-        };
-
         desktop = {
           quickshell.noctalia.enable = true;
           windowManager.hyprland = {

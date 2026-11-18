@@ -7,14 +7,6 @@
 
     home-manager.users.elaina = {
       imports = [];
-
-      modules = {
-        cli = {
-          nixvim = {
-            enable = true;
-          };
-        };
-      };
     };
   };
 }

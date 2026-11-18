@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/lewis6991/gitsigns.nvim
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim = {
       plugins.gitsigns = {
         enable = true;

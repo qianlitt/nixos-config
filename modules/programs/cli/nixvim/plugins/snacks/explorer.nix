@@ -2,7 +2,7 @@
 #
 # Docs: https://github.com/folke/snacks.nvim/blob/main/docs/explorer.md
 {
-  flake.modules.homeManager.nixvim = {config, ...}: let
+  flake.modules.homeManager."nixvim.plugins" = {config, ...}: let
     mkRaw = config.lib.nixvim.mkRaw;
   in {
     programs.nixvim = {

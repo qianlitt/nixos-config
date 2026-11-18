@@ -28,7 +28,7 @@
         fastfetch
         fish
         homeManager."git.min"
-        nixvim
+        homeManager."nixvim.base"
         shell
         ssh
         starship

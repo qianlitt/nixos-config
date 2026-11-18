@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/folke/snacks.nvim
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim = {
       plugins.snacks = {
         enable = true;

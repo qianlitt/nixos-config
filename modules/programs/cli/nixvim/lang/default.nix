@@ -1,11 +1,10 @@
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.language" = {
     lib,
     config,
     pkgs,
     ...
   }: let
-    inherit (config.modules.cli.nixvim) lsp format lint treesitter;
     inherit (config.programs.nixvim.plugins.treesitter.package) builtGrammars;
 
     allConfigs =
@@ -26,26 +25,29 @@
     allExtraPackages = lib.flatten (map (cfg: cfg.extraPackages or []) allConfigs);
   in {
     programs.nixvim = {
-      lsp.servers = lib.mkIf lsp.enable (
-        lib.mkMerge (map (
-            cfg:
-              lib.mapAttrs (_name: svr: {enable = true;} // svr) (cfg.lsp or {})
-          )
-          allConfigs)
-      );
+      lsp.servers = lib.mkMerge (map (
+          cfg:
+            lib.mapAttrs (_name: svr: {enable = true;} // svr)
+            (cfg.lsp or {})
+        )
+        allConfigs);
 
       plugins = {
-        conform-nvim.settings = lib.mkIf format.enable {
+        conform-nvim.settings = {
           formatters_by_ft = allConform.formatters_by_ft or {};
-          formatters = lib.mapAttrs (_: cmd: {command = cmd;}) (allConform.commands or {});
+          formatters =
+            lib.mapAttrs (
+              _: cmd: {command = cmd;}
+            )
+            (allConform.commands or {});
         };
-        lint.lintersByFt = lib.mkIf lint.enable allLint;
-        treesitter.grammarPackages = lib.mkIf treesitter.enable (
-          lib.mkAfter (map (g: builtGrammars.${g}) allTreesitter)
+        lint.lintersByFt = allLint;
+        treesitter.grammarPackages = lib.mkAfter (
+          map (g: builtGrammars.${g}) allTreesitter
         );
       };
 
-      extraPackages = lib.mkIf (lsp.enable || format.enable || lint.enable) allExtraPackages;
+      extraPackages = allExtraPackages;
     };
   };
 }

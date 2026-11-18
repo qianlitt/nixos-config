@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/folke/trouble.nvim
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim = {
       plugins.trouble = {
         enable = true;

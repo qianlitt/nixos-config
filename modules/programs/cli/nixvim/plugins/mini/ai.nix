@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/nvim-mini/mini.ai
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim.plugins.mini-ai = {
       enable = true;
 
