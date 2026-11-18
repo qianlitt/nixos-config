@@ -54,6 +54,10 @@
         hl.bind("${kbSettings}", hl.dsp.exec_cmd(ipc .. " settings-toggle"))
         hl.bind("${kbLock}", hl.dsp.exec_cmd(ipc .. " session lock"))
 
+        -- 窗口切换器
+        hl.bind("ALT + Tab", hl.dsp.exec_cmd(ipc .. " window-switcher hold"))
+        hl.bind("ALT + SHIFT + Tab", hl.dsp.exec_cmd(ipc .. " window-switcher hold reverse"))
+
         -- Media
         hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. " volume-up"), { locked = true, repeating = true })
         hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(ipc .. " volume-down"), { locked = true, repeating = true })
