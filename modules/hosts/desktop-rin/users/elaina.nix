@@ -85,7 +85,6 @@
           #   monitors = config.systemConstants.host.rin.monitors;
           # };
 
-          fcitx5.enable = true;
           game.enable = true;
           terminal.kitty.enable = true;
         };

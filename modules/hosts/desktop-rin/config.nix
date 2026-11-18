@@ -32,7 +32,6 @@
           hyprland.enable = true;
         };
 
-        fcitx5.enable = true;
         fonts.enable = true;
         keyboard.enable = true;
         game.enable = true;
