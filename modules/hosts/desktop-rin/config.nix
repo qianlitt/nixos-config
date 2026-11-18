@@ -32,7 +32,6 @@
           hyprland.enable = true;
         };
 
-        keyboard.enable = true;
         localsend.enable = true;
         stylix.enable = true;
       };
