@@ -84,8 +84,6 @@
           #   quickshell = "noctalia";
           #   monitors = config.systemConstants.host.rin.monitors;
           # };
-
-          terminal.kitty.enable = true;
         };
       };
 
