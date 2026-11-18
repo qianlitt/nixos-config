@@ -25,12 +25,6 @@
     modules = {
       grub.enable = true;
       i18n.enable = true;
-
-      desktop = {
-        windowManager = {
-          hyprland.enable = true;
-        };
-      };
     };
   };
 }

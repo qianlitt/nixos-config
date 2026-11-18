@@ -35,6 +35,7 @@
             homeManager."nixvim.full"
 
             hyprland
+            homeManager."hyprland<->noctalia"
             # niri
             noctalia
             game
@@ -50,6 +51,9 @@
           (gitUser {
             name = config.systemConstants.git.user.name;
             email = config.systemConstants.git.user.email;
+          })
+          (hyprlandMonitors {
+            monitors = config.systemConstants.host.rin.monitors;
           })
         ]);
 
@@ -68,21 +72,6 @@
         };
         "programs/anki/mysync/key" = {
           sopsFile = "${inputs.self.inputs.secrets}/users/elaina.yaml";
-        };
-      };
-
-      modules = {
-        desktop = {
-          windowManager.hyprland = {
-            enable = true;
-            quickshell = "noctalia";
-            monitors = config.systemConstants.host.rin.monitors;
-          };
-          # windowManager.niri = {
-          #   enable = true;
-          #   quickshell = "noctalia";
-          #   monitors = config.systemConstants.host.rin.monitors;
-          # };
         };
       };
 
