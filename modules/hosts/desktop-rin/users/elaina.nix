@@ -12,30 +12,36 @@
     }: {
       home.pointerCursor.enable = true;
 
-      imports = with inputs.self.modules.homeManager; [
-        anki
-        discord
-        fcitx5
-        kitty
-        obsidian
-        telegram
-        chromium
-        zen-browser
-        neovide
-        vscode
-        wps
-        calibre
-        zathura
-        zeal
-        godot
-        aseprite
+      imports =
+        (with inputs.self.modules.homeManager; [
+          anki
+          discord
+          fcitx5
+          kitty
+          obsidian
+          telegram
+          chromium
+          zen-browser
+          neovide
+          vscode
+          wps
+          calibre
+          zathura
+          zeal
+          godot
+          aseprite
 
-        hyprland
-        # niri
-        noctalia
-        game
-        stylix
-      ];
+          hyprland
+          # niri
+          noctalia
+          game
+          stylix
+        ])
+        ++ (with inputs.self.factory; [
+          (gpgImportKey {
+            fingerprint = config.systemConstants.gpg.fingerprint;
+          })
+        ]);
 
       sops.secrets = {
         gpg = {
@@ -71,15 +77,6 @@
             tui.enable = true;
           };
 
-          gpg = {
-            enable = true;
-            sshKeys = [config.systemConstants.gpg.keygrip];
-            importKey = {
-              enable = true;
-              fingerprint = config.systemConstants.gpg.fingerprint;
-            };
-          };
-
           nixvim = {
             enable = true;
 
@@ -109,6 +106,8 @@
           terminal.kitty.enable = true;
         };
       };
+
+      services.gpg-agent.sshKeys = [config.systemConstants.gpg.keygrip];
 
       programs = {
         btop.package = pkgs.btop-cuda;

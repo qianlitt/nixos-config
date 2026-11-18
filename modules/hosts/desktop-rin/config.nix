@@ -26,10 +26,6 @@
       grub.enable = true;
       i18n.enable = true;
 
-      cli = {
-        gpg.enable = true;
-      };
-
       desktop = {
         quickshell.noctalia.enable = true;
         windowManager = {
