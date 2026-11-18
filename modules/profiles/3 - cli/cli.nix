@@ -27,7 +27,7 @@
         eza
         fastfetch
         fish
-        git
+        homeManager."git.min"
         nixvim
         shell
         ssh

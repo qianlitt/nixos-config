@@ -13,33 +13,42 @@
       home.pointerCursor.enable = true;
 
       imports =
-        (with inputs.self.lib.modules.homeManager; [
-          anki
-          discord
-          fcitx5
-          kitty
-          obsidian
-          telegram
-          chromium
-          zen-browser
-          neovide
-          vscode
-          wps
-          calibre
-          zathura
-          zeal
-          godot
-          aseprite
+        (with inputs.self.lib.modules;
+          with inputs.self.lib.modules.homeManager; [
+            anki
+            discord
+            fcitx5
+            kitty
+            obsidian
+            telegram
+            chromium
+            zen-browser
+            neovide
+            vscode
+            wps
+            calibre
+            zathura
+            zeal
+            godot
+            aseprite
+            homeManager."git.full"
 
-          hyprland
-          # niri
-          noctalia
-          game
-          stylix
-        ])
+            hyprland
+            # niri
+            noctalia
+            game
+            stylix
+          ])
         ++ (with inputs.self.factory; [
           (gpgImportKey {
             fingerprint = config.systemConstants.gpg.fingerprint;
+          })
+          (gitSigningKey {
+            signingKey = config.systemConstants.git.signingKey;
+          })
+          (gitUser {
+            name = config.systemConstants.git.user.name;
+            email = config.systemConstants.git.user.email;
           })
         ]);
 
@@ -63,20 +72,6 @@
 
       modules = {
         cli = {
-          git = {
-            enable = true;
-            user = {
-              name = config.systemConstants.git.user.name;
-              email = config.systemConstants.git.user.email;
-            };
-            signing = {
-              enable = true;
-              key = config.systemConstants.git.signingKey;
-            };
-            gh.enable = true;
-            tui.enable = true;
-          };
-
           nixvim = {
             enable = true;
 
