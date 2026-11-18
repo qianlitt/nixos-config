@@ -47,30 +47,5 @@
       podlet # 生成 Podman Quadlet 配置
       lazydocker # TUI
     ];
-
-    # 开启 Podman 自动更新定时器（用户级 systemd）
-    systemd.user.services.podman-auto-update = {
-      description = "Podman auto-update service";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.podman}/bin/podman auto-update";
-        Restart = "on-failure";
-        RestartSec = 10;
-        TimeoutStartSec = 300;
-        LogsDirectory = "podman";
-        StandardOutput = "journal";
-        StandardError = "journal";
-      };
-    };
-
-    systemd.user.timers.podman-auto-update = {
-      description = "Podman auto-update timer";
-      wantedBy = ["default.target"];
-      timerConfig = {
-        OnCalendar = "02:00:00"; # 每日凌晨2点
-        Persistent = true;
-        RandomizedDelaySec = 3600; # 添加随机延迟，避免同时更新
-      };
-    };
   };
 }
