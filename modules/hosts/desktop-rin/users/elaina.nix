@@ -85,7 +85,6 @@
           #   monitors = config.systemConstants.host.rin.monitors;
           # };
 
-          game.enable = true;
           terminal.kitty.enable = true;
         };
       };

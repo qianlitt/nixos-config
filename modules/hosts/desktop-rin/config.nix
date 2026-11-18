@@ -33,7 +33,6 @@
         };
 
         keyboard.enable = true;
-        game.enable = true;
         localsend.enable = true;
         stylix.enable = true;
       };
