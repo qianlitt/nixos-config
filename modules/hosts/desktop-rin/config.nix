@@ -32,7 +32,6 @@
           hyprland.enable = true;
         };
 
-        audio.enable = true;
         displayManager.enable = true;
         dolphin.enable = true;
         fcitx5.enable = true;
