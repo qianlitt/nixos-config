@@ -31,8 +31,6 @@
         windowManager = {
           hyprland.enable = true;
         };
-
-        stylix.enable = true;
       };
     };
   };

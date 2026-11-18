@@ -16,10 +16,7 @@
         niri
         noctalia
         game
-        stylix
       ];
-
-      modules.desktop.stylix.enable = true;
     };
 
     darwin.profile-desktop = {
@@ -48,7 +45,6 @@
         niri
         noctalia
         game
-        stylix
       ];
     };
   };
