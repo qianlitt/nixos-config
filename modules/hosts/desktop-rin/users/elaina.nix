@@ -73,7 +73,6 @@
 
       modules = {
         desktop = {
-          quickshell.noctalia.enable = true;
           windowManager.hyprland = {
             enable = true;
             quickshell = "noctalia";

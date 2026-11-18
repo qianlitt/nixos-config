@@ -27,7 +27,6 @@
       i18n.enable = true;
 
       desktop = {
-        quickshell.noctalia.enable = true;
         windowManager = {
           hyprland.enable = true;
         };
