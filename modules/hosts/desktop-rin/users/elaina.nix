@@ -80,8 +80,6 @@
             };
           };
 
-          ai.enable = true;
-
           nixvim = {
             enable = true;
 

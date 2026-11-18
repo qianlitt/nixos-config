@@ -27,7 +27,6 @@
       i18n.enable = true;
 
       cli = {
-        ai.enable = true;
         gpg.enable = true;
         direnv.enable = true;
       };
