@@ -1,5 +1,5 @@
 {self, ...}: {
-  config.flake.factory.user = username: isAdmin: {
+  flake.factory.user = username: isAdmin: {
     nixos."${username}" = {
       lib,
       pkgs,
