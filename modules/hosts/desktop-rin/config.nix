@@ -28,7 +28,6 @@
 
       cli = {
         gpg.enable = true;
-        direnv.enable = true;
       };
 
       desktop = {
