@@ -9,7 +9,7 @@ in {
     (self.factory.user username true)
     {
       nixos.${username} = {config, ...}: {
-        imports = with self.modules.nixos; [
+        imports = with self.lib.modules.nixos; [
         ];
 
         sops.secrets = {
@@ -31,12 +31,12 @@ in {
       };
 
       darwin.${username} = {
-        imports = with self.modules.darwin; [
+        imports = with self.lib.modules.darwin; [
         ];
       };
 
       homeManager.${username} = {pkgs, ...}: {
-        imports = with self.modules.homeManager; [
+        imports = with self.lib.modules.homeManager; [
           profile-cli
         ];
 

@@ -2,31 +2,31 @@
 {inputs, ...}: {
   flake.modules = {
     nixos.profile-default = {
-      imports = with inputs.self.modules.nixos;
+      imports = with inputs.self.lib.modules.nixos;
         [
           profile-minimal
 
           home-manager
         ]
-        ++ [inputs.self.modules.generic.systemConstants];
+        ++ [inputs.self.lib.modules.generic.systemConstants];
     };
 
     darwin.profile-default = {
-      imports = with inputs.self.modules.darwin;
+      imports = with inputs.self.lib.modules.darwin;
         [
           profile-minimal
 
           home-manager
         ]
-        ++ [inputs.self.modules.generic.systemConstants];
+        ++ [inputs.self.lib.modules.generic.systemConstants];
     };
 
     homeManager.profile-default = {
-      imports = with inputs.self.modules.homeManager;
+      imports = with inputs.self.lib.modules.homeManager;
         [
           profile-minimal
         ]
-        ++ [inputs.self.modules.generic.systemConstants];
+        ++ [inputs.self.lib.modules.generic.systemConstants];
     };
   };
 }

@@ -1,7 +1,7 @@
 # default settings needed for all nixosConfigurations
 {inputs, ...}: {
   flake.modules.nixos.profile-minimal = {
-    imports = with inputs.self.modules.nixos; [
+    imports = with inputs.self.lib.modules.nixos; [
       disko
       grub
       i18n

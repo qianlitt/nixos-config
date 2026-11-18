@@ -6,7 +6,7 @@
   }: let
     sopsFile = "${inputs.self.inputs.secrets}/hosts/frieren.yaml";
   in {
-    imports = with inputs.self.modules; [
+    imports = with inputs.self.lib.modules; [
       nixos."services.samba"
       nixos."services.nfs"
     ];

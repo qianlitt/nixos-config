@@ -22,7 +22,7 @@
       ];
     };
   in {
-    imports = with inputs.self.modules; [
+    imports = with inputs.self.lib.modules; [
       nixos."services.rustfs"
       nixos."services.niks3"
     ];

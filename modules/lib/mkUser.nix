@@ -18,7 +18,7 @@
 
       home-manager.users."${username}" = {
         imports = [
-          self.modules.homeManager."${username}"
+          self.lib.modules.homeManager."${username}"
         ];
       };
     };
@@ -35,7 +35,7 @@
 
       home-manager.users."${username}" = {
         imports = [
-          self.modules.homeManager."${username}"
+          self.lib.modules.homeManager."${username}"
         ];
       };
 

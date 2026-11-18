@@ -1,6 +1,6 @@
 {inputs, ...}: {
   flake.modules.nixos.rin = {config, ...}: {
-    imports = with inputs.self.modules; [
+    imports = with inputs.self.lib.modules; [
       nixos."services.gitlab-runner"
     ];
 

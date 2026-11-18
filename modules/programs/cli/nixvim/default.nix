@@ -14,7 +14,7 @@
   in {
     imports = [
       inputs.nixvim.homeModules.nixvim
-      inputs.self.modules.generic.nixvimIcons
+      inputs.self.lib.modules.generic.nixvimIcons
     ];
 
     options.modules.cli.nixvim = {

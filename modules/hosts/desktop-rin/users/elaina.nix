@@ -1,6 +1,6 @@
 {inputs, ...}: {
   flake.modules.nixos.rin = {
-    imports = with inputs.self.modules.nixos;
+    imports = with inputs.self.lib.modules.nixos;
     with inputs.self.factory; [
       elaina
     ];
@@ -13,7 +13,7 @@
       home.pointerCursor.enable = true;
 
       imports =
-        (with inputs.self.modules.homeManager; [
+        (with inputs.self.lib.modules.homeManager; [
           anki
           discord
           fcitx5

@@ -1,7 +1,7 @@
 {inputs, ...}: {
   flake.modules = {
     nixos.profile-desktop = {
-      imports = with inputs.self.modules.nixos; [
+      imports = with inputs.self.lib.modules.nixos; [
         profile-cli
 
         audio
@@ -23,13 +23,13 @@
     };
 
     darwin.profile-desktop = {
-      imports = with inputs.self.modules.darwin; [
+      imports = with inputs.self.lib.modules.darwin; [
         profile-cli
       ];
     };
 
     homeManager.profile-desktop = {
-      imports = with inputs.self.modules.homeManager; [
+      imports = with inputs.self.lib.modules.homeManager; [
         profile-cli
 
         anki

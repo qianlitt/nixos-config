@@ -1,6 +1,6 @@
 {inputs, ...}: {
   flake.modules.nixos.rin = {
-    imports = with inputs.self.modules.nixos; [
+    imports = with inputs.self.lib.modules.nixos; [
       profile-cli
 
       audio

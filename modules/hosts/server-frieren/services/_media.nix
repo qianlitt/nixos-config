@@ -4,7 +4,7 @@ in {
   flake.modules.nixos.frieren = {config, ...}: let
     domain = "lan.${config.systemConstants.admin.domain}"; # 分配三级域名
   in {
-    imports = with inputs.self.modules; [
+    imports = with inputs.self.lib.modules; [
       nixos."services.qbittorrent"
       nixos."services.peerbanhelper"
 
