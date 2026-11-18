@@ -33,19 +33,6 @@
     };
 
     config = lib.mkIf cfg.enable {
-      assertions = [
-        {
-          assertion = config.modules.cli.podman.enable && config.modules.cli.podman.quadlet.enable;
-          message = ''
-            Openlist 服务依赖 Podman 和 Quadlet，请添加配置：
-              modules.cli.podman = {
-                enable = true;
-                quadlet.enable = true;
-              };
-          '';
-        }
-      ];
-
       # 创建数据目录
       systemd.tmpfiles.rules = [
         "d '${toString cfg.dataDir}' 0755 root root - -"

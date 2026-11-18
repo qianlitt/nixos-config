@@ -101,16 +101,6 @@
           assertion = cfg.database.passwordFile != "";
           message = "Cloudreve: database.passwordFile 必须设置，且文件内容应为 PostgreSQL 密码";
         }
-        {
-          assertion = config.modules.cli.podman.enable && config.modules.cli.podman.quadlet.enable;
-          message = ''
-            Cloudreve 服务依赖 Podman 和 Quadlet，请添加配置：
-              modules.cli.podman = {
-                enable = true;
-                quadlet.enable = true;
-              };
-          '';
-        }
       ];
 
       # PostgreSQL 配置

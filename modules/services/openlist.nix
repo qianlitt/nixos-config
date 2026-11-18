@@ -40,19 +40,6 @@
     };
 
     config = lib.mkIf cfg.enable {
-      assertions = [
-        {
-          assertion = config.modules.cli.podman.enable && config.modules.cli.podman.quadlet.enable;
-          message = ''
-            Openlist 服务依赖 Podman 和 Quadlet，请添加配置：
-              modules.cli.podman = {
-                enable = true;
-                quadlet.enable = true;
-              };
-          '';
-        }
-      ];
-
       # 创建用户和用户组
       users.users.openlist = {
         isSystemUser = true;

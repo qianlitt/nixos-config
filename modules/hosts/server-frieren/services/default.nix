@@ -25,11 +25,6 @@
     };
 
     modules = {
-      cli.podman = {
-        enable = true;
-        quadlet.enable = true;
-      };
-
       services = {
         ssh = {
           enable = true;

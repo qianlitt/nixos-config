@@ -4,11 +4,6 @@
       nixos."services.gitlab-runner"
     ];
 
-    modules.cli.podman = {
-      enable = true;
-      quadlet.enable = true;
-    };
-
     users.groups.github-runner = {};
     users.users.github-runner = {
       isSystemUser = true;
