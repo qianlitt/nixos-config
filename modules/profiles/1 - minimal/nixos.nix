@@ -4,7 +4,6 @@
     imports = with inputs.self.lib.modules.nixos; [
       disko
       grub
-      i18n
       kernel
       nix
       nur
