@@ -94,8 +94,12 @@
         };
       };
 
-      nfs = {
-        enable = true;
+      # Immich / RustFS 的数据目录改到数据盘
+    };
+    services = {
+      rustfs.volumes = "/mnt/s3";
+      immich.mediaLocation = "/mnt/immich";
+      nfs.server = {
         hostName = "192.168.1.101";
         exports = {
           "/mnt/media" = {
@@ -106,12 +110,6 @@
           };
         };
       };
-
-      # Immich / RustFS 的数据目录改到数据盘
-    };
-    services = {
-      rustfs.volumes = "/mnt/s3";
-      immich.mediaLocation = "/mnt/immich";
     };
 
     systemd.tmpfiles.rules = [
