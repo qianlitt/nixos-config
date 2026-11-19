@@ -20,8 +20,6 @@
   in {
     imports =
       (with inputs.self.lib.modules; [
-        nixos."services.ssh"
-
         nixos."services.nginx"
         nixos."services.postgresql"
 
@@ -54,11 +52,6 @@
 
     modules = {
       services = {
-        ssh = {
-          enable = true;
-          allowPassword = false;
-        };
-
         vaultwarden.enable = true;
       };
     };
