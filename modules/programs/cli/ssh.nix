@@ -5,7 +5,8 @@
       enableDefaultConfig = false;
 
       settings = {
-        # 此处的顺序不重要，由 nix 自动合并
+        # Host-specific 配置优先于 "*" 默认配置。
+        # OpenSSH 对大多数配置项采用 first obtained value 规则。
         "*" = {
           forwardAgent = false; # 禁用代理转发
           compression = false; # 禁用压缩
