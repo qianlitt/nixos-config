@@ -50,12 +50,6 @@
       };
     };
 
-    modules = {
-      services = {
-        vaultwarden.enable = true;
-      };
-    };
-
     services = {
       anki-sync-server.users = [
         {
@@ -82,79 +76,95 @@
     };
 
     # ========== Nginx 子域名反代配置 ==========
-    services.nginx.virtualHosts = {
-      # AList
-      "pan.${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
-
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:5244/";
-          proxyWebsockets = true;
-          extraConfig = ''
-            client_max_body_size 0;
-            tcp_nopush on;
-            tcp_nodelay on;
-            proxy_send_timeout 600s;
-            proxy_read_timeout 600s;
-            proxy_request_buffering off;
-            proxy_buffering off;
-            chunked_transfer_encoding on;
-          '';
-        };
-      };
-
-      # Immich
-      "photo.${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
-
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString config.services.immich.port}/";
-          proxyWebsockets = true;
-          extraConfig = ''
-            client_max_body_size 0;
-            tcp_nopush on;
-            tcp_nodelay on;
-            proxy_send_timeout 600s;
-            proxy_read_timeout 600s;
-            proxy_request_buffering off;
-            proxy_buffering off;
-            chunked_transfer_encoding on;
-          '';
-        };
-      };
-
+    services.nginx = {
       # Vaultwarden
-      "vw.${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
+      upstreams.vaultwarden.servers."127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}" = {};
 
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString config.modules.services.vaultwarden.port}/";
-          proxyWebsockets = true;
+      virtualHosts = {
+        # AList
+        "pan.${domain}" = {
+          forceSSL = true;
+          useACMEHost = "wildcard.lan";
+
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:5244/";
+            proxyWebsockets = true;
+            extraConfig = ''
+              client_max_body_size 0;
+              tcp_nopush on;
+              tcp_nodelay on;
+              proxy_send_timeout 600s;
+              proxy_read_timeout 600s;
+              proxy_request_buffering off;
+              proxy_buffering off;
+              chunked_transfer_encoding on;
+            '';
+          };
         };
-      };
 
-      # Anki sync server
-      "anki.${domain}" = {
-        forceSSL = true;
-        useACMEHost = "wildcard.lan";
+        # Immich
+        "photo.${domain}" = {
+          forceSSL = true;
+          useACMEHost = "wildcard.lan";
 
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString config.services.anki-sync-server.port}/";
-          proxyWebsockets = true;
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:${toString config.services.immich.port}/";
+            proxyWebsockets = true;
+            extraConfig = ''
+              client_max_body_size 0;
+              tcp_nopush on;
+              tcp_nodelay on;
+              proxy_send_timeout 600s;
+              proxy_read_timeout 600s;
+              proxy_request_buffering off;
+              proxy_buffering off;
+              chunked_transfer_encoding on;
+            '';
+          };
         };
-        extraConfig = ''
-          client_max_body_size 0;
-          tcp_nopush on;
-          tcp_nodelay on;
-          proxy_send_timeout 600s;
-          proxy_read_timeout 600s;
-          proxy_request_buffering off;
-          proxy_buffering off;
-          chunked_transfer_encoding on;
-        '';
+
+        # Vaultwarden
+        "vw.${domain}" = {
+          forceSSL = true;
+          useACMEHost = "wildcard.lan";
+
+          locations = {
+            "/" = {
+              proxyPass = "http://vaultwarden";
+            };
+
+            "= /notifications/anonymous-hub" = {
+              proxyPass = "http://vaultwarden";
+              proxyWebsockets = true;
+            };
+
+            "= /notifications/hub" = {
+              proxyPass = "http://vaultwarden";
+              proxyWebsockets = true;
+            };
+          };
+        };
+
+        # Anki sync server
+        "anki.${domain}" = {
+          forceSSL = true;
+          useACMEHost = "wildcard.lan";
+
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:${toString config.services.anki-sync-server.port}/";
+            proxyWebsockets = true;
+          };
+          extraConfig = ''
+            client_max_body_size 0;
+            tcp_nopush on;
+            tcp_nodelay on;
+            proxy_send_timeout 600s;
+            proxy_read_timeout 600s;
+            proxy_request_buffering off;
+            proxy_buffering off;
+            chunked_transfer_encoding on;
+          '';
+        };
       };
     };
   };
