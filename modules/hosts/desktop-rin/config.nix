@@ -23,7 +23,6 @@
     ];
 
     modules = {
-      grub.enable = true;
       i18n.enable = true;
     };
   };
