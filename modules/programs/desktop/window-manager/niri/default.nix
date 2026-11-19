@@ -1,6 +1,6 @@
 {inputs, ...}: {
   flake-file.inputs = {
-    niri.url = "github:sodiboo/niri-flake";
+    niri.url = "github:epireyn/niri-flake";
   };
 
   flake.modules.nixos.niri = {
@@ -20,8 +20,8 @@
     # 缓存配置
     niri-flake.cache.enable = false;
     nix.settings = {
-      substituters = lib.mkOrder 600 ["https://niri.cachix.org"];
-      trusted-public-keys = ["niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="];
+      substituters = lib.mkOrder 600 ["https://niri-epireyn.cachix.org"];
+      trusted-public-keys = ["niri-epireyn.cachix.org-1:tlVyFN7CtsDT+ZcLPS+ekFWeT1X6X4OqvWqbBMyIzFA="];
     };
 
     # 使用 niri-unstable（需要 overlay）
