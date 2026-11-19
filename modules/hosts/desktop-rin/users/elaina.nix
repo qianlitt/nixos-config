@@ -37,6 +37,7 @@
             hyprland
             homeManager."hyprland<->noctalia"
             # niri
+            # homeManager."niri<->noctalia"
             noctalia
             game
             stylix
@@ -55,6 +56,9 @@
           (hyprlandMonitors {
             monitors = config.systemConstants.host.rin.monitors;
           })
+          # (niriOutputs {
+          #   outputs = config.systemConstants.host.rin.monitors;
+          # })
         ]);
 
       sops.secrets = {
