@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.base" = {
     programs.nixvim = {
       globals = {
         mapleader = " ";

@@ -1,45 +1,35 @@
 {
-  flake.modules.nixos."services.ssh" = {
-    config,
-    lib,
-    ...
-  }: let
-    cfg = config.modules.services.ssh;
-  in {
-    options.modules.services.ssh = {
-      enable = lib.mkEnableOption "启用 OpeSSH 服务配置";
+  flake.modules.nixos."services.ssh" = {lib, ...}: {
+    services.openssh = {
+      enable = true;
 
-      ports = lib.mkOption {
-        type = lib.types.listOf lib.types.port;
-        default = [22];
-        description = "SSH 服务监听的端口";
-      };
+      openFirewall = true;
 
-      allowRoot = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "是否允许 root 用户通过 ssh 登录";
-      };
+      settings = {
+        # Authentication
+        PermitRootLogin = lib.mkDefault "no";
+        PubkeyAuthentication = lib.mkDefault true; # 明确启用公钥认证
+        PasswordAuthentication = lib.mkDefault false;
+        KbdInteractiveAuthentication = lib.mkDefault false; # 禁止 keyboard-interactive，避免通过 PAM 等方式重新引入交互式密码认证
+        PermitEmptyPasswords = lib.mkDefault false; # 禁止空密码
 
-      allowPassword = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = "是否允许普通用户使用密码登录 ssh";
-      };
-    };
+        # Access control
+        AllowUsers = lib.mkDefault null; # 只允许指定用户登录
 
-    config = lib.mkIf cfg.enable {
-      services.openssh = {
-        enable = true;
-        ports = lib.mkDefault cfg.ports;
-        openFirewall = true;
-        settings = {
-          PermitRootLogin =
-            if cfg.allowRoot
-            then "yes"
-            else "no";
-          PasswordAuthentication = cfg.allowPassword;
-        };
+        # Brute-force mitigation
+        MaxAuthTries = lib.mkDefault 3; # 限制单次连接的认证尝试次数
+        LoginGraceTime = lib.mkDefault "30s"; # 限制未完成认证的连接时间
+        MaxSessions = lib.mkDefault 3; # 限制单个 SSH 连接的会话数量
+
+        # Reduce attack surface
+        X11Forwarding = lib.mkDefault false; # 禁止图形界面转发
+        AllowAgentForwarding = lib.mkDefault false; # 禁止 SSH Agent 转发
+        PermitTunnel = lib.mkDefault false; # 禁止 SSH TUN/TAP 隧道
+        PermitUserEnvironment = lib.mkDefault false; # 禁止用户通过环境文件影响 SSH 会话
+
+        # Session
+        PermitTTY = lib.mkDefault true;
+        PrintMotd = lib.mkDefault false;
       };
     };
   };

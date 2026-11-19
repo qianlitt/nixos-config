@@ -1,24 +1,12 @@
 {
   flake.modules.nixos.direnv = {
-    config,
-    lib,
-    ...
-  }: let
-    cfg = config.modules.cli.direnv;
-  in {
-    options.modules.cli.direnv = {
-      enable = lib.mkEnableOption "安装并配置 direnv";
-    };
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
 
-    config = lib.mkIf cfg.enable {
-      programs.direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-
-        enableBashIntegration = true;
-        enableFishIntegration = true;
-        enableZshIntegration = true;
-      };
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+      enableZshIntegration = true;
     };
   };
 }

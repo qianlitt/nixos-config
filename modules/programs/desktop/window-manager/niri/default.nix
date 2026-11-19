@@ -1,6 +1,6 @@
 {inputs, ...}: {
   flake-file.inputs = {
-    niri.url = "github:sodiboo/niri-flake";
+    niri.url = "github:epireyn/niri-flake";
   };
 
   flake.modules.nixos.niri = {
@@ -20,8 +20,8 @@
     # 缓存配置
     niri-flake.cache.enable = false;
     nix.settings = {
-      substituters = lib.mkOrder 600 ["https://niri.cachix.org"];
-      trusted-public-keys = ["niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="];
+      substituters = lib.mkOrder 600 ["https://niri-epireyn.cachix.org"];
+      trusted-public-keys = ["niri-epireyn.cachix.org-1:tlVyFN7CtsDT+ZcLPS+ekFWeT1X6X4OqvWqbBMyIzFA="];
     };
 
     # 使用 niri-unstable（需要 overlay）
@@ -33,40 +33,24 @@
   };
 
   flake.modules.homeManager.niri = {
-    config,
     lib,
     pkgs,
     ...
-  }: let
-    cfg = config.modules.desktop.windowManager.niri;
-  in {
-    options.modules.desktop.windowManager.niri = {
-      enable = lib.mkEnableOption "启用 Niri 窗口管理器";
+  }: {
+    programs.niri.settings = {
+      xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
 
-      quickshell = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "在 Niri 中启用一些 quickshell 配置";
-      };
-    };
+      prefer-no-csd = true; # 禁止 CSD，让 Niri 负责窗口装饰
 
-    config = lib.mkIf cfg.enable {
-      # 请确保已导入 `flake.modules.nixos.niri`
-      programs.niri.settings = {
-        xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
-
-        prefer-no-csd = true; # 禁止 CSD，让 Niri 负责窗口装饰
-
-        input = {
-          # focus-follows-mouse.enable = true; # 焦点跟随鼠标
-          keyboard = {
-            numlock = true;
-            track-layout = "window";
-          };
+      input = {
+        # focus-follows-mouse.enable = true; # 焦点跟随鼠标
+        keyboard = {
+          numlock = true;
+          track-layout = "window";
         };
       };
-
-      programs.kitty.enable = true; # 确保进入 Niri 时有终端可用
     };
+
+    programs.kitty.enable = true; # 确保进入 Niri 时有终端可用
   };
 }

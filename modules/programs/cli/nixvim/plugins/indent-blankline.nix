@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/lukas-reineke/indent-blankline.nvim
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim = {
       plugins.indent-blankline = {
         enable = true;

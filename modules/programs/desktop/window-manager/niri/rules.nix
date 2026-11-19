@@ -1,10 +1,5 @@
-{inputs, ...}: {
+{
   flake.modules.homeManager.niri = {
-    config,
-    lib,
-    pkgs,
-    ...
-  }: {
     programs.niri.settings.workspaces = {
       "chat" = {};
       "book" = {};
@@ -24,6 +19,12 @@
         };
         clip-to-geometry = true; # 将窗口内容裁剪为圆角
         draw-border-with-background = false;
+
+        # 背景模糊
+        background-effect = {
+          blur = true;
+          xray = false;
+        };
       }
       {
         # 焦点窗口不透明
@@ -127,23 +128,5 @@
         open-maximized = true; # 最大化平铺
       }
     ];
-
-    # warn: 临时手段，向 config.kdl 追加配置
-    xdg.configFile.niri-config.source = let
-      inherit (inputs.niri.lib.internal) validated-config-for;
-      inherit (config.programs.niri) finalConfig package;
-    in
-      lib.mkForce (
-        validated-config-for pkgs package ''
-          ${finalConfig}
-
-          window-rule {
-            background-effect {
-              blur true
-              // xray false
-            }
-          }
-        ''
-      );
   };
 }

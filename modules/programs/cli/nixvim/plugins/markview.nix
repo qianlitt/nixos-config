@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/OXY2DEV/markview.nvim
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim = {
       plugins.markview = {
         enable = true;

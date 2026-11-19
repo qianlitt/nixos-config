@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/saghen/blink.pairs
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim = {
       plugins.blink-pairs = {
         enable = true;

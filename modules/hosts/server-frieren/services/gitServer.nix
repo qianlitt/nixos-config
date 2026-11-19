@@ -3,7 +3,7 @@
     domain = "lan.${config.systemConstants.admin.domain}";
     sopsFile = "${inputs.self.inputs.secrets}/hosts/frieren.yaml";
   in {
-    imports = with inputs.self.modules; [
+    imports = with inputs.self.lib.modules; [
       nixos."services.gitlab"
     ];
 

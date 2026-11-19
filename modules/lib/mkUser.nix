@@ -1,5 +1,5 @@
 {self, ...}: {
-  config.flake.factory.user = username: isAdmin: {
+  flake.factory.user = username: isAdmin: {
     nixos."${username}" = {
       lib,
       pkgs,
@@ -18,7 +18,7 @@
 
       home-manager.users."${username}" = {
         imports = [
-          self.modules.homeManager."${username}"
+          self.lib.modules.homeManager."${username}"
         ];
       };
     };
@@ -35,7 +35,7 @@
 
       home-manager.users."${username}" = {
         imports = [
-          self.modules.homeManager."${username}"
+          self.lib.modules.homeManager."${username}"
         ];
       };
 

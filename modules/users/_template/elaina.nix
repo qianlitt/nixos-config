@@ -9,19 +9,19 @@ in {
     (self.factory.user username true)
     {
       nixos.${username} = {
-        imports = with self.modules.nixos; [
+        imports = with self.lib.modules.nixos; [
         ];
         users.users.${username} = {
         };
       };
 
       darwin.${username} = {
-        imports = with self.modules.darwin; [
+        imports = with self.lib.modules.darwin; [
         ];
       };
 
       homeManager.${username} = {pkgs, ...}: {
-        imports = with self.modules.homeManager; [
+        imports = with self.lib.modules.homeManager; [
           profile-minimal
         ];
         home.packages = with pkgs; [

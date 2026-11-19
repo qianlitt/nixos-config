@@ -13,7 +13,7 @@
     mkNixos = system: name: {
       ${name} = inputs.nixpkgs.lib.nixosSystem {
         modules = [
-          inputs.self.modules.nixos.${name}
+          inputs.self.lib.modules.nixos.${name}
           {
             nixpkgs.hostPlatform = lib.mkDefault system;
             networking.hostName = lib.mkDefault name;
@@ -25,7 +25,7 @@
     mkDarwin = system: name: {
       ${name} = inputs.nix-darwin.lib.darwinSystem {
         modules = [
-          inputs.self.modules.darwin.${name}
+          inputs.self.lib.modules.darwin.${name}
           {nixpkgs.hostPlatform = lib.mkDefault system;}
         ];
       };
@@ -35,7 +35,7 @@
       ${name} = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.${system};
         modules = [
-          inputs.self.modules.homeManager.${name}
+          inputs.self.lib.modules.homeManager.${name}
           {nixpkgs.config.allowUnfree = true;}
         ];
       };

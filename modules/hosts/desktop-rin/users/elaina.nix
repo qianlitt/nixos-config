@@ -1,6 +1,6 @@
 {inputs, ...}: {
   flake.modules.nixos.rin = {
-    imports = with inputs.self.modules.nixos;
+    imports = with inputs.self.lib.modules.nixos;
     with inputs.self.factory; [
       elaina
     ];
@@ -12,30 +12,54 @@
     }: {
       home.pointerCursor.enable = true;
 
-      imports = with inputs.self.modules.homeManager; [
-        anki
-        discord
-        fcitx5
-        kitty
-        obsidian
-        telegram
-        chromium
-        zen-browser
-        neovide
-        vscode
-        wps
-        calibre
-        zathura
-        zeal
-        godot
-        aseprite
+      imports =
+        (with inputs.self.lib.modules;
+          with inputs.self.lib.modules.homeManager; [
+            anki
+            discord
+            fcitx5
+            kitty
+            obsidian
+            telegram
+            chromium
+            zen-browser
+            neovide
+            vscode
+            wps
+            calibre
+            zathura
+            zeal
+            godot
+            aseprite
+            homeManager."git.full"
+            homeManager."nixvim.full"
 
-        hyprland
-        # niri
-        noctalia
-        game
-        stylix
-      ];
+            hyprland
+            homeManager."hyprland<->noctalia"
+            # niri
+            # homeManager."niri<->noctalia"
+            noctalia
+            game
+            stylix
+          ])
+        ++ (with inputs.self.factory; [
+          (gpgImportKey {
+            fingerprint = config.systemConstants.gpg.fingerprint;
+          })
+          (gitSigningKey {
+            signingKey = config.systemConstants.git.signingKey;
+          })
+          (gitUser {
+            name = config.systemConstants.git.user.name;
+            email = config.systemConstants.git.user.email;
+          })
+          (hyprlandMonitors {
+            monitors = config.systemConstants.host.rin.monitors;
+          })
+          # (niriOutputs {
+          #   outputs = config.systemConstants.host.rin.monitors;
+          # })
+        ]);
 
       sops.secrets = {
         gpg = {
@@ -55,62 +79,7 @@
         };
       };
 
-      modules = {
-        cli = {
-          git = {
-            enable = true;
-            user = {
-              name = config.systemConstants.git.user.name;
-              email = config.systemConstants.git.user.email;
-            };
-            signing = {
-              enable = true;
-              key = config.systemConstants.git.signingKey;
-            };
-            gh.enable = true;
-            tui.enable = true;
-          };
-
-          gpg = {
-            enable = true;
-            sshKeys = [config.systemConstants.gpg.keygrip];
-            importKey = {
-              enable = true;
-              fingerprint = config.systemConstants.gpg.fingerprint;
-            };
-          };
-
-          ai.enable = true;
-
-          nixvim = {
-            enable = true;
-
-            completion.enable = true;
-            lsp.enable = true;
-            format.enable = true;
-            lint.enable = true;
-            treesitter.enable = true;
-          };
-        };
-
-        desktop = {
-          quickshell.noctalia.enable = true;
-          windowManager.hyprland = {
-            enable = true;
-            quickshell = "noctalia";
-            monitors = config.systemConstants.host.rin.monitors;
-          };
-          # windowManager.niri = {
-          #   enable = true;
-          #   quickshell = "noctalia";
-          #   monitors = config.systemConstants.host.rin.monitors;
-          # };
-
-          fcitx5.enable = true;
-          game.enable = true;
-          terminal.kitty.enable = true;
-        };
-      };
+      services.gpg-agent.sshKeys = [config.systemConstants.gpg.keygrip];
 
       programs = {
         btop.package = pkgs.btop-cuda;

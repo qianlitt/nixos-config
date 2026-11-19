@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/nvim-lualine/lualine.nvim
 {
-  flake.modules.homeManager.nixvim = {config, ...}: {
+  flake.modules.homeManager."nixvim.plugins" = {config, ...}: {
     programs.nixvim.plugins = {
       # 提供文件类型图标
       web-devicons = {

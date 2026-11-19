@@ -1,7 +1,7 @@
 {inputs, ...}: {
   flake.modules = {
     nixos.profile-cli = {
-      imports = with inputs.self.modules.nixos; [
+      imports = with inputs.self.lib.modules.nixos; [
         profile-default
 
         direnv
@@ -13,21 +13,22 @@
     };
 
     darwin.profile-cli = {
-      imports = with inputs.self.modules.darwin; [
+      imports = with inputs.self.lib.modules.darwin; [
         profile-default
       ];
     };
 
     homeManager.profile-cli = {
-      imports = with inputs.self.modules.homeManager; [
+      imports = with inputs.self.lib.modules;
+      with inputs.self.lib.modules.homeManager; [
         profile-default
 
         cliTools
         eza
         fastfetch
         fish
-        git
-        nixvim
+        homeManager."git.min"
+        homeManager."nixvim.base"
         shell
         ssh
         starship

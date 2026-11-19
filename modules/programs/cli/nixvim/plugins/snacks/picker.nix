@@ -2,7 +2,7 @@
 #
 # Docs: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim = {
       plugins.snacks.settings.picker = {
         enabled = true;

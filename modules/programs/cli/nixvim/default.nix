@@ -5,36 +5,14 @@
     };
   };
 
-  flake.modules.homeManager.nixvim = {
-    config,
-    lib,
-    ...
-  }: let
-    cfg = config.modules.cli.nixvim;
-  in {
-    imports = [
-      inputs.nixvim.homeModules.nixvim
-      inputs.self.modules.generic.nixvimIcons
-    ];
+  flake.modules.homeManager = {
+    "nixvim.base" = {
+      imports = [
+        inputs.nixvim.homeModules.nixvim
+        inputs.self.lib.modules.generic.nixvimIcons
+      ];
 
-    options.modules.cli.nixvim = {
-      enable = lib.mkEnableOption "nixvim";
-
-      # TODO: preset -> enum ["minimal" "full"]
-
-      completion = {enable = lib.mkEnableOption "code completion";};
-      lsp = {enable = lib.mkEnableOption "LSP support";};
-      format = {enable = lib.mkEnableOption "code formatting";};
-      lint = {enable = lib.mkEnableOption "linting";};
-      treesitter = {enable = lib.mkEnableOption "syntax highlighting";};
-    };
-
-    config = lib.mkIf cfg.enable {
       programs.nixvim = {
-        # BUG: "linux-kernel has been removed" 的临时解决方案
-        # https://github.com/nix-community/nixvim/issues/4426
-        nixpkgs.useGlobalPackages = true;
-
         enable = true;
 
         # 设置主题
@@ -61,6 +39,14 @@
         # 性能优化
         performance.byteCompileLua.enable = true; # 预编译 lua
       };
+    };
+
+    "nixvim.full" = {
+      imports = with inputs.self.lib.modules; [
+        homeManager."nixvim.base"
+        homeManager."nixvim.plugins"
+        homeManager."nixvim.language"
+      ];
     };
   };
 }

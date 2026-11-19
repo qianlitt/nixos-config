@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/nvim-mini/mini.indentscope
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim.plugins.mini-indentscope = {
       enable = true;
 

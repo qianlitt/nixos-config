@@ -6,7 +6,7 @@
     lib,
     ...
   }: {
-    imports = with inputs.self.modules.homeManager; [
+    imports = with inputs.self.lib.modules.homeManager; [
       nix
       sops
     ];

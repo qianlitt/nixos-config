@@ -2,29 +2,22 @@
 #
 # Home Page: https://github.com/mfussenegger/nvim-lint
 {
-  flake.modules.homeManager.nixvim = {
-    config,
-    lib,
-    ...
-  }: let
-    inherit (config.modules.cli.nixvim) lint;
-  in
-    lib.mkIf lint.enable {
-      programs.nixvim = {
-        plugins.lint = {
-          enable = true;
+  flake.modules.homeManager."nixvim.plugins" = {
+    programs.nixvim = {
+      plugins.lint = {
+        enable = true;
 
-          lazyLoad.settings.event = ["BufWritePost" "BufReadPost" "InsertLeave"];
+        lazyLoad.settings.event = ["BufWritePost" "BufReadPost" "InsertLeave"];
 
-          autoCmd = {
-            event = ["BufWritePost"]; # 保存时运行
-            callback.__raw = ''
-              function()
-                require('lint').try_lint()
-              end
-            '';
-          };
+        autoCmd = {
+          event = ["BufWritePost"]; # 保存时运行
+          callback.__raw = ''
+            function()
+              require('lint').try_lint()
+            end
+          '';
         };
       };
     };
+  };
 }

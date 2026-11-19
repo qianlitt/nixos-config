@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/folke/noice.nvim
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim = {
       plugins = {
         nui.enable = true; # noice 依赖

@@ -2,7 +2,7 @@
 #
 # Home Page: https://github.com/folke/which-key.nvim
 {
-  flake.modules.homeManager.nixvim = {
+  flake.modules.homeManager."nixvim.plugins" = {
     programs.nixvim.plugins.which-key = {
       enable = true;
 

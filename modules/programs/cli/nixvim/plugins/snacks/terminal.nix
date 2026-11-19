@@ -2,7 +2,7 @@
 #
 # Docs: https://github.com/folke/snacks.nvim/blob/main/docs/terminal.md
 {
-  flake.modules.homeManager.nixvim = let
+  flake.modules.homeManager."nixvim.plugins" = let
     term_nav = dir: ''
       function(self)
         return self:is_floating() and "<c-${dir}>" or vim.schedule(function()

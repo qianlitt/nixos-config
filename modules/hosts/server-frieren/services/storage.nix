@@ -5,8 +5,12 @@
     ...
   }: let
     sopsFile = "${inputs.self.inputs.secrets}/hosts/frieren.yaml";
+
+    sambaUsers = {
+      elaina = config.sops.secrets."services/samba/elaina".path;
+    };
   in {
-    imports = with inputs.self.modules; [
+    imports = with inputs.self.lib.modules; [
       nixos."services.samba"
       nixos."services.nfs"
     ];
@@ -26,10 +30,13 @@
       users.elaina.extraGroups = ["media" "shares" "smbusers"];
     };
 
-    modules.services = {
+    services = {
+      rustfs.volumes = "/mnt/s3";
+
+      immich.mediaLocation = "/mnt/immich";
+
       samba = {
-        enable = true;
-        users.elaina.passwordFile = config.sops.secrets."services/samba/elaina".path;
+        # users.elaina.passwordFile = config.sops.secrets."services/samba/elaina".path;
 
         settings = {
           global = {
@@ -94,8 +101,7 @@
         };
       };
 
-      nfs = {
-        enable = true;
+      nfs.server = {
         hostName = "192.168.1.101";
         exports = {
           "/mnt/media" = {
@@ -106,11 +112,7 @@
           };
         };
       };
-
-      # Immich / RustFS 的数据目录改到数据盘
-      immich.mediaLocation = "/mnt/immich";
     };
-    services.rustfs.volumes = "/mnt/s3";
 
     systemd.tmpfiles.rules = [
       "d /mnt/media 2775 root media -"
@@ -129,8 +131,35 @@
       "d /mnt/backups 0770 elaina users -"
     ];
 
-    # 挂载失败时服务失败，而不是静默写根盘
     systemd.services = {
+      # 初始化 SMB 用户密码
+      samba-passdb = {
+        description = "Set Samba passwords from secret files";
+        after = ["samba-smbd.service"];
+        requires = ["samba-smbd.service"];
+        partOf = ["samba-smbd.service"];
+        wantedBy = ["multi-user.target"];
+
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+
+        script = ''
+          ${lib.concatStringsSep "\n" (
+            lib.mapAttrsToList (name: passwordFile: ''
+              password="$(cat ${lib.escapeShellArg passwordFile})"
+
+              printf '%s\n%s\n' "$password" "$password" \
+                | ${config.services.samba.package}/bin/smbpasswd \
+                    -s -a ${lib.escapeShellArg name}
+            '')
+            sambaUsers
+          )}
+        '';
+      };
+
+      # 挂载失败时服务失败，而不是静默写根盘
       "samba-smbd".unitConfig.RequiresMountsFor = [
         "/mnt/media"
         "/srv/shares"
