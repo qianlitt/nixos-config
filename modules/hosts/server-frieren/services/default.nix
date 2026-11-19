@@ -59,7 +59,6 @@
           allowPassword = false;
         };
 
-        nginx.enable = true;
         postgresql = {
           enable = true;
           package = pkgs.postgresql_17;
