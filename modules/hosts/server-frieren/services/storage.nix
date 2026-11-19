@@ -108,9 +108,11 @@
       };
 
       # Immich / RustFS 的数据目录改到数据盘
+    };
+    services = {
+      rustfs.volumes = "/mnt/s3";
       immich.mediaLocation = "/mnt/immich";
     };
-    services.rustfs.volumes = "/mnt/s3";
 
     systemd.tmpfiles.rules = [
       "d /mnt/media 2775 root media -"

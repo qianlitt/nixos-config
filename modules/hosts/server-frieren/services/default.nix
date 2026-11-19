@@ -73,29 +73,24 @@
           backup.enable = true;
         };
 
-        immich = {
-          enable = true;
-          host = "0.0.0.0";
-          port = 2283;
-
-          machine-learning.enable = false;
-          environment = {
-            TZ = config.time.timeZone;
-            IMMICH_LOG_LEVEL = "log";
-          };
-        };
-
         vaultwarden.enable = true;
       };
     };
 
-    services.anki-sync-server = {
-      users = [
+    services = {
+      anki-sync-server.users = [
         {
           username = "lean";
           passwordFile = config.sops.secrets."services/anki-sync/lean".path;
         }
       ];
+      immich = {
+        machine-learning.enable = false;
+        environment = {
+          TZ = config.time.timeZone;
+          IMMICH_LOG_LEVEL = "log";
+        };
+      };
     };
 
     # ========== Nginx 子域名反代配置 ==========
@@ -127,7 +122,7 @@
         useACMEHost = "wildcard.lan";
 
         locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString config.modules.services.immich.port}/";
+          proxyPass = "http://127.0.0.1:${toString config.services.immich.port}/";
           proxyWebsockets = true;
           extraConfig = ''
             client_max_body_size 0;
