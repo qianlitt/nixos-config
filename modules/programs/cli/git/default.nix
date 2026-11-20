@@ -59,12 +59,11 @@
 
         home.packages = with pkgs; [
           git-filter-repo
+          git-trim
+          git-town
 
           hunk
         ];
-
-        # TODO: git trim
-        # TODO: git flow
       };
     };
 
