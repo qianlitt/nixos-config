@@ -77,6 +77,9 @@
         "programs/anki/mysync/key" = {
           sopsFile = "${inputs.self.inputs.secrets}/users/elaina.yaml";
         };
+        "programs/ssh" = {
+          sopsFile = "${inputs.self.inputs.secrets}/users/elaina.yaml";
+        };
       };
 
       services.gpg-agent.sshKeys = [config.systemConstants.gpg.keygrip];
@@ -88,6 +91,9 @@
           usernameFile = config.sops.secrets."programs/anki/mysync/username".path;
           keyFile = config.sops.secrets."programs/anki/mysync/key".path;
         };
+        ssh.includes = [
+          config.sops.secrets."programs/ssh".path
+        ];
       };
     };
   };
