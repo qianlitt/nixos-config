@@ -39,7 +39,9 @@
     ];
   };
 
-  flake.modules.homeManager.game = {pkgs, ...}: {
+  flake.modules.homeManager.game = {pkgs, ...}: let
+    ps = inputs.self.packages.${pkgs.stdenv.hostPlatform.system};
+  in {
     home.packages = with pkgs; [
       # 帧率、温度、负载显示
       # https://github.com/flightlessmango/MangoHud
@@ -55,6 +57,9 @@
 
       # 二进制文件编辑器
       bbe
+
+      # 《鸣潮》命令行 CLI 管理器
+      ps.ww-manager
     ];
 
     # Lutris
