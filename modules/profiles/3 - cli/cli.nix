@@ -36,9 +36,6 @@
         yazi
         zellij
         zoxide
-
-        ai
-        gpg
       ];
     };
   };
