@@ -36,16 +36,16 @@
           # GitHub CLI
           gh.enable = true;
 
-          # A syntax-highlighting pager for git, diff, grep, and blame output
-          delta = {
-            enable = true;
-            enableGitIntegration = true;
-            options = {
-              diff-so-fancy = true;
-              line-numbers = true;
-              true-color = "always";
-            };
-          };
+          # # A syntax-highlighting pager for git, diff, grep, and blame output
+          # delta = {
+          #   enable = true;
+          #   enableGitIntegration = true;
+          #   options = {
+          #     diff-so-fancy = true;
+          #     line-numbers = true;
+          #     true-color = "always";
+          #   };
+          # };
 
           # Git TUI
           lazygit = {
@@ -59,6 +59,8 @@
 
         home.packages = with pkgs; [
           git-filter-repo
+
+          hunk
         ];
 
         # TODO: git trim
