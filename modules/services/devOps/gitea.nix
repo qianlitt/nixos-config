@@ -14,7 +14,6 @@
           HTTP_PORT = 3000;
         };
 
-        service.DISABLE_REGISTRATION = true;
         "cron.update_checker".ENABLED = false;
       };
     };
