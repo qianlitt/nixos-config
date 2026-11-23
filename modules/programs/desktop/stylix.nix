@@ -23,7 +23,7 @@
     stylix = {
       enable = true;
 
-      autoEnable = true;
+      autoEnable = false;
 
       # Theme
       polarity = "dark"; # 强制深色主题
@@ -63,16 +63,31 @@
         desktop = 1.0;
         terminal = 0.9;
       };
+
+      targets = {
+        font-packages.enable = true;
+        fontconfig.enable = true;
+        gtk.enable = true;
+        qt.enable = true;
+
+        console.enable = true;
+        plymouth.enable = true;
+        grub.enable = true;
+      };
     };
   };
 
   flake.modules.homeManager.stylix = {
+    home.pointerCursor.enable = true;
+
     stylix.targets = {
-      nixvim.colors.enable = false;
-      vscode.enable = false; # VSCode 主题由插件提供
-      noctalia-shell.enable = false;
-      hyprland.colors.enable = false; # BUG: 当前 stylix 不能正确配置 decoration
-      zen-browser.enable = false;
+      font-packages.enable = true;
+      fontconfig.enable = true;
+      gtk.enable = true;
+      qt.enable = true;
+
+      foot.enable = true;
+      kitty.enable = true;
     };
   };
 }
