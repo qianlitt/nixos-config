@@ -33,4 +33,5 @@ jobs:
       - name: Build NixOS
         run: |
           nix build \
+            -j 1 \
             .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
