@@ -41,6 +41,7 @@
             noctalia
             game
             stylix
+            ai
           ])
         ++ (with inputs.self.factory; [
           (gpgImportKey {

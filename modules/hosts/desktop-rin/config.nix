@@ -17,6 +17,7 @@
         noctalia
         game
         stylix
+        ai
       ]
       ++ [
         (inputs.self.factory.i18n {lang = "zh";})
