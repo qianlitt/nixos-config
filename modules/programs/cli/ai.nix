@@ -21,9 +21,6 @@
         # AI Coding Agents
         claude-code
         codex
-        oh-my-codex
-        opencode
-        oh-my-opencode
         dsh
 
         # Utilities
