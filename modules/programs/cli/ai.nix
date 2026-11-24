@@ -13,7 +13,9 @@
     };
   };
 
-  flake.modules.homeManager.ai = {pkgs, ...}: {
+  flake.modules.homeManager.ai = {pkgs, ...}: let
+    ps = inputs.self.packages.${pkgs.stdenv.hostPlatform.system};
+  in {
     # llm-agents.nix: https://github.com/numtide/llm-agents.nix
     home.packages =
       (with pkgs; [uv nodejs]) # MCP Dependencise
@@ -25,6 +27,8 @@
 
         # Utilities
         cc-switch-cli
+
+        ps.learnharness
       ]);
   };
 }
