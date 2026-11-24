@@ -162,6 +162,7 @@
         address = "127.0.0.1:9000";
         accessKeyFile = config.sops.secrets."services/rustfs/accessKey".path;
         secretKeyFile = config.sops.secrets."services/rustfs/secretKey".path;
+        volumes = "/mnt/s3";
       };
 
       # niks3

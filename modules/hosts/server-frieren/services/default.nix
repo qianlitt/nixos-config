@@ -23,7 +23,6 @@
         nixos."services.nginx"
         nixos."services.postgresql"
 
-        nixos."services.alist"
         nixos."services.immich"
         nixos."services.vaultwarden"
         nixos."services.anki-sync"
@@ -63,6 +62,7 @@
           TZ = config.time.timeZone;
           IMMICH_LOG_LEVEL = "log";
         };
+        mediaLocation = "/mnt/immich";
       };
       postgresql = {
         package = pkgs.postgresql_17;
@@ -81,27 +81,6 @@
       upstreams.vaultwarden.servers."127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}" = {};
 
       virtualHosts = {
-        # AList
-        "pan.${domain}" = {
-          forceSSL = true;
-          useACMEHost = "wildcard.lan";
-
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:5244/";
-            proxyWebsockets = true;
-            extraConfig = ''
-              client_max_body_size 0;
-              tcp_nopush on;
-              tcp_nodelay on;
-              proxy_send_timeout 600s;
-              proxy_read_timeout 600s;
-              proxy_request_buffering off;
-              proxy_buffering off;
-              chunked_transfer_encoding on;
-            '';
-          };
-        };
-
         # Immich
         "photo.${domain}" = {
           forceSSL = true;

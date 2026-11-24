@@ -63,39 +63,6 @@
                       ];
                     };
 
-                    # 媒体库：视频/音乐本身已压缩，不再 zstd
-                    "@media" = {
-                      mountpoint = "/mnt/media";
-                      mountOptions = [
-                        "compress=no"
-                        "noatime"
-                        "nodiratime"
-                        "nofail"
-                      ];
-                    };
-
-                    # 家庭共享：文档为主，轻量压缩
-                    "@shares" = {
-                      mountpoint = "/srv/shares";
-                      mountOptions = [
-                        "compress=zstd:1"
-                        "noatime"
-                        "nodiratime"
-                        "nofail"
-                      ];
-                    };
-
-                    # 其他设备的备份接收目录
-                    "@backups" = {
-                      mountpoint = "/mnt/backups";
-                      mountOptions = [
-                        "compress=no"
-                        "noatime"
-                        "nodiratime"
-                        "nofail"
-                      ];
-                    };
-
                     # Immich 媒体
                     "@immich" = {
                       mountpoint = "/mnt/immich";
